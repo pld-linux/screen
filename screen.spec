@@ -63,7 +63,7 @@ make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/skel,usr/{bin,man/man1,info}}
 
-install -s screen $RPM_BUILD_ROOT/usr/bin
+install -s screen $RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc $RPM_BUILD_ROOT/etc/screenrc
@@ -87,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc *.gz
 
-%attr(755,root,root) /usr/bin/screen
+%attr(755,root,root) %{_bindir}/screen
 %{_mandir}/man1/*
 
 %{_infodir}/screen.info*
