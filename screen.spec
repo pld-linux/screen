@@ -18,6 +18,7 @@ Patch4:		screen-compat21.patch
 Patch5:		screen-DESTDIR.patch
 Patch6:		screen-doc_fixes.patch
 Patch7:		screen-texinfo_doc_fixes.patch
+Patch8:		screen-ncurses.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 Prereq:		/usr/sbin/fix-info-dir
@@ -62,6 +63,7 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
