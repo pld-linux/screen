@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.8
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
@@ -74,8 +74,9 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 autoconf
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
-	--with-libpam
-
+	--with-libpam \
+	--disable-socket-dir 
+	
 %{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
