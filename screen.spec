@@ -5,13 +5,14 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.8
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
 Group(pl):	Aplikacje/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
 Source1:	screen.1.pl
+Source2:	%{name}.pamd
 Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-DESTDIR.patch
@@ -19,8 +20,11 @@ Patch3:		%{name}-manual.patch
 Patch4:		%{name}-ia64.patch
 Patch5:		%{name}-info.patch
 Patch6:		%{name}-texinfo_fixes.patch
+Patch7:		%{name}-debian.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
+BuildRequires:	texinfo
+BuildRequires:	pam-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc
@@ -64,25 +68,29 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p1
+%patch7 -p1
 
 %build
+autoconf
 %configure \
-	--with-sys-screenrc=%{_sysconfdir}/screenrc
+	--with-sys-screenrc=%{_sysconfdir}/screenrc \
+	--with-libpam
 
 %{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/skel,%{_bindir},%{_mandir}/{,pl}/man1,%{_infodir}}
+install -d $RPM_BUILD_ROOT/{etc/{skel,pam.d},%{_bindir},%{_mandir}/{,pl}/man1,%{_infodir}}
 
-install screen $RPM_BUILD_ROOT%{_bindir}
-install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
-install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
+install screen			$RPM_BUILD_ROOT%{_bindir}
+install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
+install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
+install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+install etc/screenrc		$RPM_BUILD_ROOT/etc/skel/.screenrc
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man1/screen.1
+install %{SOURCE1}		$RPM_BUILD_ROOT%{_mandir}/pl/man1/screen.1
+install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
 
 gzip -9nf NEWS README FAQ ChangeLog
 
@@ -102,3 +110,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/screen
 %{_mandir}/man1/*
 %{_infodir}/screen.info*
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
