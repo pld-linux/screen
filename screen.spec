@@ -125,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 - added #define PTYGROUP 5 and #define PTYMODE 0620 in config.h.in
   gid=5 is tty group in RedHat Linux (/dev/tty* used by screen is not
   curently writable by other users), 
-- added striping screen binary,
+- added stripping screen binary,
 - added %attr macros in %files (allow build package from non root
   account),
 - added %clear section.
