@@ -4,38 +4,42 @@ Summary(fr):	screen - gère plusieurs sessions sur un seul terminal
 Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
-Version:	3.7.6
+Version:	3.9.4
 Release:	4
 Copyright:	GPL
 Group:		Utilities/Terminal
-Group(pl):	U¿ytki/Terminal
-Source:		ftp://ftp.gnu.org/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:		screen-fhs.patch
-Patch1:		screen-linux.patch
-Patch2:		screen-tmprace.patch
-Patch3:		screen-info.patch
-Patch4:		screen-misc.patch
-Patch5:		screen-tty.patch
+Group(pl):	Narzêdzia/Terminal
+Source:		ftp://ftp.gnu.org/pub/gnu/screen/%{name}-%{version}.tar.gz
+Patch0:		screen-info.patch
+Patch1:		screen-tty.patch
+Patch2:		screen-pty.patch
+Patch3:		screen-notmp.patch
+Patch4:		screen-compat21.patch
+Patch5:		screen-DESTDIR.patch
+Patch6:		screen-doc_fixes.patch
+Patch7:		screen-texinfo_doc_fixes.patch
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	utempter-devel
 Prereq:		/usr/sbin/fix-info-dir
 BuildRoot:	/tmp/%{name}-%{version}-root
 
+%define		_sysconfdir	/etc
+
 %description
-Screen is a program that allows you to have multiple
-logins on one terminal.  It is useful in situations where
-you are telnetted into a machine or connected via a dumb
-terminal and want more than just one login.
+Screen is a program that allows you to have multiple logins on one terminal.
+It is useful in situations where you are telnetted into a machine or
+connected via a dumb terminal and want more than just one login.
 
 %description -l de
-Screens ist ein Programm, das Ihnen erlaubt, sich auf einem
-Terminal mehrfach einzuloggen - was nützlich sein kann,
-wenn Sie über ein dummes Terminal eine Telnetverbindung zu
-einem Rechner haben und mehr als ein Login benötigen.
+Screens ist ein Programm, das Ihnen erlaubt, sich auf einem Terminal
+mehrfach einzuloggen - was nützlich sein kann, wenn Sie über ein dummes
+Terminal eine Telnetverbindung zu einem Rechner haben und mehr als ein Login
+benötigen.
 
 %description -l fr
-Screen est un programme permettant plusieurs connexions sur un terminal.
-Il est utile pour ouvrir plusieurs sessions à la fois, si vous voulez
-ouvrir une session telnet sur une autre machine et voulez plus d'une
-connexion.
+Screen est un programme permettant plusieurs connexions sur un terminal. Il
+est utile pour ouvrir plusieurs sessions à la fois, si vous voulez ouvrir
+une session telnet sur une autre machine et voulez plus d'une connexion.
 
 %description -l pl
 Screen jest programem, który umo¿liwia otworzenie wielu sesji na jednym
@@ -56,12 +60,15 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
-./configure %{_target_platform} \
-	--prefix=%{_prefix}
+LDFLAGS="-s"; export LDFLAGS
+%configure
 
 make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
+(cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -88,10 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-
+%config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_mandir}/man1/*
-
 %{_infodir}/screen.info*
-
-%config(noreplace) %verify(not md5 mtime size) /etc/screenrc
