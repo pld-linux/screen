@@ -7,14 +7,17 @@ Name:		screen
 Version:	3.9.8
 Release:	1
 License:	GPL
-Group:		Utilities/Terminal
-Group(pl):	Narzêdzia/Terminal
+Group:		Applications/Terminal
+Group(de):	Applikationen/Terminal
+Group(pl):	Aplikacje/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
-Patch1:		screen-tty.patch
-Patch2:		screen-compat21.patch
-Patch3:		screen-DESTDIR.patch
-Patch4:		screen-manual.patch
-Patch5:		screen-ia64.patch
+Patch0:		%{name}-tty.patch
+Patch1:		%{name}-compat21.patch
+Patch2:		%{name}-DESTDIR.patch
+Patch3:		%{name}-manual.patch
+Patch4:		%{name}-ia64.patch
+Patch5:		screen-info.patch
+Patch6:		screen-texinfo_fixes.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -53,15 +56,17 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 
 %prep
 %setup -q
-%patch1 -p0
-%patch2 -p0
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 %patch3 -p0
-%patch4 -p0
-%patch5 -p0
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
-LDFLAGS="-s"; export LDFLAGS
-%configure --with-sys-screenrc=%{_sysconfdir}/screenrc
+%configure \
+	--with-sys-screenrc=%{_sysconfdir}/screenrc
 
 %{__make} CFLAGS="$RPM_OPT_FLAGS" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
