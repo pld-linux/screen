@@ -54,7 +54,7 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch3 -p1
 
 %build
-./configure \
+./configure %{_target} \
     --prefix=/usr
 
 make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
