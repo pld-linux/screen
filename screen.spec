@@ -32,6 +32,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	texinfo
 BuildRequires:	utempter-devel
+Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
