@@ -59,6 +59,8 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 	--prefix=/usr
 make CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s"
 
+(cd doc; makeinfo screen.texinfo)
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/skel,usr/{bin,man/man1,info}}
