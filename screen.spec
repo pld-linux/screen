@@ -1,21 +1,20 @@
-Summary:     Screen - Manages multiple sessions on one tty
-Summary(de): Screen - Verwaltet mehrere Sitzungen an einem tty
-Summary(fr): screen - gère plusieurs sessions sur un seul terminal
-Summary(pl): Screen - Program zarz±dzaj±cy wieloma sesjami na jednym terminalu
-Summary(tr): Bir uçbirimde birden fazla oturumu düzenler
-Name:        screen
-Version:     3.7.6
-Release:     1
-Copyright:   GPL
-Group:       Utilities/Terminal
-Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:      screen.patch
-Patch1:      screen-linux.patch
-Patch2:      screen-tty.patch
-Patch3:	     screen-tmprace.patch
-Patch4:      screen-info.patch
-Prereq:      /sbin/install-info
-BuildRoot:   /tmp/%{name}-%{version}-root
+Summary:	Screen - Manages multiple sessions on one tty
+Summary(de):	Screen - Verwaltet mehrere Sitzungen an einem tty
+Summary(fr):	screen - gère plusieurs sessions sur un seul terminal
+Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
+Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
+Name:		screen
+Version:	3.7.6
+Release:	2d
+Copyright:	GPL
+Group:		Utilities/Terminal
+Group(pl):	U¿ytki/Terminal
+Source:		ftp://ftp.gnu.org/pub/gnu/%{name}-%{version}.tar.gz
+Patch0:		%{name}.patch
+Patch1:		%{name}-linux.patch
+Patch2:		%{name}-utmp.patch
+Prereq:		/sbin/install-info
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
 Screen is a program that allows you to have multiple
@@ -50,16 +49,13 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1 
-%patch3 -p1
-%patch4 -p1
+%patch2 -p1
 
 %build
 ./configure \
-	--prefix=/usr
-make CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s"
+    --prefix=/usr
 
-(cd doc; makeinfo screen.texinfo)
+make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -73,39 +69,43 @@ install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
 gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*}
 
+bzip2 -9 NEWS README FAQ ChangeLog
+
 %post
-/sbin/install-info /usr/info/screen.info.gz /etc/info-dir
+/sbin/install-info /usr/info/screen.info.gz /etc/info-dir \
+--entry="* screen: (screen).             Terminal multiplexer."
 
 %preun
 if [ $1 = 0 ]; then
-	/sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir
+    /sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir \
+    --entry="* screen: (screen).             Terminal multiplexer."
 fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, root, 755)
-%doc NEWS README FAQ ChangeLog
-%attr(4755, root, root) /usr/bin/screen
-%attr(0644, root,  man) /usr/man/man1/*
+%defattr(644,root,root,755)
+%doc *.bz2
+
+%attr(755,root,root) /usr/bin/screen
+%attr(644,root, man) /usr/man/man1/*
+
 /usr/info/screen.info*
-%config(noreplace) %verify(not md5 mtime size) /etc/skel/.screenrc
+
 %config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 
 %changelog
-* Mon Dec 27 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [3.7.6-1]
-- standarized {un}registering info pages (added screen-info.patch),
-- added LDFLAGS="-s" to make parameters,
-- changed way od passing $RPM_OPT_FLAGS,
-- added gzipping man pages.
+* Fri Feb 05 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [3.7.6-2d]
+- added utpm patch. 
 
-* Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [3.7.4-4]
-- changed to %attr(0644, root,  man) on man pages in %files,
-- fixed --entry text on {un}registering info page for ed in %post
-  %preun in devel.
+* Thu Oct 01 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [3.7.4-3d]
+- build against Tornado,
+- restricted files permission,
+- changed man pages group to man,
+- minor modifications of the spec file.
 
 * Sun Aug 23 1998 Marcin Bohosiewicz <marcus@krakow.linux.org.pl>
   [3.7.4-3]
@@ -131,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 - added #define PTYGROUP 5 and #define PTYMODE 0620 in config.h.in
   gid=5 is tty group in RedHat Linux (/dev/tty* used by screen is not
   curently writable by other users), 
-- added stripping screen binary,
-- added %attr macros in %files (allows build package from non root
+- added striping screen binary,
+- added %attr macros in %files (allow build package from non root
   account),
 - added %clear section.
