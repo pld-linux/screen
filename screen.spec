@@ -77,7 +77,7 @@ autoconf
 	--with-libpam \
 	--disable-socket-dir 
 	
-%{__make} CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" 
+%{__make} CFLAGS="%{rpmcflags}" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
