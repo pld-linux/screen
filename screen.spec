@@ -16,7 +16,7 @@ Patch2:		screen-tmprace.patch
 Patch3:		screen-info.patch
 Patch4:		screen-misc.patch
 Patch5:		screen-tty.patch
-Prereq:		/sbin/install-info
+Prereq:		/usr/sbin/fix-info-dir
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -77,12 +77,10 @@ gzip -9nf $RPM_BUILD_ROOT/{%{_infodir}/screen.info*,%{_mandir}/man1/*} \
 	NEWS README FAQ ChangeLog
 
 %post
-/sbin/install-info %{_infodir}/screen.info.gz /etc/info-dir
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %preun
-if [ "$1" = "0" ]; then
-	/sbin/install-info --delete %{_infodir}/screen.info.gz /etc/info-dir
-fi
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
