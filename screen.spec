@@ -1,11 +1,15 @@
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de):	Screen - Verwaltet mehrere Sitzungen an einem tty
+Summary(es):	Screen - Administra mЗltiples sesiones en un tty
 Summary(fr):	screen - gХre plusieurs sessions sur un seul terminal
 Summary(pl):	Screen - Program zarz╠dzaj╠cy sesjami na jednym terminalu
+Summary(pt_BR):	Screen - Gerencia mЗltiplas sessУes em um tty
+Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминала
 Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
+Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
-Version:	3.9.11
-Release:	0.9
+Version:	3.9.13
+Release:	2
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -20,9 +24,7 @@ Patch5:		%{name}-debian_fixed.patch
 Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
-Patch9:		%{name}-acfix.patch
-Patch10:	%{name}-no-libs.patch
-Patch11:	%{name}-setreuid-bug.patch
+Patch9:		%{name}-no-libs.patch
 BuildRequires:	autoconf
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
@@ -44,6 +46,12 @@ mehrfach einzuloggen - was nЭtzlich sein kann, wenn Sie Эber ein
 dummes Terminal eine Telnetverbindung zu einem Rechner haben und mehr
 als ein Login benЖtigen.
 
+%description -l es
+Screen es un programa que permite que tengas mЗltiples logins en un
+terminal. Es Зtil en situaciones donde estАs usando telnet en una
+mАquina o conectado vМa un terminal dumb y quiera mАs que apenas un
+login.
+
 %description -l fr
 Screen est un programme permettant plusieurs connexions sur un
 terminal. Il est utile pour ouvrir plusieurs sessions Ю la fois, si
@@ -57,10 +65,27 @@ terminali nie umo©liwiaj╠cych otwarcia kilku sesji w systemie. Screen
 umo©liwia ponadto powrСt do otwartych sesji w przypadku przerwania
 poЁ╠czenia z terminalem.
 
+%description -l pt_BR
+Screen И um programa que permite que vocЙ tenha mЗltiplos logins em um
+terminal. Ele И Зtil em situaГУes onde vocЙ estА usando telnet em uma
+mАquina ou conectado via um terminal dumb e quer mais do que apenas um
+login.
+
+%description -l ru
+Утилита screen позволяет иметь несколько сессий на одном терминале.
+Screen полезен пользователям, которые заходят на машину по сети или
+через dumb-терминал, но хотят иметь более одной сессии с этой машиной.
+
 %description -l tr
 Screen, aynЩ uГbirimde birden fazla oturum olanaПЩ saПlayan bir
 programdЩr. Bir makinaya telnet programЩ ile ya da programlanamaz bir
 uГbirim Эzerinden baПlantЩ kurduПunuz durumlarda kullanЩЧlЩdЩr.
+
+%description -l uk
+Утил╕та screen дозволя╓ мати дек╕лька сес╕й на одному терм╕нал╕.
+Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
+через dumb-терм╕нал, але хочуть мати б╕льше одно╖ сес╕╖ з ц╕╓ю
+машиною.
 
 %prep
 %setup -q
@@ -71,11 +96,12 @@ uГbirim Эzerinden baПlantЩ kurduПunuz durumlarda kullanЩЧlЩdЩr.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#%patch7 -p1
+# DON'T ENABLE IT UNLESS YOU REALLY FIX IT
+# (it's heavily broken - note that some sequences should be get for
+# $TERM before running screen instance, and others for TERM=screen!)
+###%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 %{__autoconf}
@@ -117,7 +143,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS README FAQ ChangeLog
+%doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
