@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.7.6
-Release:	2d
+Release:	3
 Copyright:	GPL
 Group:		Utilities/Terminal
 Group(pl):	U¿ytki/Terminal
@@ -67,9 +67,8 @@ install doc/screen.info* $RPM_BUILD_ROOT/usr/info
 install etc/etcscreenrc $RPM_BUILD_ROOT/etc/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
-gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*}
-
-bzip2 -9 NEWS README FAQ ChangeLog
+gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*} \
+	NEWS README FAQ ChangeLog
 
 %post
 /sbin/install-info /usr/info/screen.info.gz /etc/info-dir \
@@ -86,7 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.bz2
+%doc *.gz
 
 %attr(755,root,root) /usr/bin/screen
 %attr(644,root, man) /usr/man/man1/*
