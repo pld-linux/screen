@@ -9,7 +9,7 @@ Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk):	íÅÎÅÄÖÅÒ ÅËÒÁÎÕ, ÝÏ Ð¦ÄÔÒÉÍÕ¤ Ë¦ÌØËÁ ÌÏÇ¦Î¦× Ú ÏÄÎÏÇÏ ÔÅÒÍ¦ÎÁÌÕ
 Name:		screen
 Version:	3.9.11
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Patch11:	%{name}-setreuid-bug.patch
 BuildRequires:	autoconf
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
+BuildRequires:	readline-devel >= 4.3
 BuildRequires:	texinfo
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
