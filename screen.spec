@@ -5,7 +5,7 @@ Summary(pl): Screen - Program zarz±dzaj±cy wieloma sesjami na jednym terminalu
 Summary(tr): Bir uçbirimde birden fazla oturumu düzenler
 Name:        screen
 Version:     3.7.4
-Release:     3
+Release:     4
 Copyright:   GPL
 Group:       Utilities/Terminal
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
@@ -75,12 +75,12 @@ install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 gzip -9nf $RPM_BUILD_ROOT/usr/info/screen.info*
 
 %post
-/sbin/install-info /usr/info/screen.info.gz /usr/info/dir --entry="* screen: (screen).             Terminal multiplexer."
+/sbin/install-info /usr/info/screen.info.gz /usr/info/dir --entry \
+"* screen: (screen).                             Terminal multiplexer."
 
 %preun
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete /usr/info/screen.info.gz /usr/info/dir --entry="* screen: (screen).             Terminal multiplexer."
-fi
+/sbin/install-info --delete /usr/info/screen.info.gz /usr/info/dir --entry \
+"* screen: (screen).                             Terminal multiplexer."
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -88,13 +88,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644, root, root, 755)
 %doc NEWS README FAQ ChangeLog
-%attr (4755,root,root) /usr/bin/screen
-/usr/man/man1/*
+%attr(4755, root, root) /usr/bin/screen
+%attr(0644, root,  man) /usr/man/man1/*
 /usr/info/screen.info*
 %config(noreplace) %verify(not md5 mtime size) /etc/skel/.screenrc
 %config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 
 %changelog
+* Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [3.7.4-4]
+- changed to %attr(0644, root,  man) on man pages in %files,
+- fixed --entry text on {un}registering info page for ed in %post
+  %preun in devel.
+
 * Sun Aug 23 1998 Marcin Bohosiewicz <marcus@krakow.linux.org.pl>
   [3.7.4-3]
 - added translations de,fr,tr from orginal RH 5.1 screen's spec,
