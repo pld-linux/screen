@@ -4,24 +4,20 @@ Summary(fr):	screen - gère plusieurs sessions sur un seul terminal
 Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
-Version:	3.9.5
-Release:	9
+Version:	3.9.8
+Release:	1
 License:	GPL
 Group:		Utilities/Terminal
 Group(pl):	Narzêdzia/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
 Patch0:		screen-info.patch
 Patch1:		screen-tty.patch
-Patch2:		screen-notmp.patch
-Patch3:		screen-compat21.patch
-Patch4:		screen-DESTDIR.patch
-Patch5:		screen-doc_fixes.patch
-Patch6:		screen-texinfo_doc_fixes.patch
-Patch7:		screen-ncurses.patch
-Patch8:		screen-home_etc.patch
-Patch9:		screen-md5.patch
-Patch10:	screen-ia64.patch
-Patch11:	screen-jbj.patch
+Patch2:		screen-compat21.patch
+Patch3:		screen-DESTDIR.patch
+Patch4:		screen-doc_fixes.patch
+Patch5:		screen-texinfo_doc_fixes.patch
+Patch6:		screen-home_etc.patch
+Patch7:		screen-ia64.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -67,10 +63,6 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
