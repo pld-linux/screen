@@ -16,17 +16,18 @@ Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-manual.patch
 Patch3:		%{name}-ia64.patch
 Patch4:		%{name}-info.patch
-#Patch5:		%{name}-debian.patch
 Patch5:		%{name}-debian_fixed.patch
 Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-acfix.patch
-BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	utempter-devel
-BuildRequires:	texinfo
-BuildRequires:	pam-devel
+Patch10:	%{name}-no-libs.patch
+Patch11:	%{name}-setreuid-bug.patch
 BuildRequires:	autoconf
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	pam-devel
+BuildRequires:	texinfo
+BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc
@@ -73,12 +74,14 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 #%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 %{__autoconf}
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
-	--with-libpam \
+	--enable-pam \
 	--enable-colors256 \
 	--disable-socket-dir
 
@@ -90,13 +93,15 @@ makeinfo screen.texinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/{skel,pam.d},%{_bindir},%{_mandir}/{,pl}/man1,%{_infodir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/screen/utf8encodings} \
+	$RPM_BUILD_ROOT{/etc/{skel,pam.d},%{_mandir}/{,pl}/man1,%{_infodir}}
 
 install screen			$RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 install etc/screenrc		$RPM_BUILD_ROOT/etc/skel/.screenrc
+install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
@@ -115,9 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README FAQ ChangeLog
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
+%{_datadir}/screen
 %attr(600,root,root) /etc/skel/.screenrc
 %{_mandir}/man1/*
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
+%attr(644,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*

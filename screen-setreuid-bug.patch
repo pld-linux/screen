@@ -1,0 +1,24 @@
+--- screen-3.9.11/screen.c.orig	Fri Jun 28 21:12:51 2002
++++ screen-3.9.11/screen.c	Fri Jun 28 21:18:13 2002
+@@ -719,6 +719,10 @@
+ #ifdef USE_LOCALE
+   setlocale(LC_ALL, "");
+ #endif
++  real_uid = getuid();
++  real_gid = getgid();
++  eff_uid = geteuid();
++  eff_gid = getegid();
+ #ifdef ENCODINGS
+   if (nwin_options.encoding == -1)
+     {
+@@ -752,10 +756,6 @@
+ #endif
+   if (ac)
+     nwin.args = av;
+-  real_uid = getuid();
+-  real_gid = getgid();
+-  eff_uid = geteuid();
+-  eff_gid = getegid();
+   if (eff_uid != real_uid)
+     {		
+       /* if running with s-bit, we must install a special signal
