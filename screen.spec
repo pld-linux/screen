@@ -72,7 +72,7 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 #%patch8 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
 	--with-libpam \
