@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.9
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
@@ -70,7 +70,7 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
+#%patch8 -p1
 
 %build
 autoconf
