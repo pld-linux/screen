@@ -4,16 +4,16 @@ Summary(fr): screen - gère plusieurs sessions sur un seul terminal
 Summary(pl): Screen - Program zarz±dzaj±cy wieloma sesjami na jednym terminalu
 Summary(tr): Bir uçbirimde birden fazla oturumu düzenler
 Name:        screen
-Version:     3.7.4
-Release:     4
+Version:     3.7.6
+Release:     1
 Copyright:   GPL
 Group:       Utilities/Terminal
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:      screen-3.6.2.patch
-Patch1:      screen-3.7.3-linux.patch
-Patch2:      screen-3.7.1-glibc.patch
-Patch3:      screen-3.7.3-tty.patch
-Patch4:	     screen-tmprace.patch
+Patch0:      screen.patch
+Patch1:      screen-linux.patch
+Patch2:      screen-tty.patch
+Patch3:	     screen-tmprace.patch
+Patch4:      screen-info.patch
 Prereq:      /sbin/install-info
 BuildRoot:   /tmp/%{name}-%{version}-root
 
@@ -48,19 +48,16 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 
 %prep
 %setup -q
-%patch0
+%patch0 -p1
 %patch1 -p1
-
-%ifarch axp
-%patch2 -p1
-%endif
-
-%patch3 -p1 
+%patch2 -p1 
+%patch3 -p1
 %patch4 -p1
 
 %build
-./configure --prefix=/usr
-make CC="gcc $RPM_OPT_FLAGS"
+./configure \
+	--prefix=/usr
+make CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -72,15 +69,15 @@ install doc/screen.info* $RPM_BUILD_ROOT/usr/info
 install etc/etcscreenrc $RPM_BUILD_ROOT/etc/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
-gzip -9nf $RPM_BUILD_ROOT/usr/info/screen.info*
+gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*}
 
 %post
-/sbin/install-info /usr/info/screen.info.gz /usr/info/dir --entry \
-"* screen: (screen).                             Terminal multiplexer."
+/sbin/install-info /usr/info/screen.info.gz /etc/info-dir
 
 %preun
-/sbin/install-info --delete /usr/info/screen.info.gz /usr/info/dir --entry \
-"* screen: (screen).                             Terminal multiplexer."
+if [ $1 = 0 ]; then
+	/sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,6 +92,13 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 
 %changelog
+* Mon Dec 27 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [3.7.6-1]
+- standarized {un}registering info pages (added screen-info.patch),
+- added LDFLAGS="-s" to make parameters,
+- changed way od passing $RPM_OPT_FLAGS,
+- added gzipping man pages.
+
 * Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [3.7.4-4]
 - changed to %attr(0644, root,  man) on man pages in %files,
