@@ -1,6 +1,6 @@
---- screen-3.7.6/os.h.compat21	Mon Dec 28 14:46:04 1998
-+++ screen-3.7.6/os.h	Mon Dec 28 14:46:35 1998
-@@ -236,7 +236,7 @@
+--- os.h.orig	Wed Aug 30 14:00:10 2000
++++ os.h	Fri Sep  8 19:13:49 2000
+@@ -270,7 +270,7 @@
  #  define pututline	pututxline
  #  define setutent	setutxent
  #  define endutent	endutxent

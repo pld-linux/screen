@@ -1,7 +1,6 @@
-diff -uNr screen-3.7.3.orig/config.h.in screen-3.7.3/config.h.in
---- screen-3.7.3.orig/config.h.in	Mon Aug  4 11:41:12 1997
-+++ screen-3.7.3/config.h.in	Mon Aug  4 11:42:53 1997
-@@ -77,8 +77,8 @@
+--- config.h.in.orig	Fri Sep  1 18:07:26 2000
++++ config.h.in	Fri Sep  8 19:16:57 2000
+@@ -88,8 +88,8 @@
   * Note, screen is unable to change mode or group of the pty if it
   * is not installed with sufficient privilege. (e.g. set-uid-root)
   */

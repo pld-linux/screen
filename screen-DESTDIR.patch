@@ -1,7 +1,6 @@
-diff -Nru screen-3.9.5/Makefile.in screen-3.9.5.new/Makefile.in
---- screen-3.9.5/Makefile.in	Fri Jun 23 00:25:37 2000
-+++ screen-3.9.5.new/Makefile.in	Fri Jun 23 00:24:23 2000
-@@ -71,14 +71,8 @@
+--- Makefile.in.orig	Fri Sep  1 18:07:26 2000
++++ Makefile.in	Fri Sep  8 19:11:49 2000
+@@ -68,14 +68,8 @@
  	$(CC) -c -I. -I$(srcdir) $(M_CFLAGS) $(DEFS) $(OPTIONS) $(CFLAGS) $<
  
  install_bin: .version screen
@@ -18,7 +17,7 @@ diff -Nru screen-3.9.5/Makefile.in screen-3.9.5.new/Makefile.in
  
  ###############################################################################
  install: installdirs install_bin
-@@ -94,7 +88,7 @@
+@@ -91,7 +85,7 @@
  
  installdirs:
  # Path leading to ETCSCREENRC and Socketdirectory not checked.
@@ -27,29 +26,3 @@ diff -Nru screen-3.9.5/Makefile.in screen-3.9.5.new/Makefile.in
  	cd doc ; $(MAKE) installdirs
  
  uninstall: .version
-diff -Nru screen-3.9.5/doc/Makefile.in screen-3.9.5.new/doc/Makefile.in
---- screen-3.9.5/doc/Makefile.in	Fri Jun 23 00:25:37 2000
-+++ screen-3.9.5.new/doc/Makefile.in	Fri Jun 23 00:24:23 2000
-@@ -23,11 +23,11 @@
- 	$(MAKEINFO) $(srcdir)/screen.texinfo -o screen.info
- 
- install: installdirs
--	$(INSTALL_DATA) $(srcdir)/screen.1 $(mandir)/man1/screen.1
-+	$(INSTALL_DATA) $(srcdir)/screen.1 $(DESTDIR)$(mandir)/man1/screen.1
- 	-$(MAKE) screen.info
- 	-if test -f screen.info; then d=.; else d=$(srcdir); fi; \
- 	if test -f $$d/screen.info; then \
--	for f in $$d/screen.info*; do $(INSTALL_DATA) $$f $(infodir);done; \
-+	for f in $$d/screen.info*; do $(INSTALL_DATA) $$f $(DESTDIR)$(infodir);done; \
- 	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
- 	  install-info --info-dir=$(infodir) $$d/screen.info; \
- 	else true; fi; \
-@@ -38,7 +38,7 @@
- 	rm -f $(infodir)/screen.info*
- 
- installdirs:
--	$(srcdir)/../etc/mkinstalldirs $(mandir)/man1 $(infodir)
-+	$(srcdir)/../etc/mkinstalldirs $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(infodir)
- 
- mostlyclean:
- 	-rm -f *.cp *.cps *.fn *.fns *.ky *.kys *.pg *.tp *.vr
