@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.4
-Release:	4
+Release:	5
 Copyright:	GPL
 Group:		Utilities/Terminal
 Group(pl):	Narzêdzia/Terminal
@@ -19,6 +19,7 @@ Patch5:		screen-DESTDIR.patch
 Patch6:		screen-doc_fixes.patch
 Patch7:		screen-texinfo_doc_fixes.patch
 Patch8:		screen-ncurses.patch
+Patch9:		screen-home_etc.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 Prereq:		/usr/sbin/fix-info-dir
@@ -64,6 +65,7 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
