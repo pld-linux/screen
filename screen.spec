@@ -9,7 +9,7 @@ Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
 Version:	4.0.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -27,6 +27,7 @@ Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
+Patch10:	%{name}-screenrc.patch
 BuildRequires:	autoconf
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
@@ -103,6 +104,7 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 ###%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 %{__aclocal}
