@@ -4,8 +4,8 @@ Summary(fr):	screen - gère plusieurs sessions sur un seul terminal
 Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
-Version:	3.9.8
-Release:	6
+Version:	3.9.9
+Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
@@ -19,8 +19,7 @@ Patch2:		%{name}-DESTDIR.patch
 Patch3:		%{name}-manual.patch
 Patch4:		%{name}-ia64.patch
 Patch5:		%{name}-info.patch
-Patch6:		%{name}-texinfo_fixes.patch
-Patch7:		%{name}-debian.patch
+Patch6:		%{name}-debian.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRequires:	texinfo
@@ -63,12 +62,11 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %setup -q
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
+%patch2 -p1
 %patch3 -p0
 %patch4 -p0
-%patch5 -p0
+%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 %build
 autoconf
