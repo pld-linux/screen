@@ -117,4 +117,4 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
