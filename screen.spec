@@ -10,10 +10,12 @@ Copyright:	GPL
 Group:		Utilities/Terminal
 Group(pl):	U¿ytki/Terminal
 Source:		ftp://ftp.gnu.org/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:		screen.patch
+Patch0:		screen-fhs.patch
 Patch1:		screen-linux.patch
-Patch2:		screen-utmp.patch
+Patch2:		screen-tmprace.patch
 Patch3:		screen-info.patch
+Patch4:		screen-misc.patch
+Patch5:		screen-tty.patch
 Prereq:		/sbin/install-info
 BuildRoot:	/tmp/%{name}-%{version}-root
 
@@ -52,16 +54,18 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 ./configure %{_target_platform} \
-    --prefix=/usr
+	--prefix=%{_prefix}
 
 make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/skel,usr/{bin,man/man1,info}}
+install -d $RPM_BUILD_ROOT/{etc/skel,%{_bindir},%{_mandir}/man1,%{_infodir}}
 
 install -s screen $RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -69,7 +73,7 @@ install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc $RPM_BUILD_ROOT/etc/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
-gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*} \
+gzip -9nf $RPM_BUILD_ROOT/{%{_infodir}/screen.info*,%{_mandir}/man1/*} \
 	NEWS README FAQ ChangeLog
 
 %post
