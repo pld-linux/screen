@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.5
-Release:	8
+Release:	9
 License:	GPL
 Group:		Utilities/Terminal
 Group(pl):	Narzêdzia/Terminal
