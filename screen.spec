@@ -8,8 +8,8 @@ Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминал
 Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
-Version:	3.9.11
-Release:	7
+Version:	3.9.13
+Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -99,11 +99,11 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#%patch7 -p1
+%patch7 -p1
 #%patch8 -p1
-%patch9 -p1
+#%patch9 -p1
 %patch10 -p1
-%patch11 -p1
+#%patch11 -p1
 
 %build
 %{__autoconf}
