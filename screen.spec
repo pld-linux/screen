@@ -8,12 +8,12 @@ Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминал
 Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
-Version:	4.0.1
-Release:	3
+Version:	4.0.2
+Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	2f674d5a7a299abf085d0b69c90de4f8
+# Source0-md5:	ed68ea9b43d9fba0972cb017a24940a1
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -27,7 +27,7 @@ Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
-Patch10:	%{name}-screenrc.patch
+URL:		http://www.gnu.org/software/screen/ 
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
@@ -105,7 +105,6 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 ###%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 %build
 %{__aclocal}
@@ -163,4 +162,4 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
-%attr(644,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
+%config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
