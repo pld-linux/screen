@@ -21,6 +21,7 @@ Patch6:		%{name}-debian.patch
 Patch7:		%{name}-nolibtermcap.patch
 Patch8:		%{name}-no_hardcoded_term_sequences.patch
 Patch9:		%{name}-home_etc.patch
+Patch10:	%{name}-acfix.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRequires:	texinfo
@@ -72,6 +73,7 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch7 -p1
 #%patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 %{__autoconf}
@@ -81,7 +83,10 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 	--disable-socket-dir
 
 %{__make} CFLAGS="%{rpmcflags}"
-(cd doc; rm -f screen.info*; makeinfo screen.texinfo)
+
+cd doc
+rm -f screen.info*
+makeinfo screen.texinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -96,8 +101,6 @@ install etc/screenrc		$RPM_BUILD_ROOT/etc/skel/.screenrc
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
 
-gzip -9nf NEWS README FAQ ChangeLog
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -109,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc NEWS README FAQ ChangeLog
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %attr(600,root,root) /etc/skel/.screenrc

@@ -1,0 +1,13 @@
+--- screen-3.9.10/configure.in.orig	Mon Jun  3 19:52:06 2002
++++ screen-3.9.10/configure.in	Mon Jun  3 20:03:48 2002
+@@ -205,8 +205,8 @@
+ AC_CHECKING(SVR4)
+ AC_TRY_LINK([#include <utmpx.h>
+ ],,
+-AC_CHECK_HEADER(dwarf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN),
+-AC_CHECK_HEADER(elf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN)))
++[AC_CHECK_HEADER(dwarf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN),
++[AC_CHECK_HEADER(elf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN))])]
+ ,LIBS="$oldlibs")
+ 
+ AC_CHECKING(for Solaris 2.x)
