@@ -23,7 +23,7 @@ Patch9:		screen-home_etc.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 Prereq:		/usr/sbin/fix-info-dir
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc
 
