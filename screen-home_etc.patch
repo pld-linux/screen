@@ -1,234 +1,58 @@
-diff -rNu screen-3.9.4-orig/Makefile.in screen-3.9.4/Makefile.in
---- screen-3.9.4-orig/Makefile.in	Wed Aug 11 22:19:51 1999
-+++ screen-3.9.4/Makefile.in	Wed Feb  2 20:55:17 2000
-@@ -55,12 +55,12 @@
- 	search.c tty.c term.c window.c utmp.c loadav.c putenv.c help.c \
- 	termcap.c input.c attacher.c pty.c process.c display.c comm.c \
- 	kmapdef.c acls.c braille.c braille_tsi.c logfile.c layer.c \
--	sched.c teln.c nethack.c
-+	sched.c teln.c nethack.c userdir.c
- OFILES=	screen.o ansi.o fileio.o mark.o misc.o resize.o socket.o \
- 	search.o tty.o term.o window.o utmp.o loadav.o putenv.o help.o \
- 	termcap.o input.o attacher.o pty.o process.o display.o comm.o \
- 	kmapdef.o acls.o braille.o braille_tsi.o logfile.o layer.o \
--	sched.o teln.o nethack.o
-+	sched.o teln.o nethack.o userdir.o
- 
- all:	screen
- 
-@@ -270,7 +270,7 @@
-  comm.h layer.h term.h image.h display.h window.h braille.h extern.h \
-  logfile.h
- fileio.o: fileio.c rcs.h config.h screen.h os.h osdef.h ansi.h acls.h \
-- comm.h layer.h term.h image.h display.h window.h extern.h
-+ comm.h layer.h term.h image.h display.h window.h extern.h userdir.h
- mark.o: mark.c rcs.h config.h screen.h os.h osdef.h ansi.h acls.h \
-  comm.h layer.h term.h image.h display.h window.h mark.h extern.h
- misc.o: misc.c rcs.h config.h screen.h os.h osdef.h ansi.h acls.h \
-diff -rNu screen-3.9.4-orig/config.h.in screen-3.9.4/config.h.in
---- screen-3.9.4-orig/config.h.in	Wed Aug 11 22:19:51 1999
-+++ screen-3.9.4/config.h.in	Wed Feb  2 20:38:44 2000
-@@ -55,7 +55,7 @@
- 
- /*
-  * Screen sources two startup files. First a global file with a path
-- * specified here, second your local $HOME/.screenrc
-+ * specified here, second your local $HOME/etc/screenrc
-  * Don't define this, if you don't want it.
-  */
- #ifndef ETCSCREENRC
-diff -rNu screen-3.9.4-orig/fileio.c screen-3.9.4/fileio.c
---- screen-3.9.4-orig/fileio.c	Mon Jul 26 19:51:02 1999
-+++ screen-3.9.4/fileio.c	Wed Feb  2 21:02:40 2000
-@@ -28,6 +28,7 @@
- #include <sys/types.h>
- #include <fcntl.h>
- #include <sys/stat.h>
-+#include <sys/param.h>
- 
- #ifndef SIGINT
- # include <signal.h>
-@@ -36,6 +37,7 @@
- #include "config.h" 
- #include "screen.h"
- #include "extern.h"
-+#include "userdir.h"
- 
- extern struct display *display, *displays;
- extern struct win *fore;
-@@ -94,8 +96,9 @@
- findrcfile(rcfile)
- char *rcfile;
- {
--  static char buf[256];
-+  static char buf[MAXPATHLEN];
-   char *rc, *p;
-+  struct cfv etcfile;
- 
-   if (rcfile)
-     {
-@@ -112,11 +115,22 @@
+diff -ruN screen-3.9.10.org/fileio.c screen-3.9.10/fileio.c
+--- screen-3.9.10.org/fileio.c	Thu May  3 16:43:24 2001
++++ screen-3.9.10/fileio.c	Sun Jun  2 01:23:37 2002
+@@ -112,7 +112,14 @@
+ 	  rc = SaveStr(p);
  	}
        else
- 	{
--	  debug("  ...nothing in $SCREENRC, defaulting $HOME/.screenrc\n");
--	  if (strlen(home) > sizeof(buf) - 12)
--	    Panic(0, "Rc: home too large");
--	  sprintf(buf, "%s/.screenrc", home);
--	  rc = SaveStr(buf);
-+	  debug("  ...nothing in $SCREENRC, defaulting $HOME/etc/screenrc\n");
-+	  etcfile.variable = "CONFIG_DIR";
-+          etcfile.home_dir = NULL;
-+          etcfile.home_scd = NULL; 
-+          etcfile.subname = "screenrc";
-+          etcfile.prefix = "."; 
-+          etcfile.suffix = ""; 
-+          etcfile.mode = M_REGULAR_FILE; 
-+          if ((usercfv (&etcfile)) == -1) {
-+	  	if (strlen(home) > sizeof(buf) - 12)
-+		    Panic(0, "Rc: home too large");
-+		sprintf(buf, "%s/.screenrc", home);
-+		rc = SaveStr(buf);
-+	  }   
-+	  else 
-+          	rc = SaveStr(etcfile.result); 
- 	}
+-	{
++	if (getenv("CONFIG_DIR")) {
++	  debug("  ...nothing in $SCREENRC, defaulting $HOME/$CONFIG_DIR/screen/screenrc\n");
++	  if ((strlen(home)+strlen(getenv("CONFIG_DIR"))+7) > sizeof(buf) - 12)
++	    Panic(0, "Rc: home too large");
++	  sprintf(buf, "%s/%s/screen/screenrc", home, getenv("CONFIG_DIR"));
++	  rc = SaveStr(buf);
++	}
++	else {
+ 	  debug("  ...nothing in $SCREENRC, defaulting $HOME/.screenrc\n");
+ 	  if (strlen(home) > sizeof(buf) - 12)
+ 	    Panic(0, "Rc: home too large");
+diff -ruN screen-3.9.10.org/screen.c screen-3.9.10/screen.c
+--- screen-3.9.10.org/screen.c	Sun Jun  2 01:08:28 2002
++++ screen-3.9.10/screen.c	Sun Jun  2 01:27:43 2002
+@@ -882,7 +882,10 @@
+ #endif /* DEBUG */
      }
-   return rc;
-diff -rNu screen-3.9.4-orig/userdir.c screen-3.9.4/userdir.c
---- screen-3.9.4-orig/userdir.c	Thu Jan  1 01:00:00 1970
-+++ screen-3.9.4/userdir.c	Wed Feb  2 00:18:04 2000
-@@ -0,0 +1,92 @@
-+#include "userdir.h"
-+    
-+static char *nonulhome = "";
-+
-+/******************************************************************************/
-+    
-+int getusercfv (char *variable, 
-+		    char *home_dir, 
-+		    char *user_dir, 
-+		    size_t stringsize)
-+	{
-+	struct stat st;
-+	char *d;
-+	
-+	bzero (user_dir, stringsize);
-+	if (variable == NULL || *variable == '\0') return (-1);
-+	if (home_dir == NULL) home_dir = nonulhome;
-+	d = getenv (variable);	
-+	if (d == NULL || *d == '\0') return (-1);
-+	if (*d == '/') 
-+	    {
-+	    strncpy (user_dir, d, stringsize-1);
-+	    }
-+	else
-+	    {
-+	    snprintf (user_dir, stringsize-1, "%s/%s", home_dir, d);
-+	    }
-+	    
-+	if (stat(user_dir,&st) != -1 && S_ISDIR(st.st_mode)) 
-+	    {
-+	    return (0);
-+	    }
-+	
-+	return (-1);
-+	}
-+
-+/******************************************************************************/
-+
-+int usercfv (struct cfv *CFV)
-+	{
-+	int gr;
-+	struct stat st;
-+	char *p;
-+	
-+	if (CFV->subname == NULL) CFV->subname = nonulhome;
-+	if (CFV->home_dir == NULL) CFV->home_dir = getenv ("HOME");
-+	if (CFV->home_dir == NULL) CFV->home_dir = CFV->home_scd;
-+	if (CFV->home_dir == NULL) return (-1);
-+	
-+	gr = getusercfv (CFV->variable, 
-+			CFV->home_dir, 
-+			CFV->result,
-+			MAXPATHLEN);
-+			
-+	if (gr != -1) 	/* have main directory */
-+	    {
-+	    if ((p = strrchr(CFV->result, '/')) && *(p+1) == '\0') 
-+		p = '\0';
-+	    snprintf ((rindex(CFV->result,'\0')), MAXPATHLEN-1, "/%s", CFV->subname);
-+    	    if (stat( CFV->result,&st) != -1 
-+		 && CFV->mode ? S_ISDIR(st.st_mode) : S_ISREG(st.st_mode)) /* have file or dir */
-+		return (1);
-+	    }
-+
-+	/* don't have main directory or a proper variable set */
-+	
-+	if (CFV->home_dir == NULL || *(CFV->home_dir) == '\0') return (-1);
-+	if (CFV->prefix == NULL && CFV->suffix == NULL) return (-1);
-+	snprintf (CFV->result, MAXPATHLEN-1, "%s/%s%s%s", 
-+		       CFV->home_dir, 
-+		       CFV->prefix? CFV->prefix:"",
-+		       CFV->subname,
-+		       CFV->suffix? CFV->suffix:"");
-+	if (stat(CFV->result,&st) != -1 
-+		 && CFV->mode ? S_ISDIR(st.st_mode) : S_ISREG(st.st_mode)) /* have file or dir */
-+		return (2);
-+	return (-1);
-+	}
-+	
-+/******************************************************************************/
-+	
-+FILE *fopencfv (struct cfv *CFV, const char *mode)
-+    {
-+    FILE *cfvfile = NULL;
-+    
-+    CFV->mode = M_REGULAR_FILE;
-+    if ((usercfv (CFV)) == -1) return (NULL);	
-+    cfvfile = fopen (CFV->result, mode);
-+    return (cfvfile);
-+    }
-+    
-+/******************************************************************************/
-\ No newline at end of file
-diff -rNu screen-3.9.4-orig/userdir.h screen-3.9.4/userdir.h
---- screen-3.9.4-orig/userdir.h	Thu Jan  1 01:00:00 1970
-+++ screen-3.9.4/userdir.h	Wed Feb  2 00:18:04 2000
-@@ -0,0 +1,35 @@
-+#ifndef USERDIR__H
-+#define USERDIR__H
-+
-+#include <unistd.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <sys/types.h>
-+#include <sys/stat.h>
-+#include <sys/param.h>
-+
-+#define	M_REGULAR_FILE	0
-+#define	M_DIRECTORY	1
-+
-+struct cfv {
-+	char result[MAXPATHLEN];	/* our result			*/
-+	char *variable;	/* name of an environment variable		*/
-+	char *home_dir;	/* home directory or NULL for autodetect	*/
-+	char *home_scd; /* directory if home_dir==NULL and no result	*/
-+	char *subname;	/* core name of a file/directory		*/
-+    	char *prefix;	/* prefix when using directly home_dir		*/
-+	char *suffix;	/* suffix when using directly home_dir		*/
-+	int mode;	/* expected: M_REGULAR_FILE or M_DIRECTORY	*/
-+	};
-+
-+int getusercfv (char *variable, 
-+		    char *home_dir, 
-+		    char *user_dir,
-+		    size_t stringsize);
-+
-+int usercfv (struct cfv *CFV);
-+
-+FILE *fopencfv (struct cfv *CFV, const char *mode);
-+
-+#endif
-\ No newline at end of file
+ 
+-  snprintf(bufferfile,sizeof(bufferfile),"%s/.screen-exchange", home);
++  if (getenv("CONFIG_DIR"))
++    snprintf(bufferfile,sizeof(bufferfile),"%s/%s/screen/exchange", home, getenv("CONFIG_DIR"));
++  else
++    snprintf(bufferfile,sizeof(bufferfile),"%s/.screen-exchange", home);
+   BufferFile = SaveStr(bufferfile);
+ #ifdef _MODE_T
+   oumask = umask(0);		/* well, unsigned never fails? jw. */
+@@ -904,7 +907,10 @@
+   if (multiattach)
+     {
+ # ifndef SOCKDIR
+-      sprintf(SockPath, "%s/.screen", multi_home);
++      if (getenv("CONFIG_DIR"))
++	sprintf(SockPath, "%s/%s/screen/sockets", multi_home, getenv("CONFIG_DIR"));
++      else
++        sprintf(SockPath, "%s/.screen", multi_home);
+       SockDir = SockPath;
+ # else
+       SockDir = SOCKDIR;
+@@ -917,7 +923,10 @@
+ #ifndef SOCKDIR
+       if (SockDir == 0)
+ 	{
+-	  sprintf(SockPath, "%s/.screen", home);
++	  if (getenv("CONFIG_DIR"))
++	    sprintf(SockPath, "%s/%s/screen/sockets", home, getenv("CONFIG_DIR"));
++	  else
++	    sprintf(SockPath, "%s/.screen", home);
+ 	  SockDir = SockPath;
+ 	}
+ #endif
