@@ -1,268 +1,6 @@
---- screen-3.9.9.orig/doc/screen.texinfo
-+++ screen-3.9.9/doc/screen.texinfo
-@@ -2912,7 +2912,7 @@
- 
- @noindent
- @kbd{>} sets the (second) mark and writes the contents of the paste buffer
--to the screen-exchange file (@file{/tmp/screen-exchange} per default)
-+to the screen-exchange file (@file{$HOME/.screen-exchange} per default)
- once copy-mode is finished.  @xref{Screen-Exchange}.@*
- This example demonstrates how to dump the
- whole scrollback buffer to that file: @*@kbd{C-a [ g SPACE G $ >}.
-@@ -3034,7 +3034,7 @@
- (none)@*
- Change the filename used for reading and writing with the paste buffer.
- If the @var{exchange-file} parameter is omitted, @code{screen} reverts
--to the default of @file{/tmp/screen-exchange}.  The following example
-+to the default of @file{$HOME/.screen-exchange}.  The following example
- will paste the system's password file into the screen window (using the 
- paste buffer, where a copy remains):
- 
---- screen-3.9.9.orig/doc/screen.1
-+++ screen-3.9.9/doc/screen.1
-@@ -1010,7 +1011,7 @@
- .PP
- Change the filename used for reading and writing with the paste buffer.
- If the optional argument to the \*Qbufferfile\*U command is omitted, 
--the default setting (\*Q/tmp/screen-exchange\*U) is reactivated.
-+the default setting (\*Q$HOME/.screen-exchange\*U) is reactivated.
- The following example will paste the system's password file into 
- the
- .I screen
-@@ -1275,7 +1276,7 @@
- .br
- .ti -2n
- \fB>\fP sets the (second) mark and writes the contents of the paste buffer to
--the screen-exchange file (/tmp/screen-exchange per default) once copy-mode is 
-+the screen-exchange file ($HOME/.screen-exchange per default) once copy-mode is 
- finished. 
- .br
- This example demonstrates how to dump the whole scrollback buffer 
-@@ -2805,7 +2806,7 @@
- file if no filename is given. This is thought of as a primitive means of communication between
- .I screen
- users on the same host. The filename can be set with the \fIbufferfile\fP
--command and defaults to \*Q/tmp/screen-exchange\*U.
-+command and defaults to \*Q$HOME/.screen-exchange\*U.
- .sp
- .ne 3
- .BR "writelock " [ on | "off\fR|\fBauto\fR]"
---- screen-3.9.9.orig/etc/etcscreenrc
-+++ screen-3.9.9/etc/etcscreenrc
-@@ -1,6 +1,6 @@
- #
- # This is an example for the global screenrc file.
--# You may want to install this file as /usr/local/etc/screenrc.
-+# You may want to install this file as /etc/screenrc.
- # Check config.h for the exact location.
- #
- # Flaws of termcap and standard settings are done here.
-@@ -92,3 +92,5 @@
- bind 'O' login off
- bind '}' history
- 
-+# On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
-+bindkey -k kb stuff "\177"
---- screen-3.9.9.orig/pty.c
-+++ screen-3.9.9/pty.c
-@@ -243,11 +243,15 @@
- {
-   register int f;
-   char *m, *ptsname();
--  int unlockpt __P((int)), grantpt __P((int));
-+  int unlockpt __P((int)), grantpt __P((int)), getpt __P((void));
-   sigret_t (*sigcld)__P(SIGPROTOARG);
- 
-+#ifdef HAVE_GETPT
-+  if ((f = getpt()) == -1)
-+#else
-   strcpy(PtyName, "/dev/ptmx");
-   if ((f = open(PtyName, O_RDWR | O_NOCTTY)) == -1)
-+#endif /* HAVE_GETPT */
-     return -1;
- 
-   /*
---- screen-3.9.9.orig/README
-+++ screen-3.9.9/README
-@@ -54,8 +54,8 @@
- 
-   C-a C-]	(paste)		Output copy buffer to current window's stdin.
- 
--  C-a <		(readbuf) 	Read the copy buffer from /tmp/screen-exchange.
--  C-a >		(writebuf)	Write the copy buffer to /tmp/screen-exchange.
-+  C-a <		(readbuf) 	Read the copy buffer from $HOME/.screen-exchange.
-+  C-a >		(writebuf)	Write the copy buffer to $HOME/.screen-exchange.
- 
-   C-a d		(detach)	Detach screen. All processes continue and may
- 				spool output to their pty's, but screen
---- screen-3.9.9.orig/configure.in
-+++ screen-3.9.9/configure.in
-@@ -28,6 +28,8 @@
- [echo "$1" 1>&AC_FD_MSG
- ])dnl
- 
-+AC_ARG_WITH(libpam, [  --with-libpam           use libpam for PAM support])
-+
- dnl
- dnl Extract version from patchlevel.h
- dnl
-@@ -626,7 +628,10 @@
- AC_MSG_ERROR(!!! no tgetent - no screen))))))
- 
- AC_TRY_RUN([
--main()
-+#include <stdlib.h>
-+#include <string.h>
-+#include <termcap.h>
-+int main(int argc, char *argv[])
- {
-  exit(strcmp(tgoto("%p1%d", 0, 1), "1") ? 0 : 1);
- }], AC_NOTE(- you use the termcap database),
-@@ -646,6 +651,7 @@
- if test -c /dev/ptmx ; then
- AC_TRY_LINK([],[ptsname(0);grantpt(0);unlockpt(0);],AC_DEFINE(HAVE_SVR4_PTYS))
- fi
-+AC_CHECK_FUNCS(getpt)
- 
- AC_CHECKING(for ptyranges)
- if test -d /dev/ptym ; then
-@@ -1080,6 +1086,30 @@
- )
- fi
- 
-+AC_SUBST(LIBPAM)
-+AC_SUBST(USEPAM)
-+if test "$with_libpam" = "yes"; then
-+	dnl AC_CHECK_LIB(pam, pam_start, AC_DEFINE(PAM) LIBPAM=-lpam)
-+	dnl the above doesn't work as there is no libpam.a (only .so)
-+	dnl XXX - libpam_misc is probably Linux-PAM specific
-+	LIBPAM="-lpam -lpam_misc -ldl"
-+	USEPAM="-DUSE_PAM"
-+	AC_DEFINE(PAM)
-+#	AC_CACHE_CHECK(whether pam_strerror needs two arguments,
-+#		ac_cv_pam_strerror_needs_two_args,
-+#		AC_TRY_COMPILE(
-+#				[#include <security/pam_appl.h>],
-+#				[ pam_handle_t *pamh; pam_strerror(pamh, PAM_SUCCESS);
-+#	],
-+#				ac_cv_pam_strerror_needs_two_args=yes,
-+#				ac_cv_pam_strerror_needs_two_args=no
-+#		)
-+#	)
-+#	if test "$ac_cv_pam_strerror_needs_two_args" = "yes"; then
-+#			AC_DEFINE(PAM_STRERROR_NEEDS_TWO_ARGS)
-+#	fi
-+fi
-+
- dnl AC_CHECK_HEADER(shadow.h, AC_DEFINE(SHADOWPW))
- AC_CHECKING(getspnam)
- AC_TRY_LINK([#include <shadow.h>], [getspnam("x");],AC_DEFINE(SHADOWPW))
-@@ -1178,7 +1208,7 @@
- 
- ETCSCREENRC="\"/usr/local/etc/screenrc\""
- if test -n "$prefix"; then
--ETCSCREENRC="\"$prefix/etc/screenrc\""
-+ETCSCREENRC="\"/etc/screenrc\""
- fi
- AC_MSG_CHECKING(for the global screenrc file)
- AC_ARG_WITH(sys-screenrc, [  --with-sys-screenrc=path  where to put the global screenrc file], [ ETCSCREENRC="\"${withval}\"" ])
---- screen-3.9.9.orig/ansi.c
-+++ screen-3.9.9/ansi.c
-@@ -2220,7 +2220,7 @@
- int n, ys, ye, bce;
- {
-   int i, cnt1, cnt2;
--  struct mline *tmp[256];
-+  struct mline tmp[256];
-   struct mline *ml;
- 
-   if (n == 0)
---- screen-3.9.9.orig/screen.c
-+++ screen-3.9.9/screen.c
-@@ -107,6 +107,7 @@
- FILE *dfp;
- #endif
- 
-+char bufferfile[MAXPATHLEN];
- 
- extern char *blank, *null, Term[], screenterm[], **environ, Termcap[];
- int force_vt = 1;
-@@ -265,7 +266,7 @@
- char *name;
- struct passwd *ppp;
- {
--  int n;
-+  int n, len;
- #ifdef SHADOWPW
-   struct spwd *sss = NULL;
-   static char *spw = NULL;
-@@ -279,13 +280,18 @@
- pw_try_again:
- #endif
-   n = 0;
-+  len = 13;
-   if (ppp->pw_passwd[0] == '#' && ppp->pw_passwd[1] == '#' &&
-       strcmp(ppp->pw_passwd + 2, ppp->pw_name) == 0)
-     n = 13;
--  for (; n < 13; n++)
-+  else if (!strncmp(ppp->pw_passwd, "$1$", 3)) {	/* MD5-based passwords */
-+    n = 13;
-+    len = 34;
-+  }
-+  for (; n < len; n++)
-     {
-       char c = ppp->pw_passwd[n];
--      if (!(c == '.' || c == '/' || c == '$' ||
-+      if (!(c == '.' || c == '/' || (len == 34 && c == '$') ||
- 	    (c >= '0' && c <= '9') || 
- 	    (c >= 'a' && c <= 'z') || 
- 	    (c >= 'A' && c <= 'Z'))) 
-@@ -426,9 +432,6 @@
-   logtstamp_string = SaveStr("-- %n:%t -- time-stamp -- %M/%d/%y %c:%s --\n");
-   hstatusstring = SaveStr("%h");
-   captionstring = SaveStr("%3n %t");
--#ifdef COPY_PASTE
--  BufferFile = SaveStr(DEFAULT_BUFFERFILE);
--#endif
-   ShellProg = NULL;
- #ifdef POW_DETACH
-   PowDetachString = 0;
-@@ -879,6 +882,8 @@
- #endif /* DEBUG */
-     }
- 
-+  snprintf(bufferfile,sizeof(bufferfile),"%s/.screen-exchange", home);
-+  BufferFile = SaveStr(bufferfile);
- #ifdef _MODE_T
-   oumask = umask(0);		/* well, unsigned never fails? jw. */
- #else
-@@ -939,8 +944,8 @@
- 	  SockDir = SOCKDIR;
- 	  if (lstat(SockDir, &st))
- 	    {
--	      n = (eff_uid == 0) ? 0755 :
--	          (eff_gid != real_gid) ? 0775 :
-+	      n = (eff_gid != real_gid) ? 0775 :
-+	          (eff_uid == 0) ? 0755 :
- #ifdef S_ISVTX
- 		  0777|S_ISVTX;
- #else
---- screen-3.9.9.orig/screen.h
-+++ screen-3.9.9/screen.h
-@@ -44,6 +44,7 @@
- #include "layer.h"
- #include "term.h"
- 
-+extern char bufferfile[MAXPATHLEN];
- 
- #ifdef DEBUG
- # define STATIC		/* a function that the debugger should see */
---- screen-3.9.9.orig/debian/pam.d-screen
-+++ screen-3.9.9/debian/pam.d-screen
-@@ -0,0 +1 @@
-+auth	required	pam_unix.so
---- screen-3.9.9.orig/Makefile.in
-+++ screen-3.9.9/Makefile.in
+diff -urN screen-3.9.10.org/Makefile.in screen-3.9.10/Makefile.in
+--- screen-3.9.10.org/Makefile.in	Tue Sep  4 16:26:21 2001
++++ screen-3.9.10/Makefile.in	Sat Sep 29 14:47:21 2001
 @@ -23,10 +23,10 @@
  ETCSCREENRC = `sed < config.h -n -e '/define ETCSCREENRC/s/^.*"\([^"]*\)"/\1/p'`
  
@@ -276,74 +14,44 @@
  
  CPP=@CPP@
  CPP_DEPEND=$(CC) -MM
---- screen-3.9.9.orig/config.h.in
-+++ screen-3.9.9/config.h.in
-@@ -582,6 +582,11 @@
-  */
- #undef HAVE_SVR4_PTYS
+diff -urN screen-3.9.10.org/README screen-3.9.10/README
+--- screen-3.9.10.org/README	Sat Apr 28 15:26:42 2001
++++ screen-3.9.10/README	Sat Sep 29 14:47:15 2001
+@@ -54,8 +54,8 @@
  
-+/*
-+ * define HAVE_GETPT if you have the getpt() function.
-+ */
-+#undef HAVE_GETPT
-+
- /* 
-  * define PTYRANGE0 and or PTYRANGE1 if you want to adapt screen
-  * to unusual environments. E.g. For SunOs the defaults are "qpr" and 
---- screen-3.9.9.orig/window.c
-+++ screen-3.9.9/window.c
-@@ -1524,6 +1524,12 @@
- 	FreePseudowin(w);
- 	return -1;
-       }
-+    if (ioctl(w->w_ptyfd, TIOCPKT, (char *)&flag))
-+      {
-+	Msg(errno, "TIOCPKT ioctl on parent");
-+	FreePseudowin(w);
-+	return -1;
-+      }
-   }
- #endif /* TIOCPKT */
-   
-@@ -1560,6 +1566,14 @@
-   evdeq(&pwin->p_writeev);
-   free((char *)pwin);
-   w->w_pwin = NULL;
-+#ifdef TIOCPKT
+   C-a C-]	(paste)		Output copy buffer to current window's stdin.
+ 
+-  C-a <		(readbuf) 	Read the copy buffer from /tmp/screen-exchange.
+-  C-a >		(writebuf)	Write the copy buffer to /tmp/screen-exchange.
++  C-a <		(readbuf) 	Read the copy buffer from $HOME/.screen-exchange.
++  C-a >		(writebuf)	Write the copy buffer to $HOME/.screen-exchange.
+ 
+   C-a d		(detach)	Detach screen. All processes continue and may
+ 				spool output to their pty's, but screen
+diff -urN screen-3.9.10.org/ansi.c.rej screen-3.9.10/ansi.c.rej
+--- screen-3.9.10.org/ansi.c.rej	Thu Jan  1 01:00:00 1970
++++ screen-3.9.10/ansi.c.rej	Sat Sep 29 14:47:21 2001
+@@ -0,0 +1,17 @@
++***************
++*** 2220,2226 ****
++  int n, ys, ye, bce;
 +  {
-+    int flag = 1;
-+
-+    if (ioctl(w->w_ptyfd, TIOCPKT, (char *)&flag))
-+      Msg(errno, "TIOCPKT reset on parent failed");
-+  }
-+#endif /* TIOCPKT */
- }
- 
- #endif /* PSEUDOS */
---- screen-3.9.9.orig/tty.sh
-+++ screen-3.9.9/tty.sh
-@@ -788,7 +788,7 @@
- {
- #if defined(POSIX) && !defined(ultrix)
-   setsid();		/* will break terminal affiliation */
--# if defined(BSD) && defined(TIOCSCTTY)
-+# if defined(BSD) && defined(TIOCSCTTY) && !defined(__GNU__)
-   ioctl(fd, TIOCSCTTY, (char *)0);
- # endif /* BSD && TIOCSCTTY */
- #else /* POSIX */
---- screen-3.9.9.orig/process.c
-+++ screen-3.9.9/process.c
-@@ -2019,7 +2019,7 @@
- #ifdef COPY_PASTE
-     case RC_BUFFERFILE:
-       if (*args == 0)
--	BufferFile = SaveStr(DEFAULT_BUFFERFILE);
-+	BufferFile = SaveStr(bufferfile);
-       else if (ParseSaveStr(act, &BufferFile))
-         break;
-       if (msgok)
---- screen-3.9.9.orig/attacher.c
-+++ screen-3.9.9/attacher.c
++    int i, cnt1, cnt2;
++-   struct mline *tmp[256];
++    struct mline *ml;
++  
++    if (n == 0)
++--- 2220,2226 ----
++  int n, ys, ye, bce;
++  {
++    int i, cnt1, cnt2;
+++   struct mline tmp[256];
++    struct mline *ml;
++  
++    if (n == 0)
+diff -urN screen-3.9.10.org/attacher.c screen-3.9.10/attacher.c
+--- screen-3.9.10.org/attacher.c	Sat Apr 28 15:26:42 2001
++++ screen-3.9.10/attacher.c	Sat Sep 29 14:47:22 2001
 @@ -33,6 +33,10 @@
  #include "screen.h"
  #include "extern.h"
@@ -474,3 +182,320 @@
        debug("screen_builtin_lck: NO!!!!!\n");
      }
    debug("password ok.\n");
+diff -urN screen-3.9.10.org/config.h.in screen-3.9.10/config.h.in
+--- screen-3.9.10.org/config.h.in	Tue Sep  4 16:26:21 2001
++++ screen-3.9.10/config.h.in	Sat Sep 29 14:47:21 2001
+@@ -582,6 +582,11 @@
+  */
+ #undef HAVE_SVR4_PTYS
+ 
++/*
++ * define HAVE_GETPT if you have the getpt() function.
++ */
++#undef HAVE_GETPT
++
+ /* 
+  * define PTYRANGE0 and or PTYRANGE1 if you want to adapt screen
+  * to unusual environments. E.g. For SunOs the defaults are "qpr" and 
+diff -urN screen-3.9.10.org/configure.in screen-3.9.10/configure.in
+--- screen-3.9.10.org/configure.in	Thu May 17 19:00:19 2001
++++ screen-3.9.10/configure.in	Sat Sep 29 14:47:15 2001
+@@ -28,6 +28,8 @@
+ [echo "$1" 1>&AC_FD_MSG
+ ])dnl
+ 
++AC_ARG_WITH(libpam, [  --with-libpam           use libpam for PAM support])
++
+ dnl
+ dnl Extract version from patchlevel.h
+ dnl
+@@ -626,7 +628,10 @@
+ AC_MSG_ERROR(!!! no tgetent - no screen))))))
+ 
+ AC_TRY_RUN([
+-main()
++#include <stdlib.h>
++#include <string.h>
++#include <termcap.h>
++int main(int argc, char *argv[])
+ {
+  exit(strcmp(tgoto("%p1%d", 0, 1), "1") ? 0 : 1);
+ }], AC_NOTE(- you use the termcap database),
+@@ -646,6 +651,7 @@
+ if test -c /dev/ptmx ; then
+ AC_TRY_LINK([],[ptsname(0);grantpt(0);unlockpt(0);],AC_DEFINE(HAVE_SVR4_PTYS))
+ fi
++AC_CHECK_FUNCS(getpt)
+ 
+ AC_CHECKING(for ptyranges)
+ if test -d /dev/ptym ; then
+@@ -1080,6 +1086,30 @@
+ )
+ fi
+ 
++AC_SUBST(LIBPAM)
++AC_SUBST(USEPAM)
++if test "$with_libpam" = "yes"; then
++	dnl AC_CHECK_LIB(pam, pam_start, AC_DEFINE(PAM) LIBPAM=-lpam)
++	dnl the above doesn't work as there is no libpam.a (only .so)
++	dnl XXX - libpam_misc is probably Linux-PAM specific
++	LIBPAM="-lpam -lpam_misc -ldl"
++	USEPAM="-DUSE_PAM"
++	AC_DEFINE(PAM)
++#	AC_CACHE_CHECK(whether pam_strerror needs two arguments,
++#		ac_cv_pam_strerror_needs_two_args,
++#		AC_TRY_COMPILE(
++#				[#include <security/pam_appl.h>],
++#				[ pam_handle_t *pamh; pam_strerror(pamh, PAM_SUCCESS);
++#	],
++#				ac_cv_pam_strerror_needs_two_args=yes,
++#				ac_cv_pam_strerror_needs_two_args=no
++#		)
++#	)
++#	if test "$ac_cv_pam_strerror_needs_two_args" = "yes"; then
++#			AC_DEFINE(PAM_STRERROR_NEEDS_TWO_ARGS)
++#	fi
++fi
++
+ dnl AC_CHECK_HEADER(shadow.h, AC_DEFINE(SHADOWPW))
+ AC_CHECKING(getspnam)
+ AC_TRY_LINK([#include <shadow.h>], [getspnam("x");],AC_DEFINE(SHADOWPW))
+@@ -1178,7 +1208,7 @@
+ 
+ ETCSCREENRC="\"/usr/local/etc/screenrc\""
+ if test -n "$prefix"; then
+-ETCSCREENRC="\"$prefix/etc/screenrc\""
++ETCSCREENRC="\"/etc/screenrc\""
+ fi
+ AC_MSG_CHECKING(for the global screenrc file)
+ AC_ARG_WITH(sys-screenrc, [  --with-sys-screenrc=path  where to put the global screenrc file], [ ETCSCREENRC="\"${withval}\"" ])
+diff -urN screen-3.9.10.org/debian/pam.d-screen screen-3.9.10/debian/pam.d-screen
+--- screen-3.9.10.org/debian/pam.d-screen	Thu Jan  1 01:00:00 1970
++++ screen-3.9.10/debian/pam.d-screen	Sat Sep 29 14:47:21 2001
+@@ -0,0 +1 @@
++auth	required	pam_unix.so
+diff -urN screen-3.9.10.org/doc/screen.1 screen-3.9.10/doc/screen.1
+--- screen-3.9.10.org/doc/screen.1	Fri May 25 16:39:19 2001
++++ screen-3.9.10/doc/screen.1	Sat Sep 29 14:47:15 2001
+@@ -1010,7 +1010,7 @@
+ .PP
+ Change the filename used for reading and writing with the paste buffer.
+ If the optional argument to the \*Qbufferfile\*U command is omitted, 
+-the default setting (\*Q/tmp/screen-exchange\*U) is reactivated.
++the default setting (\*Q$HOME/.screen-exchange\*U) is reactivated.
+ The following example will paste the system's password file into 
+ the
+ .I screen
+@@ -1275,7 +1275,7 @@
+ .br
+ .ti -2n
+ \fB>\fP sets the (second) mark and writes the contents of the paste buffer to
+-the screen-exchange file (/tmp/screen-exchange per default) once copy-mode is 
++the screen-exchange file ($HOME/.screen-exchange per default) once copy-mode is 
+ finished. 
+ .br
+ This example demonstrates how to dump the whole scrollback buffer 
+@@ -2805,7 +2805,7 @@
+ file if no filename is given. This is thought of as a primitive means of communication between
+ .I screen
+ users on the same host. The filename can be set with the \fIbufferfile\fP
+-command and defaults to \*Q/tmp/screen-exchange\*U.
++command and defaults to \*Q$HOME/.screen-exchange\*U.
+ .sp
+ .ne 3
+ .BR "writelock " [ on | "off\fR|\fBauto\fR]"
+diff -urN screen-3.9.10.org/doc/screen.texinfo screen-3.9.10/doc/screen.texinfo
+--- screen-3.9.10.org/doc/screen.texinfo	Fri May 25 16:40:02 2001
++++ screen-3.9.10/doc/screen.texinfo	Sat Sep 29 14:47:15 2001
+@@ -2912,7 +2912,7 @@
+ 
+ @noindent
+ @kbd{>} sets the (second) mark and writes the contents of the paste buffer
+-to the screen-exchange file (@file{/tmp/screen-exchange} per default)
++to the screen-exchange file (@file{$HOME/.screen-exchange} per default)
+ once copy-mode is finished.  @xref{Screen-Exchange}.@*
+ This example demonstrates how to dump the
+ whole scrollback buffer to that file: @*@kbd{C-a [ g SPACE G $ >}.
+@@ -3034,7 +3034,7 @@
+ (none)@*
+ Change the filename used for reading and writing with the paste buffer.
+ If the @var{exchange-file} parameter is omitted, @code{screen} reverts
+-to the default of @file{/tmp/screen-exchange}.  The following example
++to the default of @file{$HOME/.screen-exchange}.  The following example
+ will paste the system's password file into the screen window (using the 
+ paste buffer, where a copy remains):
+ 
+diff -urN screen-3.9.10.org/etc/etcscreenrc screen-3.9.10/etc/etcscreenrc
+--- screen-3.9.10.org/etc/etcscreenrc	Sat Apr 28 17:25:34 2001
++++ screen-3.9.10/etc/etcscreenrc	Sat Sep 29 14:47:15 2001
+@@ -1,6 +1,6 @@
+ #
+ # This is an example for the global screenrc file.
+-# You may want to install this file as /usr/local/etc/screenrc.
++# You may want to install this file as /etc/screenrc.
+ # Check config.h for the exact location.
+ #
+ # Flaws of termcap and standard settings are done here.
+@@ -92,3 +92,5 @@
+ bind 'O' login off
+ bind '}' history
+ 
++# On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
++bindkey -k kb stuff "\177"
+diff -urN screen-3.9.10.org/process.c screen-3.9.10/process.c
+--- screen-3.9.10.org/process.c	Tue Sep  4 16:16:08 2001
++++ screen-3.9.10/process.c	Sat Sep 29 14:47:22 2001
+@@ -2019,7 +2019,7 @@
+ #ifdef COPY_PASTE
+     case RC_BUFFERFILE:
+       if (*args == 0)
+-	BufferFile = SaveStr(DEFAULT_BUFFERFILE);
++	BufferFile = SaveStr(bufferfile);
+       else if (ParseSaveStr(act, &BufferFile))
+         break;
+       if (msgok)
+diff -urN screen-3.9.10.org/pty.c screen-3.9.10/pty.c
+--- screen-3.9.10.org/pty.c	Sat Apr 28 15:26:43 2001
++++ screen-3.9.10/pty.c	Sat Sep 29 14:47:15 2001
+@@ -243,11 +243,15 @@
+ {
+   register int f;
+   char *m, *ptsname();
+-  int unlockpt __P((int)), grantpt __P((int));
++  int unlockpt __P((int)), grantpt __P((int)), getpt __P((void));
+   sigret_t (*sigcld)__P(SIGPROTOARG);
+ 
++#ifdef HAVE_GETPT
++  if ((f = getpt()) == -1)
++#else
+   strcpy(PtyName, "/dev/ptmx");
+   if ((f = open(PtyName, O_RDWR | O_NOCTTY)) == -1)
++#endif /* HAVE_GETPT */
+     return -1;
+ 
+   /*
+diff -urN screen-3.9.10.org/screen.c screen-3.9.10/screen.c
+--- screen-3.9.10.org/screen.c	Tue Sep  4 15:14:51 2001
++++ screen-3.9.10/screen.c	Sat Sep 29 14:47:21 2001
+@@ -107,6 +107,7 @@
+ FILE *dfp;
+ #endif
+ 
++char bufferfile[MAXPATHLEN];
+ 
+ extern char *blank, *null, Term[], screenterm[], **environ, Termcap[];
+ int force_vt = 1;
+@@ -265,7 +266,7 @@
+ char *name;
+ struct passwd *ppp;
+ {
+-  int n;
++  int n, len;
+ #ifdef SHADOWPW
+   struct spwd *sss = NULL;
+   static char *spw = NULL;
+@@ -279,13 +280,18 @@
+ pw_try_again:
+ #endif
+   n = 0;
++  len = 13;
+   if (ppp->pw_passwd[0] == '#' && ppp->pw_passwd[1] == '#' &&
+       strcmp(ppp->pw_passwd + 2, ppp->pw_name) == 0)
+     n = 13;
+-  for (; n < 13; n++)
++  else if (!strncmp(ppp->pw_passwd, "$1$", 3)) {	/* MD5-based passwords */
++    n = 13;
++    len = 34;
++  }
++  for (; n < len; n++)
+     {
+       char c = ppp->pw_passwd[n];
+-      if (!(c == '.' || c == '/' || c == '$' ||
++      if (!(c == '.' || c == '/' || (len == 34 && c == '$') ||
+ 	    (c >= '0' && c <= '9') || 
+ 	    (c >= 'a' && c <= 'z') || 
+ 	    (c >= 'A' && c <= 'Z'))) 
+@@ -426,9 +432,6 @@
+   logtstamp_string = SaveStr("-- %n:%t -- time-stamp -- %M/%d/%y %c:%s --\n");
+   hstatusstring = SaveStr("%h");
+   captionstring = SaveStr("%3n %t");
+-#ifdef COPY_PASTE
+-  BufferFile = SaveStr(DEFAULT_BUFFERFILE);
+-#endif
+   ShellProg = NULL;
+ #ifdef POW_DETACH
+   PowDetachString = 0;
+@@ -879,6 +882,8 @@
+ #endif /* DEBUG */
+     }
+ 
++  snprintf(bufferfile,sizeof(bufferfile),"%s/.screen-exchange", home);
++  BufferFile = SaveStr(bufferfile);
+ #ifdef _MODE_T
+   oumask = umask(0);		/* well, unsigned never fails? jw. */
+ #else
+@@ -939,8 +944,8 @@
+ 	  SockDir = SOCKDIR;
+ 	  if (lstat(SockDir, &st))
+ 	    {
+-	      n = (eff_uid == 0) ? 0755 :
+-	          (eff_gid != real_gid) ? 0775 :
++	      n = (eff_gid != real_gid) ? 0775 :
++	          (eff_uid == 0) ? 0755 :
+ #ifdef S_ISVTX
+ 		  0777|S_ISVTX;
+ #else
+diff -urN screen-3.9.10.org/screen.h screen-3.9.10/screen.h
+--- screen-3.9.10.org/screen.h	Sat Apr 28 15:26:43 2001
++++ screen-3.9.10/screen.h	Sat Sep 29 14:47:21 2001
+@@ -44,6 +44,7 @@
+ #include "layer.h"
+ #include "term.h"
+ 
++extern char bufferfile[MAXPATHLEN];
+ 
+ #ifdef DEBUG
+ # define STATIC		/* a function that the debugger should see */
+diff -urN screen-3.9.10.org/tty.sh screen-3.9.10/tty.sh
+--- screen-3.9.10.org/tty.sh	Sat Apr 28 15:26:43 2001
++++ screen-3.9.10/tty.sh	Sat Sep 29 14:47:21 2001
+@@ -788,7 +788,7 @@
+ {
+ #if defined(POSIX) && !defined(ultrix)
+   setsid();		/* will break terminal affiliation */
+-# if defined(BSD) && defined(TIOCSCTTY)
++# if defined(BSD) && defined(TIOCSCTTY) && !defined(__GNU__)
+   ioctl(fd, TIOCSCTTY, (char *)0);
+ # endif /* BSD && TIOCSCTTY */
+ #else /* POSIX */
+diff -urN screen-3.9.10.org/window.c screen-3.9.10/window.c
+--- screen-3.9.10.org/window.c	Sat Apr 28 15:26:43 2001
++++ screen-3.9.10/window.c	Sat Sep 29 14:47:21 2001
+@@ -1524,6 +1524,12 @@
+ 	FreePseudowin(w);
+ 	return -1;
+       }
++    if (ioctl(w->w_ptyfd, TIOCPKT, (char *)&flag))
++      {
++	Msg(errno, "TIOCPKT ioctl on parent");
++	FreePseudowin(w);
++	return -1;
++      }
+   }
+ #endif /* TIOCPKT */
+   
+@@ -1560,6 +1566,14 @@
+   evdeq(&pwin->p_writeev);
+   free((char *)pwin);
+   w->w_pwin = NULL;
++#ifdef TIOCPKT
++  {
++    int flag = 1;
++
++    if (ioctl(w->w_ptyfd, TIOCPKT, (char *)&flag))
++      Msg(errno, "TIOCPKT reset on parent failed");
++  }
++#endif /* TIOCPKT */
+ }
+ 
+ #endif /* PSEUDOS */
