@@ -4,8 +4,8 @@ Summary(fr):	screen - gère plusieurs sessions sur un seul terminal
 Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
-Version:	3.9.10
-Release:	6
+Version:	3.9.11
+Release:	0.9
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -13,15 +13,15 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.pamd
 Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
-Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-manual.patch
-Patch4:		%{name}-ia64.patch
-Patch5:		%{name}-info.patch
-Patch6:		%{name}-debian.patch
-Patch7:		%{name}-nolibtermcap.patch
-Patch8:		%{name}-no_hardcoded_term_sequences.patch
-Patch9:		%{name}-home_etc.patch
-Patch10:	%{name}-acfix.patch
+Patch2:		%{name}-manual.patch
+Patch3:		%{name}-ia64.patch
+Patch4:		%{name}-info.patch
+#Patch5:		%{name}-debian.patch
+Patch5:		%{name}-debian_fixed.patch
+Patch6:		%{name}-nolibtermcap.patch
+Patch7:		%{name}-no_hardcoded_term_sequences.patch
+Patch8:		%{name}-home_etc.patch
+Patch9:		%{name}-acfix.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRequires:	texinfo
@@ -65,21 +65,21 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %setup -q
 %patch0 -p0
 %patch1 -p0
-%patch2 -p1
+%patch2 -p0
 %patch3 -p0
-%patch4 -p0
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
+#%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 %build
 %{__autoconf}
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
 	--with-libpam \
+	--enable-colors256 \
 	--disable-socket-dir
 
 %{__make} CFLAGS="%{rpmcflags}"
