@@ -8,8 +8,8 @@ Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминал
 Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
-Version:	3.9.13
-Release:	3
+Version:	3.9.15
+Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -89,7 +89,7 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
@@ -104,12 +104,18 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 %patch9 -p1
 
 %build
+%{__aclocal}
 %{__autoconf}
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
 	--enable-pam \
 	--enable-colors256 \
 	--disable-socket-dir
+
+for file in *.dist; do
+filenew=$(echo "$file" | sed -e 's#\.dist##g')
+	cp -f $file $filenew
+done
 
 %{__make} CFLAGS="%{rpmcflags}"
 
