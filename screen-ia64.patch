@@ -1,0 +1,12 @@
+--- screen-3.9.5/configure.in.foo	Sat May  6 17:41:17 2000
++++ screen-3.9.5/configure.in	Sat May  6 17:41:32 2000
+@@ -603,6 +603,9 @@
+ AC_MSG_ERROR(!!! no tgetent - no screen)))))
+ 
+ AC_TRY_RUN([
++
++extern char *tgoto(char *,int,int);
++
+ main()
+ {
+  exit(strcmp(tgoto("%p1%d", 0, 1), "1") ? 0 : 1);
