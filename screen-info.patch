@@ -1,0 +1,19 @@
+diff -Nru screen-3.7.6/doc/screen.texinfo screen-3.7.6.new/doc/screen.texinfo
+--- screen-3.7.6/doc/screen.texinfo	Wed Nov 25 17:28:12 1998
++++ screen-3.7.6.new/doc/screen.texinfo	Wed Jan  6 18:10:31 1999
+@@ -67,6 +67,15 @@
+ by the Foundation.
+ @end titlepage
+ 
++@ifinfo
++@format
++@dircategory Miscellaneous:
++@direntry
++* screen: (screen)			Terminal multiplexer
++@end direntry
++@end format
++@end ifinfo
++
+ @node Top, Overview, (dir), (dir)
+ 
+ @ifinfo
