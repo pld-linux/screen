@@ -1,6 +1,6 @@
---- screen-4.0.0/doc/screen.texinfo.orig	2003-08-27 16:36:37.000000000 +0200
-+++ screen-4.0.0/doc/screen.texinfo	2003-09-15 08:31:08.000000000 +0200
-@@ -3,15 +3,19 @@
+--- screen-4.0.2/doc/screen.texinfo.orig	2003-12-05 14:51:46.000000000 +0100
++++ screen-4.0.2/doc/screen.texinfo	2003-12-06 21:29:32.264574064 +0100
+@@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
  @settitle Screen User's Manual
@@ -8,21 +8,16 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.0.0
+ @set version 4.0.2
  
-+@ifinfo
-+@format
 +@dircategory Shell utilities:
  @direntry
 -* Screen: (screen).             Full-screen window manager.
-+* Screen: (screen).                   Full-screen window manager
++* Screen: (screen).			Full-screen window manager
  @end direntry
-+@end format
-+@end ifinfo
  
  @c For examples, use a literal escape in info.
- @ifinfo
-@@ -176,7 +180,7 @@
+@@ -176,7 +176,7 @@
  variable) who will use it to create the new window.  The above example would 
  start the @code{emacs} editor (editing @file{prog.c}) and switch to its window.
  
@@ -31,7 +26,7 @@
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -447,7 +451,7 @@
+@@ -447,7 +447,7 @@
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -40,7 +35,7 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -968,7 +972,7 @@
+@@ -968,7 +968,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -49,7 +44,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -997,7 +1001,7 @@
+@@ -997,7 +997,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -58,7 +53,7 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1561,13 +1565,12 @@
+@@ -1561,13 +1561,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -78,7 +73,7 @@
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -1900,7 +1903,7 @@
+@@ -1900,7 +1899,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -87,7 +82,7 @@
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity in a window
  * Windows::			List the active windows
-@@ -2109,7 +2112,7 @@
+@@ -2109,7 +2108,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -96,7 +91,7 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -4962,22 +4965,19 @@
+@@ -4962,22 +4961,19 @@
  global initialization files.
  
  @item @code{$SYSSCREENRC}
@@ -122,7 +117,7 @@
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
  
-@@ -4995,7 +4995,7 @@
+@@ -4995,7 +4991,7 @@
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -131,7 +126,7 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5100,10 +5100,10 @@
+@@ -5100,10 +5096,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -144,7 +139,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5184,8 +5184,7 @@
+@@ -5184,8 +5180,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
