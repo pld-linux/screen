@@ -1,6 +1,6 @@
-diff -Nru screen-3.9.4/Makefile.in screen-3.9.4.new/Makefile.in
---- screen-3.9.4/Makefile.in	Wed Aug 11 22:19:51 1999
-+++ screen-3.9.4.new/Makefile.in	Sun Dec  5 13:34:41 1999
+diff -Nru screen-3.9.5/Makefile.in screen-3.9.5.new/Makefile.in
+--- screen-3.9.5/Makefile.in	Fri Jun 23 00:25:37 2000
++++ screen-3.9.5.new/Makefile.in	Fri Jun 23 00:24:23 2000
 @@ -71,14 +71,8 @@
  	$(CC) -c -I. -I$(srcdir) $(M_CFLAGS) $(DEFS) $(OPTIONS) $(CFLAGS) $<
  
@@ -27,20 +27,9 @@ diff -Nru screen-3.9.4/Makefile.in screen-3.9.4.new/Makefile.in
  	cd doc ; $(MAKE) installdirs
  
  uninstall: .version
-diff -Nru screen-3.9.4/doc/Makefile.in screen-3.9.4.new/doc/Makefile.in
---- screen-3.9.4/doc/Makefile.in	Wed Aug 11 22:19:54 1999
-+++ screen-3.9.4.new/doc/Makefile.in	Sun Dec  5 13:32:42 1999
-@@ -4,8 +4,8 @@
- VPATH = @srcdir@
- 
- prefix = /usr/local
--mandir = $(prefix)/man
--infodir = $(prefix)/info
-+mandir = @mandir@
-+infodir = @infodir@
- 
- INSTALL = @INSTALL@
- INSTALL_DATA = @INSTALL_DATA@
+diff -Nru screen-3.9.5/doc/Makefile.in screen-3.9.5.new/doc/Makefile.in
+--- screen-3.9.5/doc/Makefile.in	Fri Jun 23 00:25:37 2000
++++ screen-3.9.5.new/doc/Makefile.in	Fri Jun 23 00:24:23 2000
 @@ -23,11 +23,11 @@
  	$(MAKEINFO) $(srcdir)/screen.texinfo -o screen.info
  
