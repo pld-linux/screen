@@ -1,0 +1,66 @@
+diff -Nru screen-3.9.4/Makefile.in screen-3.9.4.new/Makefile.in
+--- screen-3.9.4/Makefile.in	Wed Aug 11 22:19:51 1999
++++ screen-3.9.4.new/Makefile.in	Sun Dec  5 13:34:41 1999
+@@ -71,14 +71,8 @@
+ 	$(CC) -c -I. -I$(srcdir) $(M_CFLAGS) $(DEFS) $(OPTIONS) $(CFLAGS) $<
+ 
+ install_bin: .version screen
+-	-if [ -f $(bindir)/$(SCREEN) ] && [ ! -f $(bindir)/$(SCREEN).old ]; \
+-		then mv $(bindir)/$(SCREEN) $(bindir)/$(SCREEN).old; fi
+-	$(INSTALL_PROGRAM) screen $(bindir)/$(SCREEN)
+-	-chown root $(bindir)/$(SCREEN) && chmod 4755 $(bindir)/$(SCREEN)
+-# This doesn't work if $(bindir)/screen is a symlink
+-	-if [ -f $(bindir)/screen ] && [ ! -f $(bindir)/screen.old ]; then mv $(bindir)/screen $(bindir)/screen.old; fi
+-	rm -f $(bindir)/screen
+-	ln -s $(SCREEN) $(bindir)/screen
++	$(INSTALL_PROGRAM) screen $(DESTDIR)$(bindir)/$(SCREEN)
++	-chown root $(bindir)/$(SCREEN) && chmod 4755 $(DESTDIR)$(bindir)/$(SCREEN)
+ 
+ ###############################################################################
+ install: installdirs install_bin
+@@ -94,7 +88,7 @@
+ 
+ installdirs:
+ # Path leading to ETCSCREENRC and Socketdirectory not checked.
+-	$(srcdir)/etc/mkinstalldirs $(bindir)
++	$(srcdir)/etc/mkinstalldirs $(DESTDIR)$(bindir)
+ 	cd doc ; $(MAKE) installdirs
+ 
+ uninstall: .version
+diff -Nru screen-3.9.4/doc/Makefile.in screen-3.9.4.new/doc/Makefile.in
+--- screen-3.9.4/doc/Makefile.in	Wed Aug 11 22:19:54 1999
++++ screen-3.9.4.new/doc/Makefile.in	Sun Dec  5 13:32:42 1999
+@@ -4,8 +4,8 @@
+ VPATH = @srcdir@
+ 
+ prefix = /usr/local
+-mandir = $(prefix)/man
+-infodir = $(prefix)/info
++mandir = @mandir@
++infodir = @infodir@
+ 
+ INSTALL = @INSTALL@
+ INSTALL_DATA = @INSTALL_DATA@
+@@ -23,11 +23,11 @@
+ 	$(MAKEINFO) $(srcdir)/screen.texinfo -o screen.info
+ 
+ install: installdirs
+-	$(INSTALL_DATA) $(srcdir)/screen.1 $(mandir)/man1/screen.1
++	$(INSTALL_DATA) $(srcdir)/screen.1 $(DESTDIR)$(mandir)/man1/screen.1
+ 	-$(MAKE) screen.info
+ 	-if test -f screen.info; then d=.; else d=$(srcdir); fi; \
+ 	if test -f $$d/screen.info; then \
+-	for f in $$d/screen.info*; do $(INSTALL_DATA) $$f $(infodir);done; \
++	for f in $$d/screen.info*; do $(INSTALL_DATA) $$f $(DESTDIR)$(infodir);done; \
+ 	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
+ 	  install-info --info-dir=$(infodir) $$d/screen.info; \
+ 	else true; fi; \
+@@ -38,7 +38,7 @@
+ 	rm -f $(infodir)/screen.info*
+ 
+ installdirs:
+-	$(srcdir)/../etc/mkinstalldirs $(mandir)/man1 $(infodir)
++	$(srcdir)/../etc/mkinstalldirs $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(infodir)
+ 
+ mostlyclean:
+ 	-rm -f *.cp *.cps *.fn *.fns *.ky *.kys *.pg *.tp *.vr
