@@ -1,0 +1,11 @@
+--- screen-3.7.6/os.h.compat21	Mon Dec 28 14:46:04 1998
++++ screen-3.7.6/os.h	Mon Dec 28 14:46:35 1998
+@@ -236,7 +236,7 @@
+ #  define pututline	pututxline
+ #  define setutent	setutxent
+ #  define endutent	endutxent
+-#  define ut_time	ut_xtime
++#  define ut_time	ut_tv.tv_sec
+ # else /* SVR4 */
+ #  include <utmp.h>
+ # endif /* SVR4 */

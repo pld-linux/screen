@@ -1,0 +1,11 @@
+--- screen-3.9.4/config.h.in.notmp	Wed Aug 18 11:21:05 1999
++++ screen-3.9.4/config.h.in	Wed Aug 18 11:21:13 1999
+@@ -51,8 +51,6 @@
+  * Screen will name the subdirectories "S-$USER" (e.g /tmp/S-davison).
+  */
+ 
+-#define SOCKDIR (eff_uid ? "/tmp/uscreens" : "/tmp/screens")
+-
+ /*
+  * Screen sources two startup files. First a global file with a path
+  * specified here, second your local $HOME/.screenrc
