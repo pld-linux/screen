@@ -8,8 +8,6 @@ Version:	3.9.10
 Release:	5
 License:	GPL
 Group:		Applications/Terminal
-Group(de):	Applikationen/Terminal
-Group(pl):	Aplikacje/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.pamd
