@@ -24,13 +24,10 @@ Patch5:		%{name}-debian_fixed.patch
 Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
-Patch9:		%{name}-acfix.patch
-Patch10:	%{name}-no-libs.patch
-Patch11:	%{name}-setreuid-bug.patch
+Patch9:		%{name}-no-libs.patch
 BuildRequires:	autoconf
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
-BuildRequires:	readline-devel >= 4.3
 BuildRequires:	texinfo
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -104,9 +101,7 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 # $TERM before running screen instance, and others for TERM=screen!)
 ###%patch7 -p1
 #%patch8 -p1
-#%patch9 -p1
-%patch10 -p1
-#%patch11 -p1
+%patch9 -p1
 
 %build
 %{__autoconf}
