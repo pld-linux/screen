@@ -70,7 +70,7 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 LDFLAGS="-s"; export LDFLAGS
 %configure
 
-make CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
+%{__make} CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
