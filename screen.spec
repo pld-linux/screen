@@ -5,12 +5,13 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.8
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
 Group(pl):	Aplikacje/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
+Source1:	screen.1.pl
 Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-DESTDIR.patch
@@ -73,13 +74,15 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/skel,%{_bindir},%{_mandir}/man1,%{_infodir}}
+install -d $RPM_BUILD_ROOT/{etc/skel,%{_bindir},%{_mandir}/{,pl}/man1,%{_infodir}}
 
 install screen $RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man1/screen.1
 
 gzip -9nf NEWS README FAQ ChangeLog
 
