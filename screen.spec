@@ -64,8 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/skel,usr/{bin,man/man1,info}}
 
 install -s screen $RPM_BUILD_ROOT/usr/bin
-install doc/screen.1 $RPM_BUILD_ROOT/usr/man/man1
-install doc/screen.info* $RPM_BUILD_ROOT/usr/info
+install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc $RPM_BUILD_ROOT/etc/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
@@ -73,11 +73,11 @@ gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*} \
 	NEWS README FAQ ChangeLog
 
 %post
-/sbin/install-info /usr/info/screen.info.gz /etc/info-dir
+/sbin/install-info %{_infodir}/screen.info.gz /etc/info-dir
 
 %preun
 if [ "$1" = "0" ]; then
-	/sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir
+	/sbin/install-info --delete %{_infodir}/screen.info.gz /etc/info-dir
 fi
 
 %clean
@@ -88,9 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 
 %attr(755,root,root) /usr/bin/screen
-/usr/man/man1/*
+%{_mandir}/man1/*
 
-/usr/info/screen.info*
+%{_infodir}/screen.info*
 
 %config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 
