@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.8
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
@@ -68,21 +68,20 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc
 
-%{__make} CFLAGS="$RPM_OPT_FLAGS" 
+%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" 
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/skel,%{_bindir},%{_mandir}/man1,%{_infodir}}
 
-install -s screen $RPM_BUILD_ROOT%{_bindir}
+install screen $RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 install etc/screenrc $RPM_BUILD_ROOT/etc/skel/.screenrc
 
-gzip -9nf $RPM_BUILD_ROOT/{%{_infodir}/screen.info*,%{_mandir}/man1/*} \
-	NEWS README FAQ ChangeLog
+gzip -9nf NEWS README FAQ ChangeLog
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
