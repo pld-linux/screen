@@ -9,7 +9,7 @@ Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
 Version:	4.0.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
