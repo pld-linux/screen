@@ -10,9 +10,10 @@ Copyright:	GPL
 Group:		Utilities/Terminal
 Group(pl):	U¿ytki/Terminal
 Source:		ftp://ftp.gnu.org/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:		%{name}.patch
-Patch1:		%{name}-linux.patch
-Patch2:		%{name}-utmp.patch
+Patch0:		screen.patch
+Patch1:		screen-linux.patch
+Patch2:		screen-utmp.patch
+Patch3:		screen-info.patch
 Prereq:		/sbin/install-info
 BuildRoot:	/tmp/%{name}-%{version}-root
 
@@ -50,6 +51,7 @@ baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 ./configure \
@@ -71,13 +73,11 @@ gzip -9nf $RPM_BUILD_ROOT/usr/{info/screen.info*,man/man1/*} \
 	NEWS README FAQ ChangeLog
 
 %post
-/sbin/install-info /usr/info/screen.info.gz /etc/info-dir \
---entry="* screen: (screen).             Terminal multiplexer."
+/sbin/install-info /usr/info/screen.info.gz /etc/info-dir
 
 %preun
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir \
-    --entry="* screen: (screen).             Terminal multiplexer."
+if [ "$1" = "0" ]; then
+	/sbin/install-info --delete /usr/info/screen.info.gz /etc/info-dir
 fi
 
 %clean
@@ -88,13 +88,18 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 
 %attr(755,root,root) /usr/bin/screen
-%attr(644,root, man) /usr/man/man1/*
+/usr/man/man1/*
 
 /usr/info/screen.info*
 
 %config(noreplace) %verify(not md5 mtime size) /etc/screenrc
 
 %changelog
+* Mon Mar 29 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [3.7.6-3]
+- removed man group from man pages,
+- standarized {un}registering info pages (added screen-info.patch).
+
 * Fri Feb 05 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [3.7.6-2d]
 - added utpm patch. 
