@@ -144,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS README FAQ ChangeLog
+%doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
