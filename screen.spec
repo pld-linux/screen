@@ -26,6 +26,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRequires:	texinfo
 BuildRequires:	pam-devel
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc
@@ -97,14 +98,14 @@ install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
 
 gzip -9nf NEWS README FAQ ChangeLog
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
