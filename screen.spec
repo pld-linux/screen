@@ -126,6 +126,6 @@ rm -rf $RPM_BUILD_ROOT
   gid=5 is tty group in RedHat Linux (/dev/tty* used by screen is not
   curently writable by other users), 
 - added stripping screen binary,
-- added %attr macros in %files (allow build package from non root
+- added %attr macros in %files (allows build package from non root
   account),
 - added %clear section.
