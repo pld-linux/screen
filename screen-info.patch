@@ -1,6 +1,5 @@
-diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
---- screen-3.9.15.org/doc/screen.texinfo	Tue Mar 25 19:06:38 2003
-+++ screen-3.9.15/doc/screen.texinfo	Tue Mar 25 19:10:27 2003
+--- screen-4.0.0/doc/screen.texinfo.orig	2003-08-27 16:36:37.000000000 +0200
++++ screen-4.0.0/doc/screen.texinfo	2003-09-15 08:31:08.000000000 +0200
 @@ -3,15 +3,19 @@
  @c vi:set wm=5
  @setfilename screen.info
@@ -9,14 +8,14 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 3.9.15
+ @set version 4.0.0
  
 +@ifinfo
 +@format
 +@dircategory Shell utilities:
  @direntry
 -* Screen: (screen).             Full-screen window manager.
-+* Screen: (screen).			Full-screen window manager
++* Screen: (screen).                   Full-screen window manager
  @end direntry
 +@end format
 +@end ifinfo
@@ -41,7 +40,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -962,7 +966,7 @@
+@@ -968,7 +972,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -50,7 +49,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -989,7 +993,7 @@
+@@ -997,7 +1001,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -59,7 +58,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1542,13 +1546,12 @@
+@@ -1561,13 +1565,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -79,7 +78,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -1881,7 +1884,7 @@
+@@ -1900,7 +1903,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -88,7 +87,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity in a window
  * Windows::			List the active windows
-@@ -2090,7 +2093,7 @@
+@@ -2109,7 +2112,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -97,7 +96,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -4879,22 +4882,19 @@
+@@ -4962,22 +4965,19 @@
  global initialization files.
  
  @item @code{$SYSSCREENRC}
@@ -123,7 +122,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
  
-@@ -4912,7 +4912,7 @@
+@@ -4995,7 +4995,7 @@
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -132,7 +131,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5017,10 +5017,10 @@
+@@ -5100,10 +5100,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -145,7 +144,7 @@ diff -urN screen-3.9.15.org/doc/screen.texinfo screen-3.9.15/doc/screen.texinfo
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5101,8 +5101,7 @@
+@@ -5184,8 +5184,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
