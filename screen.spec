@@ -5,13 +5,13 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.10
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
 Group(pl):	Aplikacje/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
-Source1:	screen.1.pl
+Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.pamd
 Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
@@ -93,7 +93,7 @@ install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 install etc/screenrc		$RPM_BUILD_ROOT/etc/skel/.screenrc
 
-install %{SOURCE1}		$RPM_BUILD_ROOT%{_mandir}/pl/man1/screen.1
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
 
 gzip -9nf NEWS README FAQ ChangeLog
@@ -114,5 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/screen
 %attr(600,root,root) /etc/skel/.screenrc
 %{_mandir}/man1/*
+%lang(ja) %{_mandir}/ja/man1/*
+%lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
