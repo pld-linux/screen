@@ -76,9 +76,9 @@ autoconf
 %configure \
 	--with-sys-screenrc=%{_sysconfdir}/screenrc \
 	--with-libpam \
-	--disable-socket-dir 
-	
-%{__make} CFLAGS="%{rpmcflags}" 
+	--disable-socket-dir
+
+%{__make} CFLAGS="%{rpmcflags}"
 (cd doc; rm -f screen.info*; makeinfo screen.texinfo)
 
 %install
