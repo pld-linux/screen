@@ -29,6 +29,7 @@ Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
 Patch10:	%{name}-screenrc.patch
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	texinfo
