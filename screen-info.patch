@@ -1,8 +1,14 @@
---- ./doc/screen.texinfo.org	Wed Feb 13 11:37:42 2002
-+++ ./doc/screen.texinfo	Wed Jun 19 13:35:42 2002
-@@ -9,9 +9,14 @@
+--- screen-3.9.13/doc/screen.texinfo.orig	Thu Sep  5 14:08:13 2002
++++ screen-3.9.13/doc/screen.texinfo	Sat Nov  2 09:50:11 2002
+@@ -3,15 +3,19 @@
+ @c vi:set wm=5
+ @setfilename screen.info
+ @settitle Screen User's Manual
+-@dircategory General Commands
+ @finalout
+ @setchapternewpage odd
  @c %**end of header
- @set version 3.9.11
+ @set version 3.9.13
  
 +@ifinfo
 +@format
@@ -11,12 +17,12 @@
 -* Screen: (screen).             Full-screen window manager.
 +* Screen: (screen).			Full-screen window manager
  @end direntry
-++@end format
++@end format
 +@end ifinfo
  
  @c For examples, use a literal escape in info.
  @ifinfo
-@@ -176,7 +190,7 @@
+@@ -176,7 +180,7 @@
  variable) who will use it to create the new window.  The above example would 
  start the @code{emacs} editor (editing @file{prog.c}) and switch to its window.
  
@@ -25,7 +31,7 @@
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -442,7 +456,7 @@
+@@ -442,7 +446,7 @@
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -34,7 +40,7 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -953,7 +967,7 @@
+@@ -955,7 +959,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -43,7 +49,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -980,7 +994,7 @@
+@@ -982,7 +986,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -52,7 +58,7 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1531,13 +1545,12 @@
+@@ -1535,13 +1539,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -72,7 +78,7 @@
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -1870,7 +1883,7 @@
+@@ -1874,7 +1877,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -81,7 +87,7 @@
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity in a window
  * Windows::			List the active windows
-@@ -2079,7 +2092,7 @@
+@@ -2083,7 +2086,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -90,7 +96,7 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -4813,22 +4826,19 @@
+@@ -4841,22 +4844,19 @@
  global initialization files.
  
  @item @code{$SYSSCREENRC}
@@ -116,7 +122,7 @@
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
  
-@@ -4846,7 +4856,7 @@
+@@ -4874,7 +4874,7 @@
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -125,7 +131,7 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -4951,10 +4961,10 @@
+@@ -4979,10 +4979,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -138,7 +144,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5035,8 +5045,7 @@
+@@ -5063,8 +5063,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
