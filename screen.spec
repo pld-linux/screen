@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.10
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -20,6 +20,7 @@ Patch5:		%{name}-info.patch
 Patch6:		%{name}-debian.patch
 Patch7:		%{name}-nolibtermcap.patch
 Patch8:		%{name}-no_hardcoded_term_sequences.patch
+Patch9:		%{name}-home_etc.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRequires:	texinfo
@@ -70,6 +71,7 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 %patch6 -p1
 %patch7 -p1
 #%patch8 -p1
+%patch9 -p1
 
 %build
 %{__autoconf}
