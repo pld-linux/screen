@@ -5,7 +5,7 @@ Summary(pl):	Screen - Program zarz±dzaj±cy sesjami na jednym terminalu
 Summary(tr):	Bir uçbirimde birden fazla oturumu düzenler
 Name:		screen
 Version:	3.9.8
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Terminal
 Group(de):	Applikationen/Terminal
@@ -109,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
+%attr(600,root,root) /etc/skel/.screenrc
 %{_mandir}/man1/*
 %{_infodir}/screen.info*
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
