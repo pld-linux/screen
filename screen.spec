@@ -16,8 +16,8 @@ Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-DESTDIR.patch
 Patch3:		%{name}-manual.patch
 Patch4:		%{name}-ia64.patch
-Patch5:		screen-info.patch
-Patch6:		screen-texinfo_fixes.patch
+Patch5:		%{name}-info.patch
+Patch6:		%{name}-texinfo_fixes.patch
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,12 +56,12 @@ uçbirim üzerinden baðlantý kurduðunuz durumlarda kullanýþlýdýr.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
 %patch3 -p0
-%patch4 -p1
-%patch5 -p1
+%patch4 -p0
+%patch5 -p0
 %patch6 -p1
 
 %build
