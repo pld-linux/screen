@@ -34,8 +34,6 @@ BuildRequires:	texinfo
 BuildRequires:	utempter-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir	/etc
-
 %description
 Screen is a program that allows you to have multiple logins on one
 terminal. It is useful in situations where you are telnetted into a
@@ -119,7 +117,8 @@ filenew=$(echo "$file" | sed -e 's#\.dist##g')
 	cp -f $file $filenew
 done
 
-%{__make} CFLAGS="%{rpmcflags}"
+%{__make} \
+	CFLAGS="%{rpmcflags}"
 
 cd doc
 rm -f screen.info*
