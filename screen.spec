@@ -13,6 +13,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
+# Source0-md5:	0dff6fdc3fbbceabf25a43710fbfe75f
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5: 4ec0587ba465dc632bfc5fd2a09d79ce
 Source2:	%{name}.pamd
