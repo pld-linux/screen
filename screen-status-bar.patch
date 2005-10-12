@@ -1,12 +1,16 @@
---- screen-4.0.2/etc/screenrc~	2003-12-05 14:59:39.000000000 +0100
-+++ screen-4.0.2/etc/screenrc	2005-10-12 15:20:51.000000000 +0200
-@@ -151,3 +151,46 @@
- # defnonblock 1
- # blankerprg rain -d 100
- # idle 30 blanker
+--- screen-orig/etc/etcscreenrc~	2005-10-12 15:45:10.000000000 +0200
++++ screen-4.0.2/etc/etcscreenrc	2005-10-12 15:58:50.000000000 +0200
+@@ -95,3 +95,50 @@
+ # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
+ bindkey -k kb stuff "\177"
+ 
++######################
++#
++# status bar settings
++#
 +
-+# Status bar with hostname, term names and clock/calendar info
-+caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"
++# Status bar with hostname, term names and clock/calendar info                                                            
++caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"  
 +
 +# To disable the status bar uncomment the following line
 +# caption splitonly
@@ -36,7 +40,7 @@
 +#sorendition "= gk"
 +
 +# green line
-+#caption always "%{=b by} %c %{-} %{= .w}[%{=b .w}%n%{-}%{= .w}]%{=b .w}%t%{-} %{=b .k}[ %{= .k}%w %{=b .k}]%{-} %{=b .k}@ TmC Serv%{-}"
++#caption always "%{=b by} %c %{-} %{= .w}[%{=b .w}%n%{-}%{= .w}]%{=b .w}%t%{-} %{=b .k}[ %{= .k}%w %{=b .k}]%{-} %{=b .k}@ TmC Serv%{-}" 
 +#sorendition "=b gy"
 +
 +# blue line
