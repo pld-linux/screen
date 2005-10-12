@@ -1,3 +1,7 @@
+
+# Conditional build:                                                                                               
+%bcond_without	status_bar  # do not add status bar options to /etc/screenrc
+
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de):	Screen - Verwaltet mehrere Sitzungen an einem tty
 Summary(es):	Screen - Administra mЗltiples sesiones en un tty
@@ -9,7 +13,7 @@ Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
 Version:	4.0.2
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -28,6 +32,7 @@ Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
 Patch10:	%{name}-varargs.patch
+Patch11:	%{name}-status-bar.patch
 URL:		http://www.gnu.org/software/screen/ 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -107,6 +112,7 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 #%patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%{?with_status_bar:%patch11 -p1}
 
 %build
 %{__aclocal}
