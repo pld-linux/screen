@@ -1,5 +1,5 @@
---- screen-orig/etc/etcscreenrc~	2005-10-12 15:45:10.000000000 +0200
-+++ screen-4.0.2/etc/etcscreenrc	2005-10-12 15:58:50.000000000 +0200
+--- screen-orig/etc/etcscreenrc	2005-10-12 15:45:10.000000000 +0200
++++ screen-new/etc/etcscreenrc	2005-10-12 15:58:50.000000000 +0200
 @@ -95,3 +95,50 @@
  # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
  bindkey -k kb stuff "\177"
