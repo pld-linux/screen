@@ -1,9 +1,49 @@
 --- screen-4.0.2/etc/screenrc~	2003-12-05 14:59:39.000000000 +0100
-+++ screen-4.0.2/etc/screenrc	2005-10-12 13:51:08.000000000 +0200
-@@ -151,3 +151,6 @@
++++ screen-4.0.2/etc/screenrc	2005-10-12 15:20:51.000000000 +0200
+@@ -151,3 +151,46 @@
  # defnonblock 1
  # blankerprg rain -d 100
  # idle 30 blanker
 +
-+# status bar with hostname, term names and clock/calendar info
++# Status bar with hostname, term names and clock/calendar info
 +caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"
++
++# To disable the status bar uncomment the following line
++# caption splitonly
++
++# Some more status bar examples provided by Elan Ruusamäe <glen@pld...>
++#
++# colourized windowlist chooser
++## windowlist string "%{+ g}%02n%{-}: %{+ y}%t%{-}%f [%h]"
++
++# misc captions
++
++# active window is bolder
++#caption string "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
++
++# glen's old one colour default
++#caption string "%c %t:%n|%? [%h]%? %w"
++#sorendition "=s dg"
++
++# glen's coloured one where active window is different colour
++## caption string "%{=s wb}%{+b g.}%c%{-} %{+b w.}%t:%n%{-}|%? [%{+b y.}%h%{-}]%? %-Lw[%{+b w}%n%f %t%{-}]%+Lw"
++#sorendition "=d ry"
++
++# TmC captions
++#caption always "%c %t:%n|%? [%h]%? %w"
++
++#caption always "%c %t - ( %w )"
++#sorendition "= gk"
++
++# green line
++#caption always "%{=b by} %c %{-} %{= .w}[%{=b .w}%n%{-}%{= .w}]%{=b .w}%t%{-} %{=b .k}[ %{= .k}%w %{=b .k}]%{-} %{=b .k}@ TmC Serv%{-}"
++#sorendition "=b gy"
++
++# blue line
++#caption always "%{=b .y}%c%{-} %{=b .w}%t%{-} %{= .k}( %{= .w}%w %{= .k})%{-}"
++#sorendition "=b br"
++
++# blue line: and active window is bold
++#caption always "%{=b .y}%c%{-} %{=b .w}%t%{-} %{= .k}( %{= .w}%-Lw%{=b BW}%50>%n* %t%{-}%+Lw%< %{= .k})%{-}"
++#sorendition "=b br"
++
