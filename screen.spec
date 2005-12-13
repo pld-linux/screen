@@ -1,5 +1,5 @@
 
-# Conditional build:                                                                                               
+# Conditional build:
 %bcond_without	status_bar  # do not add status bar options to /etc/screenrc
 
 Summary:	Screen - Manages multiple sessions on one tty
@@ -33,7 +33,7 @@ Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
 Patch10:	%{name}-varargs.patch
 Patch11:	%{name}-status-bar.patch
-URL:		http://www.gnu.org/software/screen/ 
+URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
@@ -170,4 +170,4 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
-%config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
