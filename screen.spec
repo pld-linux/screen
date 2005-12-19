@@ -1,7 +1,7 @@
-
+#
 # Conditional build:
 %bcond_without	status_bar  # do not add status bar options to /etc/screenrc
-
+#
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de):	Screen - Verwaltet mehrere Sitzungen an einem tty
 Summary(es):	Screen - Administra múltiples sesiones en un tty
