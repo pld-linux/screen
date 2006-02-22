@@ -1,0 +1,4 @@
+- 3.9.11 (rel. 0.9)  - BTS#234
+- DESTDIR patch is out, some updated
+- home_etc is commented out. Should it be before 1.0 ?
+- STBR for test
