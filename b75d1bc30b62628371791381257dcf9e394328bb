@@ -1,0 +1,2 @@
+- release 6
+- added /etc/skel/.screenrc to %files
