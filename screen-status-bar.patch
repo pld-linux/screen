@@ -10,7 +10,7 @@
 +#
 +
 +# Status bar with hostname, term names and clock/calendar info                                                            
-+caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"  
++#caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"  
 +
 +# To disable the status bar uncomment the following line
 +# caption splitonly
