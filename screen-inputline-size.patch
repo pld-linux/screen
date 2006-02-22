@@ -1,0 +1,54 @@
+--- screen-4.0.2/input.c~	2003-09-08 17:25:37.000000000 +0300
++++ screen-4.0.2/input.c	2006-02-22 23:38:20.000000000 +0200
+@@ -36,9 +36,10 @@
+ extern struct display *display;
+ extern struct mchar mchar_blank, mchar_so;
+ 
++#define MAX_INPUTLINE 512
+ struct inpline
+ {
+-  char  buf[101];	/* text buffer */
++  char  buf[MAX_INPUTLINE];	/* text buffer */
+   int  len;		/* length of the editible string */
+   int  pos;		/* cursor position in editable string */
+ };
+@@ -49,7 +50,7 @@
+ struct inpdata
+ {
+   struct inpline inp;
+-  int  inpmaxlen;	/* 100, or less, if caller has shorter buffer */
++  int  inpmaxlen;	/* MAX_INPUTLINE-1, or less, if caller has shorter buffer */
+   char *inpstring;	/* the prompt */
+   int  inpstringlen;	/* length of the prompt */
+   int  inpmode;		/* INP_NOECHO, INP_RAW, INP_EVERY */
+@@ -116,8 +117,8 @@
+   int maxlen;
+   struct inpdata *inpdata;
+   
+-  if (len > 100)
+-    len = 100;
++  if (len > MAX_INPUTLINE - 1)
++    len = MAX_INPUTLINE;
+   if (!(mode & INP_NOECHO))
+     {
+       maxlen = flayer->l_width - 1 - strlen(istr);
+--- screen-4.0.2/process.c~	2006-02-23 00:05:06.000000000 +0200
++++ screen-4.0.2/process.c	2006-02-23 00:27:01.000000000 +0200
+@@ -1891,7 +1891,7 @@
+ 	ChangeAKA(fore, *args, strlen(*args));
+       break;
+     case RC_COLON:
+-      Input(":", 100, INP_COOKED, Colonfin, NULL);
++      Input(":", 512-1, INP_COOKED, Colonfin, NULL);
+       if (*args && **args)
+ 	{
+ 	  s = *args;
+@@ -3004,7 +3004,7 @@
+ 	      Msg(0, "%s: password: window required", rc_name);
+ 	      break;
+ 	    }
+-	  Input("New screen password:", 100, INP_NOECHO, pass1, display ? (char *)D_user : (char *)users);
++	  Input("New screen password:", 512-1, INP_NOECHO, pass1, display ? (char *)D_user : (char *)users);
+ 	}
+       break;
+ #endif				/* PASSWORD */
