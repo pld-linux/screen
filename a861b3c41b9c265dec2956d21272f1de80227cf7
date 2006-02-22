@@ -1,0 +1,2 @@
+- added --disable-socket-dir to prevent create /tmp/uscreens unsecure directory
+  with 0777 permission insted private ~/.screen directories
