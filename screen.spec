@@ -8,12 +8,12 @@ Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминал
 Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
-Version:	4.0.2
-Release:	6
+Version:	4.0.3
+Release:	1
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	ed68ea9b43d9fba0972cb017a24940a1
+# Source0-md5:	8506fd205028a96c741e4037de6e3c42
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
