@@ -9,7 +9,7 @@ Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
 Version:	4.0.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -122,12 +122,11 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 	--disable-socket-dir
 
 for file in *.dist; do
-filenew=$(echo "$file" | sed -e 's#\.dist##g')
-	cp -f $file $filenew
+	cp -f $file ${file%.dist}
 done
 
 %{__make} \
-	CFLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcflags} -DMAXWIN=128"
 
 cd doc
 rm -f screen.info*
@@ -147,6 +146,7 @@ install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
+rm -f $RPM_BUILD_ROOT%{_mandir}/README.screen-non-english-man-pages
 
 %clean
 rm -rf $RPM_BUILD_ROOT
