@@ -1,9 +1,12 @@
 --- screen-3.9.9/configure.in.orig	Mon Jun 11 20:11:26 2001
 +++ screen-3.9.9/configure.in	Mon Jun 11 20:25:12 2001
-@@ -619,14 +619,14 @@
+@@ -619,14 +619,17 @@
  tgetent((char *)0, (char *)0);
  #endif
  ],,
++LIBS="-ltinfo $olibs"
++AC_CHECKING(libtinfo)
++AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
 +LIBS="-lncurses $olibs"
 +AC_CHECKING(libncurses)
 +AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
@@ -16,5 +19,6 @@
 -LIBS="-lncurses $olibs"
 -AC_CHECKING(libncurses)
  AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
- AC_MSG_ERROR(!!! no tgetent - no screen))))))
+-AC_MSG_ERROR(!!! no tgetent - no screen))))))
++AC_MSG_ERROR(!!! no tgetent - no screen)))))))
  
