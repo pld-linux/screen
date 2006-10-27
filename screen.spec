@@ -9,7 +9,7 @@ Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
 Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
 Name:		screen
 Version:	4.0.3
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Patch9:		%{name}-no-libs.patch
 Patch10:	%{name}-varargs.patch
 Patch11:	%{name}-status-bar.patch
 Patch12:	%{name}-inputline-size.patch
+Patch13:	%{name}-screenrc.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -111,6 +112,7 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %{__aclocal}
