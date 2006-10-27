@@ -1,0 +1,12 @@
+--- screen-4.0.3/etc/etcscreenrc~	2006-10-27 18:39:09.521699683 +0300
++++ screen-4.0.3/etc/etcscreenrc	2006-10-27 18:39:47.882556628 +0300
+@@ -92,6 +92,9 @@
+ bind O login off
+ bind } history
+ 
++# rebind so the window list is recently used first.
++bind '"' windowlist -m
++
+ # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
+ bindkey -k kb stuff "\177"
+ 
