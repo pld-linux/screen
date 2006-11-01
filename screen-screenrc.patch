@@ -1,6 +1,6 @@
---- screen-4.0.3/etc/etcscreenrc	2006-10-27 18:39:47.882556628 +0300
-+++ screen-4.0.3/etc/etcscreenrc	2006-11-02 01:09:43.413440948 +0200
-@@ -1,7 +1,4 @@
+--- screen-4.0.3/etc/etcscreenrc	2006-11-02 01:09:43.413440948 +0200
++++ screen-4.0.3/etc/etcscreenrc	2006-11-02 01:19:56.237184687 +0200
+@@ -1,21 +1,26 @@
 -#
 -# This is an example for the global screenrc file.
 -# You may want to install this file as /etc/screenrc.
@@ -9,7 +9,30 @@
  #
  # Flaws of termcap and standard settings are done here.
  #
-@@ -39,22 +36,22 @@
+ 
+-#startup_message off
++# don't display the copyright page
++startup_message off
++
++# emulate .logout message
++pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+ 
+ #defflow on # will force screen to process ^S/^Q
+ 
+ deflogin on
+ #autodetach off
+ 
++# no annoying audible bell, please
+ vbell on
+ vbell_msg "   Wuff  ----  Wuff!!  "
+ 
++# make the shell in every window a login shell
++shell -$SHELL
++
+ # all termcap entries are now duplicated as terminfo entries.
+ # only difference should be the slightly modified syntax, and check for
+ # terminfo entries, that are already corected in the database.
+@@ -39,22 +44,22 @@
  termcap  facit|vt100|xterm LP:G0
  terminfo facit|vt100|xterm LP:G0
  
@@ -39,7 +62,7 @@
  termcap  xterm|fptwist hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
  terminfo xterm|fptwist hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
  
-@@ -71,27 +68,30 @@
+@@ -71,26 +76,45 @@
  #termcap xterm|xterms|xs ti=\E7\E[?47l
  #terminfo xterm|xterms|xs ti=\E7\E[?47l
  
@@ -58,22 +81,41 @@
  terminfo wy75-42 nx:xo:Z0=\E[?3h\E[31h:Z1=\E[?3l\E[31h
  
 -#remove some stupid / dangerous key bindings
++################
++#
++# keybindings
++#
++
 +# remove some stupid / dangerous key bindings
++bind k
  bind ^k
 -#bind L
-+# bind L
++bind .
  bind ^\
 -#make them better
++bind \\
++bind ^h
++bind h
 +# make them better
  bind \\ quit
- bind K kill
- bind I login on
- bind O login off
- bind } history
- 
+-bind K kill
+-bind I login on
+-bind O login off
+-bind } history
++bind 'K' kill
++bind 'I' login on
++bind 'O' login off
++bind '}' history
++
++# Yet another hack:
++# Prepend/append register [/] to the paste if ^a^] is pressed.
++# This lets me have autoindent mode in vi.
++register [ "\033:se noai\015a"
++register ] "\033:se ai\015a"
++bind ^] paste [.]
++
 +# rebind so the window list is recently used first.
 +bind '"' windowlist -m
-+
+ 
  # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
  bindkey -k kb stuff "\177"
- 
