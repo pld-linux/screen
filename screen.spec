@@ -17,6 +17,7 @@ Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.g
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
+Source3:	screenrc
 Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-manual.patch
@@ -143,7 +144,7 @@ install screen			$RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
 install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-install etc/screenrc		$RPM_BUILD_ROOT/etc/skel/.screenrc
+install %{SOURCE3}	$RPM_BUILD_ROOT/etc/skel/.screenrc
 install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -161,7 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN}
+%doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
