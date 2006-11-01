@@ -62,7 +62,7 @@
  termcap  xterm|fptwist hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
  terminfo xterm|fptwist hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
  
-@@ -71,26 +76,45 @@
+@@ -71,27 +76,93 @@
  #termcap xterm|xterms|xs ti=\E7\E[?47l
  #terminfo xterm|xterms|xs ti=\E7\E[?47l
  
@@ -119,3 +119,51 @@
  
  # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
  bindkey -k kb stuff "\177"
+ 
++######################
++#
++# status bar settings
++#
++
++# Status bar with hostname, term names and clock/calendar info
++#caption always "${HOSTNAME} %{-b}%{= wb}%-Lw%{= wr}%50>%{+b}%n%f %t%{= wb}%{-b}%+Lw%{= wr}%-017= %c %Y-%m-%d"
++
++# To disable the status bar uncomment the following line
++# caption splitonly
++
++# Some more status bar examples provided by Elan Ruusamäe <glen@pld...>
++#
++# colourized windowlist chooser
++## windowlist string "%{+ g}%02n%{-}: %{+ y}%t%{-}%f [%h]"
++
++# misc captions
++
++# active window is bolder
++#caption string "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
++
++# glen's old one colour default
++#caption string "%c %t:%n|%? [%h]%? %w"
++#sorendition "=s dg"
++
++# glen's coloured one where active window is different colour
++## caption string "%{=s wb}%{+b g.}%c%{-} %{+b w.}%t:%n%{-}|%? [%{+b y.}%h%{-}]%? %-Lw[%{+b w}%n%f %t%{-}]%+Lw"
++#sorendition "=d ry"
++
++# TmC captions
++#caption always "%c %t:%n|%? [%h]%? %w"
++
++#caption always "%c %t - ( %w )"
++#sorendition "= gk"
++
++# green line
++#caption always "%{=b by} %c %{-} %{= .w}[%{=b .w}%n%{-}%{= .w}]%{=b .w}%t%{-} %{=b .k}[ %{= .k}%w %{=b .k}]%{-} %{=b .k}@ TmC Serv%{-}"
++#sorendition "=b gy"
++
++# blue line
++#caption always "%{=b .y}%c%{-} %{=b .w}%t%{-} %{= .k}( %{= .w}%w %{= .k})%{-}"
++#sorendition "=b br"
++
++# blue line: and active window is bold
++#caption always "%{=b .y}%c%{-} %{=b .w}%t%{-} %{= .k}( %{= .w}%-Lw%{=b BW}%50>%n* %t%{-}%+Lw%< %{= .k})%{-}"
++#sorendition "=b br"
++

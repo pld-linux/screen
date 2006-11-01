@@ -29,9 +29,8 @@ Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
 Patch10:	%{name}-varargs.patch
-Patch11:	%{name}-status-bar.patch
-Patch12:	%{name}-inputline-size.patch
-Patch13:	%{name}-screenrc.patch
+Patch11:	%{name}-inputline-size.patch
+Patch12:	%{name}-screenrc.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -113,7 +112,6 @@ Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
 %build
 %{__aclocal}
