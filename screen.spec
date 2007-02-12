@@ -1,12 +1,12 @@
 Summary:	Screen - Manages multiple sessions on one tty
-Summary(de.UTF-8):   Screen - Verwaltet mehrere Sitzungen an einem tty
-Summary(es.UTF-8):   Screen - Administra múltiples sesiones en un tty
-Summary(fr.UTF-8):   screen - gère plusieurs sessions sur un seul terminal
-Summary(pl.UTF-8):   Screen - Program zarządzający sesjami na jednym terminalu
-Summary(pt_BR.UTF-8):   Screen - Gerencia múltiplas sessões em um tty
-Summary(ru.UTF-8):   Менеджер экрана, поддерживающий несколько логинов с одного терминала
-Summary(tr.UTF-8):   Bir uçbirimde birden fazla oturumu düzenler
-Summary(uk.UTF-8):   Менеджер екрану, що підтримує кілька логінів з одного терміналу
+Summary(de.UTF-8):	Screen - Verwaltet mehrere Sitzungen an einem tty
+Summary(es.UTF-8):	Screen - Administra múltiples sesiones en un tty
+Summary(fr.UTF-8):	screen - gère plusieurs sessions sur un seul terminal
+Summary(pl.UTF-8):	Screen - Program zarządzający sesjami na jednym terminalu
+Summary(pt_BR.UTF-8):	Screen - Gerencia múltiplas sessões em um tty
+Summary(ru.UTF-8):	Менеджер экрана, поддерживающий несколько логинов с одного терминала
+Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
+Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.0.3
 Release:	3
