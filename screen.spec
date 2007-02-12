@@ -1,12 +1,12 @@
 Summary:	Screen - Manages multiple sessions on one tty
-Summary(de):	Screen - Verwaltet mehrere Sitzungen an einem tty
-Summary(es):	Screen - Administra mЗltiples sesiones en un tty
-Summary(fr):	screen - gХre plusieurs sessions sur un seul terminal
-Summary(pl):	Screen - Program zarz╠dzaj╠cy sesjami na jednym terminalu
-Summary(pt_BR):	Screen - Gerencia mЗltiplas sessУes em um tty
-Summary(ru):	Менеджер экрана, поддерживающий несколько логинов с одного терминала
-Summary(tr):	Bir uГbirimde birden fazla oturumu dЭzenler
-Summary(uk):	Менеджер екрану, що п╕дтриму╓ к╕лька лог╕н╕в з одного терм╕налу
+Summary(de.UTF-8):   Screen - Verwaltet mehrere Sitzungen an einem tty
+Summary(es.UTF-8):   Screen - Administra mц╨ltiples sesiones en un tty
+Summary(fr.UTF-8):   screen - gц╗re plusieurs sessions sur un seul terminal
+Summary(pl.UTF-8):   Screen - Program zarzд┘dzajд┘cy sesjami na jednym terminalu
+Summary(pt_BR.UTF-8):   Screen - Gerencia mц╨ltiplas sessц╣es em um tty
+Summary(ru.UTF-8):   п°п╣п╫п╣п╢п╤п╣я─ я█п╨я─п╟п╫п╟, п©п╬п╢п╢п╣я─п╤п╦п╡п╟я▌я┴п╦п╧ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╩п╬пЁп╦п╫п╬п╡ я│ п╬п╢п╫п╬пЁп╬ я┌п╣я─п╪п╦п╫п╟п╩п╟
+Summary(tr.UTF-8):   Bir uц╖birimde birden fazla oturumu dц╪zenler
+Summary(uk.UTF-8):   п°п╣п╫п╣п╢п╤п╣я─ п╣п╨я─п╟п╫я┐, я┴п╬ п©я√п╢я┌я─п╦п╪я┐я■ п╨я√п╩я▄п╨п╟ п╩п╬пЁя√п╫я√п╡ п╥ п╬п╢п╫п╬пЁп╬ я┌п╣я─п╪я√п╫п╟п╩я┐
 Name:		screen
 Version:	4.0.3
 Release:	3
@@ -47,52 +47,52 @@ terminal. It is useful in situations where you are telnetted into a
 machine or connected via a dumb terminal and want more than just one
 login.
 
-%description -l de
+%description -l de.UTF-8
 Screens ist ein Programm, das Ihnen erlaubt, sich auf einem Terminal
-mehrfach einzuloggen - was nЭtzlich sein kann, wenn Sie Эber ein
+mehrfach einzuloggen - was nц╪tzlich sein kann, wenn Sie ц╪ber ein
 dummes Terminal eine Telnetverbindung zu einem Rechner haben und mehr
-als ein Login benЖtigen.
+als ein Login benц╤tigen.
 
-%description -l es
-Screen es un programa que permite que tengas mЗltiples logins en un
-terminal. Es Зtil en situaciones donde estАs usando telnet en una
-mАquina o conectado vМa un terminal dumb y quiera mАs que apenas un
+%description -l es.UTF-8
+Screen es un programa que permite que tengas mц╨ltiples logins en un
+terminal. Es ц╨til en situaciones donde estц║s usando telnet en una
+mц║quina o conectado vц╜a un terminal dumb y quiera mц║s que apenas un
 login.
 
-%description -l fr
+%description -l fr.UTF-8
 Screen est un programme permettant plusieurs connexions sur un
-terminal. Il est utile pour ouvrir plusieurs sessions Ю la fois, si
+terminal. Il est utile pour ouvrir plusieurs sessions ц═ la fois, si
 vous voulez ouvrir une session telnet sur une autre machine et voulez
 plus d'une connexion.
 
-%description -l pl
-Screen jest programem, ktСry umo©liwia otworzenie wielu sesji na
-jednym terminalu. Jest to bardzo przydatne, przy poЁ╠czeniach z
-terminali nie umo©liwiaj╠cych otwarcia kilku sesji w systemie. Screen
-umo©liwia ponadto powrСt do otwartych sesji w przypadku przerwania
-poЁ╠czenia z terminalem.
+%description -l pl.UTF-8
+Screen jest programem, ktцЁry umoе╪liwia otworzenie wielu sesji na
+jednym terminalu. Jest to bardzo przydatne, przy poе┌д┘czeniach z
+terminali nie umoе╪liwiajд┘cych otwarcia kilku sesji w systemie. Screen
+umoе╪liwia ponadto powrцЁt do otwartych sesji w przypadku przerwania
+poе┌д┘czenia z terminalem.
 
-%description -l pt_BR
-Screen И um programa que permite que vocЙ tenha mЗltiplos logins em um
-terminal. Ele И Зtil em situaГУes onde vocЙ estА usando telnet em uma
-mАquina ou conectado via um terminal dumb e quer mais do que apenas um
+%description -l pt_BR.UTF-8
+Screen ц╘ um programa que permite que vocц╙ tenha mц╨ltiplos logins em um
+terminal. Ele ц╘ ц╨til em situaц╖ц╣es onde vocц╙ estц║ usando telnet em uma
+mц║quina ou conectado via um terminal dumb e quer mais do que apenas um
 login.
 
-%description -l ru
-Утилита screen позволяет иметь несколько сессий на одном терминале.
-Screen полезен пользователям, которые заходят на машину по сети или
-через dumb-терминал, но хотят иметь более одной сессии с этой машиной.
+%description -l ru.UTF-8
+пёя┌п╦п╩п╦я┌п╟ screen п©п╬п╥п╡п╬п╩я▐п╣я┌ п╦п╪п╣я┌я▄ п╫п╣я│п╨п╬п╩я▄п╨п╬ я│п╣я│я│п╦п╧ п╫п╟ п╬п╢п╫п╬п╪ я┌п╣я─п╪п╦п╫п╟п╩п╣.
+Screen п©п╬п╩п╣п╥п╣п╫ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪, п╨п╬я┌п╬я─я▀п╣ п╥п╟я┘п╬п╢я▐я┌ п╫п╟ п╪п╟я┬п╦п╫я┐ п©п╬ я│п╣я┌п╦ п╦п╩п╦
+я┤п╣я─п╣п╥ dumb-я┌п╣я─п╪п╦п╫п╟п╩, п╫п╬ я┘п╬я┌я▐я┌ п╦п╪п╣я┌я▄ п╠п╬п╩п╣п╣ п╬п╢п╫п╬п╧ я│п╣я│я│п╦п╦ я│ я█я┌п╬п╧ п╪п╟я┬п╦п╫п╬п╧.
 
-%description -l tr
-Screen, aynЩ uГbirimde birden fazla oturum olanaПЩ saПlayan bir
-programdЩr. Bir makinaya telnet programЩ ile ya da programlanamaz bir
-uГbirim Эzerinden baПlantЩ kurduПunuz durumlarda kullanЩЧlЩdЩr.
+%description -l tr.UTF-8
+Screen, aynд╠ uц╖birimde birden fazla oturum olanaд÷д╠ saд÷layan bir
+programdд╠r. Bir makinaya telnet programд╠ ile ya da programlanamaz bir
+uц╖birim ц╪zerinden baд÷lantд╠ kurduд÷unuz durumlarda kullanд╠е÷lд╠dд╠r.
 
-%description -l uk
-Утил╕та screen дозволя╓ мати дек╕лька сес╕й на одному терм╕нал╕.
-Screen корисний користувачам, як╕ заходять на машину по мереж╕ або
-через dumb-терм╕нал, але хочуть мати б╕льше одно╖ сес╕╖ з ц╕╓ю
-машиною.
+%description -l uk.UTF-8
+пёя┌п╦п╩я√я┌п╟ screen п╢п╬п╥п╡п╬п╩я▐я■ п╪п╟я┌п╦ п╢п╣п╨я√п╩я▄п╨п╟ я│п╣я│я√п╧ п╫п╟ п╬п╢п╫п╬п╪я┐ я┌п╣я─п╪я√п╫п╟п╩я√.
+Screen п╨п╬я─п╦я│п╫п╦п╧ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟п╪, я▐п╨я√ п╥п╟я┘п╬п╢я▐я┌я▄ п╫п╟ п╪п╟я┬п╦п╫я┐ п©п╬ п╪п╣я─п╣п╤я√ п╟п╠п╬
+я┤п╣я─п╣п╥ dumb-я┌п╣я─п╪я√п╫п╟п╩, п╟п╩п╣ я┘п╬я┤я┐я┌я▄ п╪п╟я┌п╦ п╠я√п╩я▄я┬п╣ п╬п╢п╫п╬я≈ я│п╣я│я√я≈ п╥ я├я√я■я▌
+п╪п╟я┬п╦п╫п╬я▌.
 
 %prep
 %setup -q
