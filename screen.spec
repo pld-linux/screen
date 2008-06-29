@@ -32,6 +32,7 @@ Patch10:	%{name}-varargs.patch
 Patch11:	%{name}-inputline-size.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
+Patch14:	%{name}-comment.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -114,6 +115,7 @@ Screen корисний користувачам, які заходять на �
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p0
 
 %build
 %{__aclocal}
