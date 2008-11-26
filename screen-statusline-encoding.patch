@@ -12,7 +12,7 @@ https://savannah.gnu.org/bugs/index.php?23955
  	    D_encoding  = n;
 --- screen.c.orig	2008-05-08 02:37:22.000000000 +0800
 +++ screen.c	2008-05-20 20:34:37.000000000 +0800
-@@ -2584,6 +2584,18 @@
+@@ -2584,6 +2584,17 @@
  	    }
  	  p += strlen(p) - 1;
  	  break;
@@ -22,7 +22,6 @@ https://savannah.gnu.org/bugs/index.php?23955
 +	  D_encoding = nwin_options.encoding > 0 ? nwin_options.encoding : 0;
 +	  if (win && win->w_encoding)
 +	    {
-+	      *p++ = ' ';
 +	      strcpy(p, EncodingName(win->w_encoding));
 +	    }
 +	  p += strlen(p) - 1;
