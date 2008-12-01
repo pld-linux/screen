@@ -25,3 +25,6 @@ zombie "^Mr"
 
 # enable support for the "alternate screen" capability in all windows
 # altscreen on
+
+# utf8 by default
+defutf8 on
