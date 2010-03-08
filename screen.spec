@@ -1,3 +1,12 @@
+#
+# Conditional build:
+%bcond_with	fifo		# force using fifos even if sockets detected
+
+# TODO
+# - should we switch back fifos forcibly (so you could resume 4.0 sessions with 4.1?, stalled for me anyway)
+#   configure: checking socket implementation...
+#   - you are normal
+#   - both sockets and fifos usable. let's take sockets.
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de.UTF-8):	Screen - Verwaltet mehrere Sitzungen an einem tty
 Summary(es.UTF-8):	Screen - Administra múltiples sesiones en un tty
@@ -9,7 +18,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.1
-Release:	0.4
+Release:	0.6
 License:	GPL
 Group:		Applications/Terminal
 Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-7851249fa3e5a9ce00ad3bf8bd0b417acb335f84.tar.gz
@@ -123,6 +132,7 @@ mv screen-*/src/* .
 %{__autoheader}
 %{__autoconf}
 CFLAGS="%{rpmcflags} -DMAXWIN=128"
+%{?with_fifo:nore=1} \
 %configure \
 	--enable-pam \
 	--enable-colors256 \
