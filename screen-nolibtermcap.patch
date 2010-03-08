@@ -1,6 +1,6 @@
---- screen-3.9.9/configure.in.orig	Mon Jun 11 20:11:26 2001
-+++ screen-3.9.9/configure.in	Mon Jun 11 20:25:12 2001
-@@ -619,14 +619,17 @@
+--- screen-4.1/configure.in~	2010-03-08 16:29:51.000000000 +0200
++++ screen-4.1/configure.in	2010-03-08 16:30:07.081578872 +0200
+@@ -664,6 +656,12 @@
  tgetent((char *)0, (char *)0);
  #endif
  ],,
@@ -13,12 +13,15 @@
  LIBS="-ltermcap $olibs"
  AC_CHECKING(libtermcap)
  AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
- LIBS="-ltermlib $olibs"
- AC_CHECKING(libtermlib)
--AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+@@ -673,10 +671,7 @@
+ LIBS="-lncursesw $olibs"
+ AC_CHECKING(libncursesw)
+ AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
 -LIBS="-lncurses $olibs"
 -AC_CHECKING(libncurses)
- AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
--AC_MSG_ERROR(!!! no tgetent - no screen))))))
-+AC_MSG_ERROR(!!! no tgetent - no screen)))))))
+-AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+-AC_MSG_ERROR(!!! no tgetent - no screen)))))))
++AC_MSG_ERROR(!!! no tgetent - no screen))))))))
+ 
+ AC_TRY_RUN([
  

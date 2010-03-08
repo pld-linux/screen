@@ -1,6 +1,6 @@
---- screen-3.9.11/configure.in.orig	Fri Jun 28 20:35:41 2002
-+++ screen-3.9.11/configure.in	Fri Jun 28 20:48:05 2002
-@@ -195,14 +195,6 @@
+--- screen-4.1/configure.in~	2010-02-24 14:49:45.000000000 +0200
++++ screen-4.1/configure.in	2010-02-24 14:51:15.206024475 +0200
+@@ -201,14 +201,6 @@
  #endif
  ], LIBS="$LIBS -lsocket -linet";seqptx=1)
  
@@ -12,10 +12,10 @@
 -[AC_CHECK_HEADER(dwarf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN),
 -[AC_CHECK_HEADER(elf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN))])]
 -,LIBS="$oldlibs")
+ AC_CHECK_HEADERS([stropts.h string.h strings.h])
  
  AC_CHECKING(for Solaris 2.x)
- AC_EGREP_CPP(yes,
-@@ -850,9 +842,6 @@
+@@ -885,9 +877,6 @@
  dnl
  dnl    ****  loadav  ****
  dnl

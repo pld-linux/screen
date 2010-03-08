@@ -8,17 +8,16 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.0.3
-Release:	8
+Version:	4.1
+Release:	0.4
 License:	GPL
 Group:		Applications/Terminal
-Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	8506fd205028a96c741e4037de6e3c42
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-7851249fa3e5a9ce00ad3bf8bd0b417acb335f84.tar.gz
+# Source0-md5:	a1b42f6505230ecdb943d95231b3e358
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
 Source3:	screenrc
-Patch0:		%{name}-tty.patch
 Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-manual.patch
 Patch3:		%{name}-ia64.patch
@@ -32,8 +31,8 @@ Patch10:	%{name}-varargs.patch
 Patch11:	%{name}-inputline-size.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
-Patch14:	%{name}-comment.patch
 Patch15:	%{name}-statusline-encoding.patch
+Patch16:	%{name}-etcscreenrc.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -98,8 +97,9 @@ Screen корисний користувачам, які заходять на �
 машиною.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -qc
+mv screen-*/src/* .
+
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
@@ -115,26 +115,23 @@ Screen корисний користувачам, які заходять на �
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%patch14 -p0
+#%patch13 -p1 # my brain farted here, see if you have better luck
 %patch15 -p0
 
 %build
 %{__aclocal}
+%{__autoheader}
 %{__autoconf}
+CFLAGS="%{rpmcflags} -DMAXWIN=128"
 %configure \
-	--with-sys-screenrc=%{_sysconfdir}/screenrc \
 	--enable-pam \
 	--enable-colors256 \
 	--enable-rxvt_osc \
+	--with-pty-mode=0620 \
+	--with-pty-group=5 \
 	--disable-socket-dir
 
-for file in *.dist; do
-	cp -f $file ${file%.dist}
-done
-
-%{__make} \
-	CFLAGS="%{rpmcflags} -DMAXWIN=128"
+%{__make} -j1
 
 cd doc
 rm -f screen.info*
@@ -145,15 +142,15 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/screen/utf8encodings} \
 	$RPM_BUILD_ROOT{/etc/{skel,pam.d},%{_mandir}/{,pl}/man1,%{_infodir}}
 
-install screen			$RPM_BUILD_ROOT%{_bindir}
-install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
-install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
-install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-install %{SOURCE3}	$RPM_BUILD_ROOT/etc/skel/.screenrc
-install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
+install -p screen $RPM_BUILD_ROOT%{_bindir}
+cp -a doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -a doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
+cp -a etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+cp -a %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.screenrc
+cp -a utf8encodings/* $RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-install %{SOURCE2}		$RPM_BUILD_ROOT/etc/pam.d/screen
 rm -f $RPM_BUILD_ROOT%{_mandir}/README.screen-non-english-man-pages
 
 %clean
@@ -169,11 +166,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
+%attr(600,root,root) /etc/skel/.screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
-%attr(600,root,root) /etc/skel/.screenrc
 %{_mandir}/man1/*
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/screen.info*
-%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*

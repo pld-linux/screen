@@ -1,12 +1,11 @@
-diff -ur -x Makefile -x configure -x screen.info screen-4.0.3/ansi.c screen-4.0.3.wiget/ansi.c
---- screen-4.0.3/ansi.c	2003-12-05 14:57:05.000000000 +0100
-+++ screen-4.0.3.wiget/ansi.c	2008-03-21 22:19:42.000000000 +0100
-@@ -1496,12 +1496,14 @@
+--- screen-4.1/ansi.c~	2010-02-24 15:33:05.000000000 +0200
++++ screen-4.1/ansi.c	2010-02-24 15:42:23.596133932 +0200
+@@ -1530,12 +1530,14 @@
  	}
  #endif
  #ifdef RXVT_OSC
--      if (typ == 0 || typ == 1 || typ == 20 || typ == 39 || typ == 49)
-+      if (typ == 0 || typ == 1 || typ == 20 || typ == 39 || typ == 49 || typ == 10 || typ == 11 )
+-      if (typ == 0 || typ == 1 || typ == 2 || typ == 20 || typ == 39 || typ == 49)
++      if (typ == 0 || typ == 1 || typ == 2 || typ == 20 || typ == 39 || typ == 49 || typ == 10 || typ == 11 )
  	{
  	  int typ2;
  	  typ2 = typ / 10;
@@ -26,12 +25,6 @@ diff -ur -x Makefile -x configure -x screen.info screen-4.0.3/ansi.c screen-4.0.
  		    Redisplay(0);
  		}
  	    }
-Tylko w screen-4.0.3.wiget: ansi.c~
-Tylko w screen-4.0.3.wiget: autom4te.cache
-Tylko w screen-4.0.3.wiget: config.h
-Tylko w screen-4.0.3.wiget: config.log
-Tylko w screen-4.0.3.wiget: config.status
-diff -ur -x Makefile -x configure -x screen.info screen-4.0.3/display.c screen-4.0.3.wiget/display.c
 --- screen-4.0.3/display.c	2003-12-05 14:45:41.000000000 +0100
 +++ screen-4.0.3.wiget/display.c	2008-03-21 22:21:46.000000000 +0100
 @@ -3053,7 +3053,7 @@
@@ -75,7 +68,6 @@ diff -ur -x Makefile -x configure -x screen.info screen-4.0.3/display.c screen-4
  }
  #endif
 Tylko w screen-4.0.3.wiget: display.c~
-diff -ur -x Makefile -x configure -x screen.info screen-4.0.3/display.h screen-4.0.3.wiget/display.h
 --- screen-4.0.3/display.h	2003-07-01 16:01:42.000000000 +0200
 +++ screen-4.0.3.wiget/display.h	2008-03-21 22:08:44.000000000 +0100
 @@ -113,7 +113,7 @@

@@ -93,8 +93,8 @@
        else if (ParseSaveStr(act, &BufferFile))
          break;
        if (msgok)
---- ./screen.c.org	Mon Feb 11 13:39:06 2002
-+++ ./screen.c	Wed Jun 19 14:00:37 2002
+--- screen-4.1/screen.c~	2010-02-24 14:46:32.000000000 +0200
++++ screen-4.1/screen.c	2010-02-24 14:47:04.352924220 +0200
 @@ -109,6 +109,7 @@
  FILE *dfp;
  #endif
@@ -133,10 +133,10 @@
  	    (c >= '0' && c <= '9') || 
  	    (c >= 'a' && c <= 'z') || 
  	    (c >= 'A' && c <= 'Z'))) 
-@@ -435,9 +441,6 @@
+@@ -479,9 +479,6 @@
    timestring = SaveStr("%c:%s %M %d %H%? %l%?");
-   wlisttit = SaveStr("Num Name%=Flags");
-   wliststr = SaveStr("%3n %t%=%f");
+   wlisttit = SaveStr(" Num Name%=Flags");
+   wliststr = SaveStr("%4n %t%=%f");
 -#ifdef COPY_PASTE
 -  BufferFile = SaveStr(DEFAULT_BUFFERFILE);
 -#endif
