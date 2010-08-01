@@ -17,12 +17,12 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.1
-Release:	0.6
-License:	GPL
+Version:	4.1.0
+Release:	0.7
+License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-7851249fa3e5a9ce00ad3bf8bd0b417acb335f84.tar.gz
-# Source0-md5:	a1b42f6505230ecdb943d95231b3e358
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-a805439f6443fb0e00ac6caff92f99950c1ddda8.tar.gz
+# Source0-md5:	fa1677dfd3880772b4bc5a3aa598f4fe
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -41,7 +41,6 @@ Patch11:	%{name}-inputline-size.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
 Patch15:	%{name}-statusline-encoding.patch
-Patch16:	%{name}-etcscreenrc.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -137,6 +136,7 @@ CFLAGS="%{rpmcflags} -DMAXWIN=128"
 	--enable-pam \
 	--enable-colors256 \
 	--enable-rxvt_osc \
+	--with-sys-screenrc=/etc/screenrc \
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
 	--disable-socket-dir
