@@ -9,7 +9,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.0.3
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/Terminal
 Source0:	ftp://ftp.uni-erlangen.de/pub/utilities/screen/%{name}-%{version}.tar.gz
@@ -148,8 +148,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/screen/utf8encodings} \
 install screen			$RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
-install etc/etcscreenrc		$RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-install %{SOURCE3}	$RPM_BUILD_ROOT/etc/skel/.screenrc
+
+cat %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+echo -e "\n\n" > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+cat etc/etcscreenrc >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+
 install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -171,7 +174,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
-%attr(600,root,root) /etc/skel/.screenrc
 %{_mandir}/man1/*
 %lang(ja) %{_mandir}/ja/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
