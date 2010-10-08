@@ -134,7 +134,7 @@ for file in *.dist; do
 done
 
 %{__make} \
-	CFLAGS="%{rpmcflags} -DMAXWIN=128"
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -DMAXWIN=128"
 
 cd doc
 rm -f screen.info*
@@ -149,9 +149,9 @@ install screen			$RPM_BUILD_ROOT%{_bindir}
 install doc/screen.1		$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/screen.info*	$RPM_BUILD_ROOT%{_infodir}
 
-cat %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 echo -e "\n\n" > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-cat etc/etcscreenrc >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+cat %{SOURCE3} >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 
 install utf8encodings/*		$RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 
