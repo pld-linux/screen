@@ -156,9 +156,9 @@ install -p screen $RPM_BUILD_ROOT%{_bindir}
 cp -a doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -a doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 
+install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+echo -e "\n\n" >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 cat %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-echo -e "\n\n" > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-cat etc/etcscreenrc >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 
 cp -a utf8encodings/* $RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
