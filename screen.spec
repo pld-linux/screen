@@ -18,11 +18,11 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.1.0
-Release:	0.7
+Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-a805439f6443fb0e00ac6caff92f99950c1ddda8.tar.gz
-# Source0-md5:	fa1677dfd3880772b4bc5a3aa598f4fe
+# Source0-md5:	1aca27adebec4ab0c3a8ee683675a7fd
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -155,8 +155,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/screen/utf8encodings} \
 install -p screen $RPM_BUILD_ROOT%{_bindir}
 cp -a doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -a doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
-cp -a etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
-cp -a %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.screenrc
+
+cat %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+echo -e "\n\n" > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+cat etc/etcscreenrc >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+
 cp -a utf8encodings/* $RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
 cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
 
@@ -177,7 +180,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
-%attr(600,root,root) /etc/skel/.screenrc
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
 %{_mandir}/man1/*
