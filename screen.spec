@@ -134,7 +134,7 @@ for file in *.dist; do
 done
 
 %{__make} \
-	CFLAGS="%{rpmcflags} -DMAXWIN=128"
+	CFLAGS="%{rpmcflags} -DMAXWIN=256"
 
 cd doc
 rm -f screen.info*
