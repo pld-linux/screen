@@ -18,15 +18,15 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.1.0
-Release:	1.1
+Release:	1.2
 License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/screen-a805439f6443fb0e00ac6caff92f99950c1ddda8.tar.gz
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-a805439f6443fb0e00ac6caff92f99950c1ddda8.tar.gz
 # Source0-md5:	1aca27adebec4ab0c3a8ee683675a7fd
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
-Source3:	screenrc
+Source3:	%{name}rc
 Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-manual.patch
 Patch3:		%{name}-ia64.patch
@@ -130,7 +130,7 @@ mv screen-*/src/* .
 %{__aclocal}
 %{__autoheader}
 %{__autoconf}
-CFLAGS="%{rpmcflags} -DMAXWIN=128"
+CFLAGS="%{rpmcflags} -DMAXWIN=256"
 %{?with_fifo:nore=1} \
 %configure \
 	--enable-pam \
