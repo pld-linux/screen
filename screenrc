@@ -1,0 +1,36 @@
+# user's .screenrc file
+
+# This is how one can set a reattach password:
+# password ODSJQf.4IJN7E    # "1234"
+
+# no annoying audible bell, please
+vbell on
+
+# detach on hangup
+autodetach on
+
+# don't display the copyright page
+startup_message off
+
+# emulate .logout message
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+# make the shell in every window a login shell
+shell -$SHELL
+
+defscrollback 5000
+
+# don't kill window after the process died
+zombie "^Mr"
+
+# enable support for the "alternate screen" capability in all windows
+# altscreen on
+
+# utf8 by default
+defutf8 on
+
+# 256 colors terminal
+# term screen-256color
+
+# use terminal scrollback buffer
+termcapinfo xterm|xterm-color|xterms|xs|konsole|konsole-256color|rxvt|gnome-terminal ti@:te@

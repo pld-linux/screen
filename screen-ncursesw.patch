@@ -1,0 +1,20 @@
+--- screen-4.0.3/configure.in~	2011-02-14 10:17:32.341272254 +0100
++++ screen-4.0.3/configure.in	2011-02-15 18:50:46.405665123 +0100
+@@ -644,6 +644,8 @@
+ tgetent((char *)0, (char *)0);
+ #endif
+ ],,
++LIBS="-ltinfow $olibs"
++AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+ LIBS="-ltinfo $olibs"
+ AC_CHECKING(libtinfo)
+ AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+@@ -656,7 +658,7 @@
+ LIBS="-ltermlib $olibs"
+ AC_CHECKING(libtermlib)
+ AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+-AC_MSG_ERROR(!!! no tgetent - no screen)))))))
++AC_MSG_ERROR(!!! no tgetent - no screen))))))))
+ 
+ AC_TRY_RUN([
+ 
