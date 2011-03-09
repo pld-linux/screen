@@ -33,4 +33,4 @@ defutf8 on
 # term screen-256color
 
 # use terminal scrollback buffer
-termcapinfo xterm|xterms|xs|konsole|konsole-256color|rxvt|gnome-terminal ti@:te@
+termcapinfo xterm|xterm-color|xterms|xs|konsole|konsole-256color|rxvt|gnome-terminal ti@:te@
