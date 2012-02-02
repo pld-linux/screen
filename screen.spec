@@ -7,6 +7,7 @@
 #   configure: checking socket implementation...
 #   - you are normal
 #   - both sockets and fifos usable. let's take sockets.
+# - from changelog: 'maxwin' can now be used to increase the number of maximum windows.
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de.UTF-8):	Screen - Verwaltet mehrere Sitzungen an einem tty
 Summary(es.UTF-8):	Screen - Administra múltiples sesiones en un tty
@@ -17,12 +18,13 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
+# 4.0 stable is on SCREEN_4_0 brach
 Version:	4.1.0
-Release:	1.2
+Release:	1.3
 License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-a805439f6443fb0e00ac6caff92f99950c1ddda8.tar.gz
-# Source0-md5:	1aca27adebec4ab0c3a8ee683675a7fd
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-df0777e915608ba2d403bb0b3a967b4619e0378b.tar.gz
+# Source0-md5:	7b1e03f977d2d01983e344df81e8640b
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
