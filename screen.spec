@@ -20,11 +20,11 @@ Summary(uk.UTF-8):	Менеджер екрану, що підтримує кіл
 Name:		screen
 # 4.0 stable is on SCREEN_4_0 brach
 Version:	4.1.0
-Release:	1.3
+Release:	1.4
 License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-df0777e915608ba2d403bb0b3a967b4619e0378b.tar.gz
-# Source0-md5:	d8f6eb8a8d940e90e2acbd73ad015e77
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-c64f800e7b197e14433ac97be12f32385a27a04f.tar.gz
+# Source0-md5:	a944a43bd3324ed2238bfa093a68ad04
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
