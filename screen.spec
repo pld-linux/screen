@@ -149,7 +149,7 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-sys-screenrc=/etc/screenrc \
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
-	--with-socket-dir="%{_localstatedir}/run/screen"
+	--disable-socket-dir
 
 %{__make} -j1
 
@@ -176,16 +176,6 @@ cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/README.screen-non-english-man-pages
 
-# Create the socket dir
-install -d $RPM_BUILD_ROOT%{_localstatedir}/run/screen
-
-# And tell systemd to recreate it on start with tmpfs
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d
-cat <<EOF > $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d/screen.conf
-# screen needs directory in /var/run
-d %{_localstatedir}/run/screen 0775 root screen
-EOF
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -200,7 +190,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
-%{_sysconfdir}/tmpfiles.d/screen.conf
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
 %{_mandir}/man1/*
