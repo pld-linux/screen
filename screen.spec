@@ -139,6 +139,7 @@ mv screen-*/src/* .
 %{__aclocal}
 %{__autoheader}
 %{__autoconf}
+# --enable-locale vs --enable-use-locale - https://savannah.gnu.org/bugs/index.php?37528
 CFLAGS="%{rpmcflags} -DMAXWIN=256"
 %{?with_fifo:nore=1} \
 %configure \
@@ -146,6 +147,7 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--enable-colors256 \
 	--enable-rxvt_osc \
 	--enable-telnet \
+	--enable-use-locale \
 	--with-sys-screenrc=/etc/screenrc \
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
