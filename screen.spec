@@ -20,7 +20,7 @@ Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-cbaa666d4f21988164068a38ac915f8b4f3c4da3.tar.gz
-# Source0-md5:	8acbe428e5d3071c20c3981183009b73
+# Source0-md5:	ce736c486b6cd4d7167ae6dae5e3103c
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
