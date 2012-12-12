@@ -1,3 +1,7 @@
+; support OSC 10 and 11 commands for xterm default fg/bg colour
+; http://www.xfree86.org/current/ctlseqs.html
+; P s = 1 0 → Change VT100 text foreground color to P t
+; P s = 1 1 → Change VT100 text background color to P t 
 --- screen-4.1/ansi.c~	2010-02-24 15:33:05.000000000 +0200
 +++ screen-4.1/ansi.c	2010-02-24 15:42:23.596133932 +0200
 @@ -1530,12 +1530,14 @@
