@@ -20,11 +20,11 @@ Summary(uk.UTF-8):	Менеджер екрану, що підтримує кіл
 Name:		screen
 # 4.0 stable is on SCREEN_4_0 brach
 Version:	4.1.0
-Release:	1.4
+Release:	1.5
 License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-c64f800e7b197e14433ac97be12f32385a27a04f.tar.gz
-# Source0-md5:	4318d917bdbf26a0e49532462cfa285b
+Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-cbaa666d4f21988164068a38ac915f8b4f3c4da3.tar.gz
+# Source0-md5:	8acbe428e5d3071c20c3981183009b73
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -43,6 +43,9 @@ Patch11:	%{name}-inputline-size.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
 Patch15:	%{name}-statusline-encoding.patch
+Patch16:	screen-ipv6.patch
+Patch17:	screen-E3.patch
+Patch18:	screen-4.1.0-suppress_remap.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -51,6 +54,7 @@ BuildRequires:	pam-devel
 BuildRequires:	texinfo
 BuildRequires:	utempter-devel
 Requires:	pam >= 0.77.3
+Requires:	systemd-units >= 38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -127,6 +131,9 @@ mv screen-*/src/* .
 %patch12 -p1
 #%patch13 -p1 # my brain farted here, see if you have better luck
 %patch15 -p0
+%patch16 -p2
+%patch17 -p2
+%patch18 -p1
 
 %build
 %{__aclocal}
@@ -138,10 +145,11 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--enable-pam \
 	--enable-colors256 \
 	--enable-rxvt_osc \
+	--enable-telnet \
 	--with-sys-screenrc=/etc/screenrc \
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
-	--disable-socket-dir
+	--with-socket-dir="%{_localstatedir}/run/screen"
 
 %{__make} -j1
 
@@ -168,6 +176,16 @@ cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/README.screen-non-english-man-pages
 
+# Create the socket dir
+install -d $RPM_BUILD_ROOT%{_localstatedir}/run/screen
+
+# And tell systemd to recreate it on start with tmpfs
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d
+cat <<EOF > $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d/screen.conf
+# screen needs directory in /var/run
+d %{_localstatedir}/run/screen 0775 root screen
+EOF
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -182,6 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
+%{_sysconfdir}/tmpfiles.d/screen.conf
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
 %{_mandir}/man1/*
