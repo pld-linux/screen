@@ -161,6 +161,8 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-pty-group=5 \
 	--disable-socket-dir
 
+%{?with_fifo:grep -q "define.*NAMEDPIPE.*1" config.h || echo "bcond with fifo but fifos not enabled!" && exit 1}
+
 %{__make} -j1
 
 cd doc
