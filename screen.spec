@@ -1,12 +1,8 @@
 #
 # Conditional build:
-%bcond_with	fifo		# force using fifos even if sockets detected
+%bcond_without	fifo		# force using fifos even if sockets detected
 
 # TODO
-# - should we switch back fifos forcibly (so you could resume 4.0 sessions with 4.1?, stalled for me anyway)
-#   configure: checking socket implementation...
-#   - you are normal
-#   - both sockets and fifos usable. let's take sockets.
 # - from changelog: 'maxwin' can now be used to increase the number of maximum windows.
 Summary:	Screen - Manages multiple sessions on one tty
 Summary(de.UTF-8):	Screen - Verwaltet mehrere Sitzungen an einem tty
@@ -20,7 +16,7 @@ Summary(uk.UTF-8):	Менеджер екрану, що підтримує кіл
 Name:		screen
 # 4.0 stable is on SCREEN_4_0 brach
 Version:	4.1.0
-Release:	1.5
+Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-cbaa666d4f21988164068a38ac915f8b4f3c4da3.tar.gz
@@ -46,6 +42,12 @@ Patch15:	%{name}-statusline-encoding.patch
 Patch16:	screen-ipv6.patch
 Patch17:	screen-E3.patch
 Patch18:	screen-4.1.0-suppress_remap.patch
+Patch19:       49long-usernames.patch
+Patch20:       50increase-max-TERM-length.patch
+Patch21:       51fix-utf8-status-padding-bug.patch
+Patch22:       52fix_screen_utf8_nfd.patch
+Patch23:       53fix-startup-race-condition.patch
+Patch24:       60-644788-screen-4.1.0-4.0.3-interoperability.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -134,6 +136,12 @@ mv screen-*/src/* .
 %patch16 -p2
 %patch17 -p2
 %patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 %build
 %{__aclocal}
