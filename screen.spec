@@ -16,7 +16,7 @@ Summary(uk.UTF-8):	Менеджер екрану, що підтримує кіл
 Name:		screen
 # 4.0 stable is on SCREEN_4_0 brach
 Version:	4.1.0
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-cbaa666d4f21988164068a38ac915f8b4f3c4da3.tar.gz
@@ -161,7 +161,12 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-pty-group=5 \
 	--disable-socket-dir
 
-%{?with_fifo:grep -q "define.*NAMEDPIPE.*1" config.h || echo "bcond with fifo but fifos not enabled!" && exit 1}
+%if %{with fifo}
+if ! grep -q "define.*NAMEDPIPE.*1" config.h; then
+	echo "bcond with fifo but fifos not enabled!"
+	exit 1
+fi
+%endif
 
 %{__make} -j1
 
