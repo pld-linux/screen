@@ -56,7 +56,6 @@ BuildRequires:	pam-devel
 BuildRequires:	texinfo
 BuildRequires:	utempter-devel
 Requires:	pam >= 0.77.3
-Requires:	systemd-units >= 38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
