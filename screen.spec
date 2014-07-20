@@ -1,3 +1,5 @@
+# TODO: check interoperability with 4.0.x and 4.1.x (or don't care about it):
+# 4.2.1 string buffer sizes are enlargered upstream, but to different values than Debian's 4.1.x
 #
 # Conditional build:
 %bcond_without	fifo		# force using fifos even if sockets detected
@@ -14,13 +16,12 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-# 4.0 stable is on SCREEN_4_0 brach
-Version:	4.1.0
-Release:	4
+Version:	4.2.1
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Terminal
-Source0:	http://git.savannah.gnu.org/cgit/screen.git/snapshot/%{name}-c2cd05962664c80f8ae063d6bf7a21084e0c2f37.tar.gz
-# Source0-md5:	61195697c98359ae3a86c8e1ea5f538d
+Source0:	http://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
+# Source0-md5:	419a0594e2b25039239af8b90eda7d92
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -30,24 +31,17 @@ Patch2:		%{name}-manual.patch
 Patch3:		%{name}-ia64.patch
 Patch4:		%{name}-info.patch
 Patch5:		%{name}-debian_fixed.patch
-Patch6:		%{name}-nolibtermcap.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
 Patch9:		%{name}-no-libs.patch
-Patch10:	%{name}-varargs.patch
-Patch11:	%{name}-inputline-size.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
 Patch15:	%{name}-statusline-encoding.patch
 Patch16:	screen-ipv6.patch
 Patch17:	screen-E3.patch
 Patch18:	screen-4.1.0-suppress_remap.patch
-Patch19:       49long-usernames.patch
-Patch20:       50increase-max-TERM-length.patch
-Patch21:       51fix-utf8-status-padding-bug.patch
-Patch22:       52fix_screen_utf8_nfd.patch
-Patch23:       53fix-startup-race-condition.patch
-Patch24:       60-644788-screen-4.1.0-4.0.3-interoperability.patch
+Patch22:	52fix_screen_utf8_nfd.patch
+Patch24:	60-644788-screen-4.1.0-4.0.3-interoperability.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -112,34 +106,25 @@ Screen корисний користувачам, які заходять на �
 машиною.
 
 %prep
-%setup -qc
-mv screen-*/src/* .
-
+%setup -q
 %patch1 -p0
-%patch2 -p0
+%patch2 -p1
 %patch3 -p0
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 # DON'T ENABLE IT UNLESS YOU REALLY FIX IT
 # (it's heavily broken - note that some sequences should be get for
 # $TERM before running screen instance, and others for TERM=screen!)
 ###%patch7 -p1
 #%patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
 %patch12 -p1
 #%patch13 -p1 # my brain farted here, see if you have better luck
 %patch15 -p0
 %patch16 -p2
 %patch17 -p2
 %patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
 %patch22 -p1
-%patch23 -p1
 %patch24 -p1
 
 %build

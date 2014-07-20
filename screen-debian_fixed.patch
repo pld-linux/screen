@@ -1,38 +1,38 @@
---- ./doc/screen.1.org	Wed Jun 19 13:36:55 2002
-+++ ./doc/screen.1	Wed Jun 19 13:47:46 2002
-@@ -1040,7 +1040,7 @@
+--- screen-4.2.1/doc/screen.1.orig	2014-07-20 09:46:39.879173376 +0200
++++ screen-4.2.1/doc/screen.1	2014-07-20 09:51:20.829161584 +0200
+@@ -1143,7 +1143,7 @@
  .PP
  Change the filename used for reading and writing with the paste buffer.
  If the optional argument to the \*Qbufferfile\*U command is omitted, 
--the default setting (\*Q/tmp/screen-exchange\*U) is reactivated.
-+the default setting (\*Q$HOME/.screen-exchange\*U) is reactivated.
+-the default setting (\*Q/tmp/screen\-exchange\*U) is reactivated.
++the default setting (\*Q$HOME/.screen\-exchange\*U) is reactivated.
  The following example will paste the system's password file into 
  the
  .I screen
-@@ -1308,7 +1308,7 @@
+@@ -1447,7 +1447,7 @@
  .br
  .ti -2n
  \fB>\fP sets the (second) mark and writes the contents of the paste buffer to
--the screen-exchange file (/tmp/screen-exchange per default) once copy-mode is 
-+the screen-exchange file ($HOME/.screen-exchange per default) once copy-mode is 
+-the screen-exchange file (/tmp/screen\-exchange per default) once copy-mode is
++the screen-exchange file ($HOME/.screen\-exchange per default) once copy-mode is
  finished. 
  .br
  This example demonstrates how to dump the whole scrollback buffer 
-@@ -2940,7 +2940,7 @@
+@@ -3474,7 +3474,7 @@
  users on the same host. If an encoding is specified the paste buffer
  is recoded on the fly to match the encoding.
  The filename can be set with the \fIbufferfile\fP
--command and defaults to \*Q/tmp/screen-exchange\*U.
-+command and defaults to \*Q$HOME/.screen-exchange\*U.
+-command and defaults to \*Q/tmp/screen\-exchange\*U.
++command and defaults to \*Q$HOME/.screen\-exchange\*U.
  .sp
  .ne 3
  .BR "writelock " [ on | "off\fR|\fBauto\fR]"
-@@ -4284,7 +4284,7 @@
+@@ -4870,7 +4870,7 @@
  Written by the "termcap" output function
- .IP /tmp/screens/screen-exchange
+ .IP /tmp/screens/screen\-exchange
  or
--.IP /tmp/screen-exchange
-+.IP $HOME/.screen-exchange
+-.IP /tmp/screen\-exchange
++.IP $HOME/.screen\-exchange
  .I screen
  `interprocess communication buffer'
  .IP hardcopy.[0-9]

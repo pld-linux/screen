@@ -1,15 +1,15 @@
---- doc/screen.1.orig	Thu Jul  6 15:40:50 2000
-+++ doc/screen.1	Fri Sep  8 19:20:38 2000
-@@ -101,7 +101,7 @@
- The above example would start the emacs editor (editing prog.c) and switch
- to its window.
+--- screen-4.2.1/doc/screen.1.orig	2014-04-28 00:10:01.000000000 +0200
++++ screen-4.2.1/doc/screen.1	2014-07-20 09:45:37.959175974 +0200
+@@ -103,7 +103,7 @@
+ the invoking shell to the application (emacs in this case), because it is
+ forked from the parent screen process, not from the invoking shell.
  .PP
 -If \*Q/etc/utmp\*U is writable by
 +If \*Q/var/run/utmp\*U is writable by
  .IR screen ,
  an appropriate record will be written to this file for each window, and
  removed when the window is terminated.
-@@ -230,7 +230,7 @@
+@@ -232,7 +232,7 @@
  The use of this option is discouraged.
  .TP 5
  .BR \-l " and " \-ln
@@ -17,8 +17,8 @@
 +turns login mode on or off (for /var/run/utmp updating).
  This can also be defined through the \*Qdeflogin\*U .screenrc command.
  .TP 5
- .BR \-ls " and " \-list
-@@ -568,7 +568,7 @@
+ .BR \-ls " [" \fImatch ]
+@@ -625,7 +625,7 @@
  
  .SH CUSTOMIZATION
  The \*Qsocket directory\*U defaults either to $HOME/.screen or simply to
@@ -27,7 +27,7 @@
  .I screen
  is installed setuid-root, then the administrator
  should compile
-@@ -581,7 +581,7 @@
+@@ -638,7 +638,7 @@
  When
  .I screen
  is invoked, it executes initialization commands from the files
@@ -36,16 +36,16 @@
  \*Q.screenrc\*U in the user's home directory. These are the \*Qprogrammer's
  defaults\*U that can be overridden in the following ways: for the
  global screenrc file 
-@@ -1515,7 +1515,7 @@
+@@ -1845,7 +1845,7 @@
  The echo command may be used to annoy 
  .I screen
  users with a 'message of the
 -day'. Typically installed in a global /local/etc/screenrc. 
-+day'. Typically installed in a global /etc/screenrc. 
- The option \*Q-n\*U may be used to suppress the line feed.
++day'. Typically installed in a global etc/screenrc. 
+ The option \*Q\-n\*U may be used to suppress the line feed.
  See also \*Qsleep\*U.
  Echo is also useful for online checking of environment variables.
-@@ -1880,7 +1880,7 @@
+@@ -2397,7 +2397,7 @@
  .B lockscreen
  .PP
  Lock this display.
@@ -54,7 +54,7 @@
  other is available). Screen does not accept any command keys until this program
  terminates. Meanwhile processes in the windows may continue, as the windows 
  are in the `detached' state. The screenlock program may be changed through the
-@@ -3941,20 +3941,18 @@
+@@ -4857,20 +4857,18 @@
  .I screen
  distribution package for private and global initialization files.
  .IP $SYSSCREENRC 
@@ -66,20 +66,20 @@
  .IP $HOME/.screenrc
 -Read in after /usr/local/etc/screenrc
 +Read in after /etc/screenrc
- .IP $SCREENDIR/S-<login>
--.IP /local/screens/S-<login>
-+.IP /tmp/screens/S-<login>
+ .IP $SCREENDIR/S\-<login>
+-.IP /local/screens/S\-<login>
++.IP /tmp/screens/S\-<login>
  Socket directories (default)
--.IP /usr/tmp/screens/S-<login>
+-.IP /usr/tmp/screens/S\-<login>
 -Alternate socket directories.
  .IP "<socket directory>/.termcap"
  Written by the "termcap" output function
--.IP /usr/tmp/screens/screen-exchange
-+.IP /tmp/screens/screen-exchange
+-.IP /usr/tmp/screens/screen\-exchange
++.IP /tmp/screens/screen\-exchange
  or
- .IP /tmp/screen-exchange
+ .IP /tmp/screen\-exchange
  .I screen
-@@ -3963,11 +3961,9 @@
+@@ -4879,11 +4877,9 @@
  Screen images created by the hardcopy function
  .IP screenlog.[0-9]
  Output log files created by the log function
@@ -93,7 +93,7 @@
  Login records
  .IP $LOCKPRG
  Program that locks a terminal.
-@@ -4078,9 +4074,9 @@
+@@ -5005,9 +5001,9 @@
  must be installed as set-uid with owner root on most systems in order
  to be able to correctly change the owner of the tty device file for
  each window.
