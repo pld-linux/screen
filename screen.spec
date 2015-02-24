@@ -17,7 +17,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.2.1
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
