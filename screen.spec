@@ -3,6 +3,7 @@
 #
 # Conditional build:
 %bcond_without	fifo		# force using fifos even if sockets detected
+%bcond_without	ipv6		# enable/disable IPv6 patch
 
 # TODO
 # - from changelog: 'maxwin' can now be used to increase the number of maximum windows.
@@ -36,11 +37,11 @@ Patch9:		%{name}-no-libs.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
 Patch15:	%{name}-statusline-encoding.patch
-Patch16:	screen-ipv6.patch
-Patch17:	screen-E3.patch
-Patch18:	screen-4.1.0-suppress_remap.patch
-Patch22:	52fix_screen_utf8_nfd.patch
-Patch24:	60-644788-screen-4.1.0-4.0.3-interoperability.patch
+Patch16:	%{name}-ipv6.patch
+Patch17:	%{name}-E3.patch
+Patch18:	%{name}-4.1.0-suppress_remap.patch
+Patch22:	52fix_%{name}_utf8_nfd.patch
+Patch24:	60-644788-%{name}-4.1.0-4.0.3-interoperability.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -119,7 +120,7 @@ Screen корисний користувачам, які заходять на �
 %patch12 -p1
 #%patch13 -p1 # my brain farted here, see if you have better luck
 %patch15 -p0
-#%patch16 -p2 # DROP, or update to 4.3 branch
+%{?with_ipv6:%patch16 -p2}
 %patch17 -p2
 %patch18 -p1
 %patch22 -p1
@@ -165,12 +166,12 @@ install -p screen $RPM_BUILD_ROOT%{_bindir}
 cp -a doc/screen.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -a doc/screen.info* $RPM_BUILD_ROOT%{_infodir}
 
-install etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
+cp -p etc/etcscreenrc $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 echo -e "\n\n" >> $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 cat %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/screenrc
 
 cp -a utf8encodings/* $RPM_BUILD_ROOT%{_datadir}/screen/utf8encodings
-cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/screen
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/README.screen-non-english-man-pages
