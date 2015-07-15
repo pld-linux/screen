@@ -186,10 +186,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README ChangeLog doc/{FAQ,README.DOTSCREEN} etc/screenrc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/screenrc
-%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/screen
 %attr(755,root,root) %{_bindir}/screen
 %{_datadir}/screen
-%{_mandir}/man1/*
-%lang(ja) %{_mandir}/ja/man1/*
-%lang(pl) %{_mandir}/pl/man1/*
+%{_mandir}/man1/screen.1*
+%lang(ja) %{_mandir}/ja/man1/screen.1*
+%lang(pl) %{_mandir}/pl/man1/screen.1*
 %{_infodir}/screen.info*
