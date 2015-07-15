@@ -1,5 +1,5 @@
---- configure.in.orig	Wed Jun 14 16:04:17 2000
-+++ configure.in	Fri Sep  8 19:15:51 2000
+--- configure.ac.orig	Wed Jun 14 16:04:17 2000
++++ configure.ac	Fri Sep  8 19:15:51 2000
 @@ -625,6 +625,9 @@
  AC_MSG_ERROR(!!! no tgetent - no screen))))))
  

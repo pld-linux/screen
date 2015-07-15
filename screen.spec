@@ -16,17 +16,16 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.2.1
+Version:	4.3.1
 Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	419a0594e2b25039239af8b90eda7d92
+# Source0-md5:	5bb3b0ff2674e29378c31ad3411170ad
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
 Source3:	%{name}rc
-Patch1:		%{name}-compat21.patch
 Patch2:		%{name}-manual.patch
 Patch3:		%{name}-ia64.patch
 Patch4:		%{name}-info.patch
@@ -107,7 +106,6 @@ Screen корисний користувачам, які заходять на �
 
 %prep
 %setup -q
-%patch1 -p0
 %patch2 -p1
 %patch3 -p0
 %patch4 -p1
@@ -121,7 +119,7 @@ Screen корисний користувачам, які заходять на �
 %patch12 -p1
 #%patch13 -p1 # my brain farted here, see if you have better luck
 %patch15 -p0
-%patch16 -p2
+#%patch16 -p2 # DROP, or update to 4.3 branch
 %patch17 -p2
 %patch18 -p1
 %patch22 -p1

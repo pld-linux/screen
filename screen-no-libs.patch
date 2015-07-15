@@ -1,5 +1,5 @@
---- screen-4.1/configure.in~	2010-02-24 14:49:45.000000000 +0200
-+++ screen-4.1/configure.in	2010-02-24 14:51:15.206024475 +0200
+--- screen-4.1/configure.ac~	2010-02-24 14:49:45.000000000 +0200
++++ screen-4.1/configure.ac	2010-02-24 14:51:15.206024475 +0200
 @@ -201,14 +201,6 @@
  #endif
  ], LIBS="$LIBS -lsocket -linet";seqptx=1)
