@@ -1,5 +1,5 @@
---- screen-4.3.1/doc/screen.texinfo~	2015-07-15 15:28:58.000000000 +0300
-+++ screen-4.3.1/doc/screen.texinfo	2015-07-15 15:29:44.248619782 +0300
+--- screen-4.4.0/doc/screen.texinfo~	2016-06-26 19:27:26.000000000 +0300
++++ screen-4.4.0/doc/screen.texinfo	2016-06-26 19:46:48.088236448 +0300
 @@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
@@ -8,12 +8,12 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.3.1
+ @set version 4.4.0
  
 +@dircategory Shell utilities:
  @direntry
 -* Screen: (screen).             Full-screen window manager.
-+* Screen: (screen).			Full-screen window manager
++* Screen: (screen).             Full-screen window manager
  @end direntry
  
  @c For examples, use a literal escape in info.

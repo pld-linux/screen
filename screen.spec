@@ -16,12 +16,12 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.3.1
+Version:	4.4.0
 Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	5bb3b0ff2674e29378c31ad3411170ad
+# Source0-md5:	d26e11a3648c2b11aaefa215a55dfd39
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
