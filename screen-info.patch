@@ -13,7 +13,7 @@
 +@dircategory Shell utilities:
  @direntry
 -* Screen: (screen).             Full-screen window manager.
-+* Screen: (screen).             Full-screen window manager
++* Screen: (screen).			Full-screen window manager
  @end direntry
  
  @c For examples, use a literal escape in info.
