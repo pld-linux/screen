@@ -124,7 +124,7 @@
 +	  n = 13;
 +	  len = 34;
 +  }
-+  for (; n < len; n++)
++  for (; n < len; n++) {
      char c = ppp->pw_passwd[n];
 -    if (!(c == '.' || c == '/'  || c == '$' ||
 +    if (!(c == '.' || c == '/' || (len == 34 && c == '$') ||
