@@ -1,5 +1,5 @@
---- screen-4.4.0/doc/screen.texinfo~	2016-06-26 19:27:26.000000000 +0300
-+++ screen-4.4.0/doc/screen.texinfo	2016-06-26 19:46:48.088236448 +0300
+--- screen-4.5.0/doc/screen.texinfo~	2017-01-19 10:24:06.000000000 +0200
++++ screen-4.5.0/doc/screen.texinfo	2017-01-19 10:24:52.417185864 +0200
 @@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
@@ -8,7 +8,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.4.0
+ @set version 4.5.0
  
 +@dircategory Shell utilities:
  @direntry

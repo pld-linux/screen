@@ -1,7 +1,7 @@
 https://savannah.gnu.org/bugs/index.php?23955
 
---- process.c.orig	2008-05-08 02:37:33.000000000 +0800
-+++ process.c	2008-05-08 02:37:49.000000000 +0800
+--- ./process.c.orig	2008-05-08 02:37:33.000000000 +0800
++++ ./process.c	2008-05-08 02:37:49.000000000 +0800
 @@ -3422,6 +3422,7 @@
  	    {
  	      WinSwitchEncoding(fore, n);
@@ -10,12 +10,12 @@ https://savannah.gnu.org/bugs/index.php?23955
  	    }
  	  else if (i && display)
  	    D_encoding  = n;
---- screen.c.orig	2008-05-08 02:37:22.000000000 +0800
-+++ screen.c	2008-05-20 20:34:37.000000000 +0800
-@@ -2584,6 +2584,17 @@
- 	    }
- 	  p += strlen(p) - 1;
- 	  break;
+--- screen-4.5.0/screen.c~	2017-01-19 11:48:22.000000000 +0200
++++ screen-4.5.0/screen.c	2017-01-19 11:49:18.766380947 +0200
+@@ -2766,6 +2766,18 @@
+       p += strlen(p) - 1;
+       break;
+ 
 +#ifdef ENCODINGS
 +	case 'e':
 +	  *p = 0;
@@ -27,6 +27,7 @@ https://savannah.gnu.org/bugs/index.php?23955
 +	  p += strlen(p) - 1;
 +	  break;
 +#endif
- 	case '{':
-           {
- 	    char rbuf[128];
++
+     case '{':
+     {
+       char rbuf[128];
