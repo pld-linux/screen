@@ -1,32 +1,32 @@
---- screen-4.5.0/doc/screen.texinfo~	2017-01-19 10:24:06.000000000 +0200
-+++ screen-4.5.0/doc/screen.texinfo	2017-01-19 10:24:52.417185864 +0200
+--- screen-4.5.1/doc/screen.texinfo.orig	2017-02-25 16:35:35.128808129 +0100
++++ screen-4.5.1/doc/screen.texinfo	2017-03-11 08:59:03.613765520 +0100
 @@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
  @settitle Screen User's Manual
 -@dircategory General Commands
++@dircategory Shell utilities:
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.5.0
+ @set version 4.5.1
  
-+@dircategory Shell utilities:
  @direntry
 -* Screen: (screen).             Full-screen window manager.
 +* Screen: (screen).			Full-screen window manager
  @end direntry
  
  @c For examples, use a literal escape in info.
-@@ -176,7 +176,7 @@
- variable) who will use it to create the new window.  The above example would 
- start the @code{emacs} editor (editing @file{prog.c}) and switch to its window.
+@@ -184,7 +184,7 @@
+ the invoking shell to the application (emacs in this case), because it is
+ forked from the parent screen process, not from the invoking shell.
  
 -If @file{/etc/utmp} is writable by @code{screen}, an appropriate record
 +If @file{/var/run/utmp} is writable by @code{screen}, an appropriate record
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -447,7 +447,7 @@
+@@ -496,7 +496,7 @@
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -35,7 +35,7 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -968,7 +968,7 @@
+@@ -1037,7 +1037,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -44,7 +44,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -997,7 +997,7 @@
+@@ -1090,7 +1090,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -53,7 +53,7 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1561,13 +1561,12 @@
+@@ -1764,13 +1764,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -73,16 +73,16 @@
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -1900,7 +1899,7 @@
+@@ -2338,7 +2337,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
 -* Login::                       Control @file{/etc/utmp} logging
 +* Login::                       Control @file{/var/run/utmp} logging
  * Mode::                        Control the file mode of the pty
- * Monitor::                     Watch for activity in a window
+ * Monitor::                     Watch for activity or inactivity in a window
  * Windows::			List the active windows
-@@ -2109,7 +2108,7 @@
+@@ -2547,7 +2546,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -91,7 +91,7 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -4962,22 +4961,19 @@
+@@ -5738,22 +5737,19 @@
  global initialization files.
  
  @item @code{$SYSSCREENRC}
@@ -117,7 +117,7 @@
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
  
-@@ -4995,7 +4991,7 @@
+@@ -5771,7 +5767,7 @@
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -126,7 +126,18 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5100,10 +5096,10 @@
+@@ -5792,8 +5792,8 @@
+ ============
+ 
+ @example
+-     Thomas Renninger <treen@suse.com>,
+-     Axel Beckert <abe@deuxchevaux.org>,
++     Thomas Renninger <treen@@suse.com>,
++     Axel Beckert <abe@@deuxchevaux.org>,
+      Ken Beal <kbeal@@amber.ssd.csd.harris.com>,
+      Rudolf Koenig <rfkoenig@@informatik.uni-erlangen.de>,
+      Toerless Eckert <eckert@@informatik.uni-erlangen.de>,
+@@ -5881,10 +5877,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -139,7 +150,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5184,8 +5180,7 @@
+@@ -5964,8 +5960,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
