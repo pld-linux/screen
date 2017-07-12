@@ -1,9 +1,3 @@
-# TODO: check interoperability with 4.0.x and 4.1.x (or don't care about it):
-# 4.2.1 string buffer sizes are enlargered upstream, but to different values than Debian's 4.1.x
-#
-# Conditional build:
-%bcond_without	fifo		# force using fifos even if sockets detected
-
 # TODO
 # - from changelog: 'maxwin' can now be used to increase the number of maximum windows.
 Summary:	Screen - Manages multiple sessions on one tty
@@ -16,12 +10,12 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.5.1
+Version:	4.6.1
 Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	http://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	a8c5da2f42f8a18fa4dada2419d1549b
+# Source0-md5:	132c893aabfaf2020074790215c8cacd
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -39,9 +33,8 @@ Patch15:	%{name}-statusline-encoding.patch
 Patch17:	%{name}-E3.patch
 Patch18:	%{name}-4.1.0-suppress_remap.patch
 Patch22:	52fix_%{name}_utf8_nfd.patch
-Patch24:	60-644788-%{name}-4.1.0-4.0.3-interoperability.patch
 URL:		http://www.gnu.org/software/screen/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
@@ -121,7 +114,6 @@ Screen корисний користувачам, які заходять на �
 %patch17 -p2
 %patch18 -p1
 %patch22 -p1
-%patch24 -p1
 
 %build
 %{__aclocal}
@@ -129,7 +121,6 @@ Screen корисний користувачам, які заходять на �
 %{__autoconf}
 # --enable-locale vs --enable-use-locale - https://savannah.gnu.org/bugs/index.php?37528
 CFLAGS="%{rpmcflags} -DMAXWIN=256"
-%{?with_fifo:nore=1} \
 %configure \
 	--enable-pam \
 	--enable-colors256 \
@@ -140,13 +131,6 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
 	--disable-socket-dir
-
-%if %{with fifo}
-if ! grep -q "define.*NAMEDPIPE.*1" config.h; then
-	echo "bcond with fifo but fifos not enabled!"
-	exit 1
-fi
-%endif
 
 %{__make} -j1
 

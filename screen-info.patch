@@ -1,5 +1,5 @@
---- screen-4.5.1/doc/screen.texinfo.orig	2017-02-25 16:35:35.128808129 +0100
-+++ screen-4.5.1/doc/screen.texinfo	2017-03-11 08:59:03.613765520 +0100
+--- screen-4.6.1/doc/screen.texinfo.orig	2017-07-10 21:26:25.000000000 +0200
++++ screen-4.6.1/doc/screen.texinfo	2017-07-12 19:33:40.440716821 +0200
 @@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.5.1
+ @set version 4.6.1
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -126,10 +126,10 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5792,8 +5792,8 @@
+@@ -5796,8 +5792,8 @@
  ============
  
- @example
+ @verbatim
 -     Thomas Renninger <treen@suse.com>,
 -     Axel Beckert <abe@deuxchevaux.org>,
 +     Thomas Renninger <treen@@suse.com>,

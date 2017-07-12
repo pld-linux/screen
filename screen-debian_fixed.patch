@@ -1,6 +1,6 @@
---- screen-4.2.1/doc/screen.1.orig	2014-07-20 09:46:39.879173376 +0200
-+++ screen-4.2.1/doc/screen.1	2014-07-20 09:51:20.829161584 +0200
-@@ -1143,7 +1143,7 @@
+--- screen-4.6.1/doc/screen.1.orig	2017-07-12 19:34:02.890716565 +0200
++++ screen-4.6.1/doc/screen.1	2017-07-12 19:34:56.057382623 +0200
+@@ -1226,7 +1226,7 @@
  .PP
  Change the filename used for reading and writing with the paste buffer.
  If the optional argument to the \*Qbufferfile\*U command is omitted, 
@@ -9,25 +9,25 @@
  The following example will paste the system's password file into 
  the
  .I screen
-@@ -1447,7 +1447,7 @@
- .br
- .ti -2n
+@@ -1540,7 +1540,7 @@
+ \fBA\fP toggles in append mode and sets a (second) mark.
+ .PP
  \fB>\fP sets the (second) mark and writes the contents of the paste buffer to
 -the screen-exchange file (/tmp/screen\-exchange per default) once copy-mode is
 +the screen-exchange file ($HOME/.screen\-exchange per default) once copy-mode is
  finished. 
- .br
+ .PP
  This example demonstrates how to dump the whole scrollback buffer 
-@@ -3474,7 +3474,7 @@
+@@ -3651,7 +3651,7 @@
  users on the same host. If an encoding is specified the paste buffer
  is recoded on the fly to match the encoding.
  The filename can be set with the \fIbufferfile\fP
 -command and defaults to \*Q/tmp/screen\-exchange\*U.
 +command and defaults to \*Q$HOME/.screen\-exchange\*U.
- .sp
- .ne 3
+ .RE
+ .TP
  .BR "writelock " [ on | "off\fR|\fBauto\fR]"
-@@ -4870,7 +4870,7 @@
+@@ -5030,7 +5030,7 @@
  Written by the "termcap" output function
  .IP /tmp/screens/screen\-exchange
  or
