@@ -1,5 +1,5 @@
---- screen-4.6.1/doc/screen.texinfo.orig	2017-07-10 21:26:25.000000000 +0200
-+++ screen-4.6.1/doc/screen.texinfo	2017-07-12 19:33:40.440716821 +0200
+--- screen-4.6.2/doc/screen.texinfo.orig	2017-10-23 14:18:26.000000000 +0200
++++ screen-4.6.2/doc/screen.texinfo	2017-12-09 08:56:43.588104192 +0100
 @@ -3,14 +3,14 @@
  @c vi:set wm=5
  @setfilename screen.info
@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.6.1
+ @set version 4.6.2
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -35,7 +35,7 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -1037,7 +1037,7 @@
+@@ -1035,7 +1035,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -44,7 +44,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -1090,7 +1090,7 @@
+@@ -1088,7 +1088,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -53,7 +53,7 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1764,13 +1764,12 @@
+@@ -1762,13 +1762,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -73,7 +73,7 @@
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -2338,7 +2337,7 @@
+@@ -2404,7 +2403,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -82,7 +82,7 @@
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity or inactivity in a window
  * Windows::			List the active windows
-@@ -2547,7 +2546,7 @@
+@@ -2613,7 +2612,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -91,7 +91,7 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -5738,22 +5737,19 @@
+@@ -5802,22 +5801,19 @@
  global initialization files.
  
  @item @code{$SYSSCREENRC}
@@ -117,7 +117,7 @@
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
  
-@@ -5771,7 +5767,7 @@
+@@ -5835,7 +5831,7 @@
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -126,7 +126,7 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5796,8 +5792,8 @@
+@@ -5860,8 +5856,8 @@
  ============
  
  @verbatim
@@ -137,7 +137,7 @@
       Ken Beal <kbeal@@amber.ssd.csd.harris.com>,
       Rudolf Koenig <rfkoenig@@informatik.uni-erlangen.de>,
       Toerless Eckert <eckert@@informatik.uni-erlangen.de>,
-@@ -5881,10 +5877,10 @@
+@@ -5945,10 +5941,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -150,7 +150,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5964,8 +5960,7 @@
+@@ -6028,8 +6024,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
