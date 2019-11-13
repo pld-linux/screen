@@ -1,27 +1,14 @@
---- screen-4.1/configure.ac~	2010-02-24 14:49:45.000000000 +0200
-+++ screen-4.1/configure.ac	2010-02-24 14:51:15.206024475 +0200
-@@ -201,14 +201,6 @@
- #endif
- ], LIBS="$LIBS -lsocket -linet";seqptx=1)
- 
--oldlibs="$LIBS"
--LIBS="$LIBS -lelf"
--AC_CHECKING(SVR4)
--AC_TRY_LINK([#include <utmpx.h>
--],,
--[AC_CHECK_HEADER(dwarf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN),
--[AC_CHECK_HEADER(elf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN))])]
--,LIBS="$oldlibs")
- AC_CHECK_HEADERS([stropts.h string.h strings.h])
- 
- AC_CHECKING(for Solaris 2.x)
-@@ -885,9 +877,6 @@
+--- screen-4.7.0/configure.ac.orig	2019-11-12 21:01:24.174032929 +0100
++++ screen-4.7.0/configure.ac	2019-11-12 21:02:55.326872445 +0100
+@@ -864,11 +864,6 @@
  dnl
  dnl    ****  loadav  ****
  dnl
+-if test "$cross_compiling" = no ; then
 -AC_CHECKING(for libutil(s))
 -test -f /usr/lib/libutils.a && LIBS="$LIBS -lutils"
 -test -f /usr/lib/libutil.a && LIBS="$LIBS -lutil"
+-fi
  
  AC_CHECKING(getloadavg)
  AC_TRY_LINK(,[getloadavg((double *)0, 0);],

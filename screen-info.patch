@@ -1,7 +1,7 @@
---- screen-4.6.2/doc/screen.texinfo.orig	2017-10-23 14:18:26.000000000 +0200
-+++ screen-4.6.2/doc/screen.texinfo	2017-12-09 08:56:43.588104192 +0100
-@@ -3,14 +3,14 @@
- @c vi:set wm=5
+--- screen-4.7.0/doc/screen.texinfo.orig	2019-10-02 00:07:59.000000000 +0200
++++ screen-4.7.0/doc/screen.texinfo	2019-11-12 21:00:02.497808741 +0100
+@@ -4,14 +4,14 @@
+ @documentencoding ISO-8859-15
  @setfilename screen.info
  @settitle Screen User's Manual
 -@dircategory General Commands
@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.6.2
+ @set version 4.7.0
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -17,7 +17,7 @@
  @end direntry
  
  @c For examples, use a literal escape in info.
-@@ -184,7 +184,7 @@
+@@ -185,7 +185,7 @@
  the invoking shell to the application (emacs in this case), because it is
  forked from the parent screen process, not from the invoking shell.
  
@@ -26,7 +26,7 @@
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -496,7 +496,7 @@
+@@ -497,7 +497,7 @@
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -35,7 +35,7 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -1035,7 +1035,7 @@
+@@ -1036,7 +1036,7 @@
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -44,7 +44,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -1088,7 +1088,7 @@
+@@ -1089,7 +1089,7 @@
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -53,7 +53,7 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -1762,13 +1762,12 @@
+@@ -1763,13 +1763,12 @@
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -73,7 +73,7 @@
  
  Warning: When you leave other shells unlocked and have no password set
  on @code{screen}, the lock is void: One could easily re-attach from an
-@@ -2404,7 +2403,7 @@
+@@ -2405,7 +2404,7 @@
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -82,7 +82,7 @@
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity or inactivity in a window
  * Windows::			List the active windows
-@@ -2613,7 +2612,7 @@
+@@ -2614,7 +2613,7 @@
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -126,18 +126,22 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5860,8 +5856,8 @@
+@@ -5860,10 +5856,10 @@
  ============
  
  @verbatim
+-     Maarten ter Huurne <maarten@treewalker.org>,
+-     Jussi Kukkonen <jussi.kukkonen@intel.com>,
 -     Thomas Renninger <treen@suse.com>,
 -     Axel Beckert <abe@deuxchevaux.org>,
++     Maarten ter Huurne <maarten@@treewalker.org>,
++     Jussi Kukkonen <jussi.kukkonen@@intel.com>,
 +     Thomas Renninger <treen@@suse.com>,
 +     Axel Beckert <abe@@deuxchevaux.org>,
       Ken Beal <kbeal@@amber.ssd.csd.harris.com>,
       Rudolf Koenig <rfkoenig@@informatik.uni-erlangen.de>,
       Toerless Eckert <eckert@@informatik.uni-erlangen.de>,
-@@ -5945,10 +5941,10 @@
+@@ -5947,10 +5943,10 @@
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -150,7 +154,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -6028,8 +6024,7 @@
+@@ -6030,8 +6026,7 @@
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 
