@@ -11,7 +11,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	4.8.0
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	https://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
@@ -33,6 +33,7 @@ Patch15:	%{name}-statusline-encoding.patch
 Patch17:	%{name}-E3.patch
 Patch18:	%{name}-4.1.0-suppress_remap.patch
 Patch22:	52fix_%{name}_utf8_nfd.patch
+Patch23:	%{name}-bracketed_paste_mode.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -114,6 +115,7 @@ Screen корисний користувачам, які заходять на �
 %patch17 -p2
 %patch18 -p1
 %patch22 -p1
+%patch23 -p1
 
 %build
 %{__aclocal}
