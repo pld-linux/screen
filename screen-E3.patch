@@ -41,7 +41,7 @@ index cc8f565..3efb67b 100644
 --- a/src/screen.c
 +++ b/src/screen.c
 @@ -1967,6 +1967,7 @@ int mode;
- #endif
+ 
      case D_LOCK:
        ClearAll();
 +      ClearScrollbackBuffer();

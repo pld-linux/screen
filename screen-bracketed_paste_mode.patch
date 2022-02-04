@@ -153,7 +153,7 @@ diff -ruNp screen-4.8.0.orig/display.h screen-4.8.0/display.h
 +  int   d_bracketed;		/* bracketed paste mode */
 +  int   d_cursorstyle;		/* cursor style */
  #ifdef RXVT_OSC
-   int   d_xtermosc[4];		/* osc used */
+   int   d_xtermosc[5];		/* osc used */
  #endif
 @@ -198,6 +200,8 @@ extern struct display TheDisplay;
  

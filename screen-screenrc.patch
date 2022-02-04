@@ -3,7 +3,7 @@
 @@ -1,21 +1,26 @@
 -#
 -# This is an example for the global screenrc file.
--# You may want to install this file as /etc/screenrc.
+-# You may want to install this file as /usr/local/etc/screenrc.
 -# Check config.h for the exact location.
 +# This is global screenrc file.
  #
@@ -62,9 +62,9 @@
  termcap  xterm|fptwist hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
  terminfo xterm|fptwist hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
  
-@@ -71,27 +76,93 @@
- #termcap xterm|xterms|xs ti=\E7\E[?47l
- #terminfo xterm|xterms|xs ti=\E7\E[?47l
+@@ -71,24 +76,89 @@
+ termcap xterm|xterms|xs ti=\E7\E[?47l
+ terminfo xterm|xterms|xs ti=\E7\E[?47l
  
 -#make hp700 termcap/info better
 +# make hp700 termcap/info better
@@ -106,7 +106,7 @@
 +bind 'I' login on
 +bind 'O' login off
 +bind '}' history
-+
+ 
 +# Yet another hack:
 +# Prepend/append register [/] to the paste if ^a^] is pressed.
 +# This lets me have autoindent mode in vi.
@@ -116,10 +116,6 @@
 +
 +# rebind so the window list is recently used first.
 +bind '"' windowlist -m
- 
- # On Debian GNU/Linux, `<--' (Backspace key) should send char `\177':
- bindkey -k kb stuff "\177"
- 
 +######################
 +#
 +# status bar settings

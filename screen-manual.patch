@@ -46,7 +46,7 @@
  See also \*Qsleep\*U.
  Echo is also useful for online checking of environment variables.
 @@ -2397,7 +2397,7 @@
- .B lockscreen
+ .RS 0
  .PP
  Lock this display.
 -Call a screenlock program (/local/bin/lck or /usr/bin/lock or a builtin if no
