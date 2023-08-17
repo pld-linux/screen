@@ -11,4 +11,4 @@
 -fi
  
  AC_CHECKING(getloadavg)
- AC_TRY_LINK(,[getloadavg((double *)0, 0);],
+ AC_TRY_LINK([
