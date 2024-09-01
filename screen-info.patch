@@ -1,5 +1,5 @@
---- screen-4.7.0/doc/screen.texinfo.orig	2019-10-02 00:07:59.000000000 +0200
-+++ screen-4.7.0/doc/screen.texinfo	2019-11-12 21:00:02.497808741 +0100
+--- screen-5.0.0/doc/screen.texinfo.orig	2024-08-28 21:55:03.000000000 +0200
++++ screen-5.0.0/doc/screen.texinfo	2024-09-01 19:14:07.342193120 +0200
 @@ -4,14 +4,14 @@
  @documentencoding ISO-8859-15
  @setfilename screen.info
@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 4.9.1
+ @set version 5.0.0
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -17,7 +17,7 @@
  @end direntry
  
  @c For examples, use a literal escape in info.
-@@ -185,7 +185,7 @@
+@@ -185,7 +185,7 @@ start the @code{emacs} editor (editing @
  the invoking shell to the application (emacs in this case), because it is
  forked from the parent screen process, not from the invoking shell.
  
@@ -26,7 +26,7 @@
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -497,7 +497,7 @@
+@@ -503,7 +503,7 @@ to be executed at startup, or on the fly
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -34,8 +34,8 @@
 +@file{/etc/screenrc}.  These defaults can be overridden in the 
  following ways:
  For the global screenrc file @code{screen} searches for the environment
- variable @code{$SYSSCREENRC} (this override feature may be disabled at
-@@ -1036,7 +1036,7 @@
+ variable @code{$SYSTEM_SCREENRC} (this override feature may be disabled at
+@@ -1044,7 +1044,7 @@ Append to hardcopy files.  @xref{Hardcop
  Place, where to dump hardcopy files.  @xref{Hardcopy}.
  @item hardstatus [@var{state}]
  Use the hardware status line.  @xref{Hardware Status Line}.
@@ -44,7 +44,7 @@
  Set display height.  @xref{Window Size}.
  @item help [-c @var{class}]
  Display current key bindings.  @xref{Help}.
-@@ -1089,7 +1089,7 @@
+@@ -1097,7 +1097,7 @@ Log all output in the current window.  @
  @item logfile @var{filename}
  Place where to collect logfiles.  @xref{Log}.
  @item login [@var{state}]
@@ -53,7 +53,16 @@
  @item logtstamp [@var{state}]
  Configure logfile time-stamps.  @xref{Log}.
  @item mapdefault
-@@ -2405,7 +2404,7 @@
+@@ -1772,7 +1772,7 @@ Without a parameter, the current message
+ @kindex C-x
+ @deffn Command lockscreen
+ (@kbd{C-a x}, @kbd{C-a C-x})@*
+-Call a screenlock program (@file{/local/bin/lck} or @file{/usr/bin/lock}
++Call a screenlock program (@file{/bin/lock} or @file{/usr/bin/lock}
+ or a builtin, if no other is available). Screen does not accept any
+ command keys until this program terminates. Meanwhile processes in the
+ windows may continue, as the windows are in the detached state.
+@@ -2414,7 +2414,7 @@ terminal emulation itself.
  * Naming Windows::		Control the name of the window
  * Console::			See the host's console messages
  * Kill::                        Destroy an unwanted window
@@ -62,7 +71,7 @@
  * Mode::                        Control the file mode of the pty
  * Monitor::                     Watch for activity or inactivity in a window
  * Windows::			List the active windows
-@@ -2614,7 +2613,7 @@
+@@ -2623,7 +2623,7 @@ compile time (@pxref{Installation}). Bot
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -71,10 +80,10 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -5802,22 +5801,19 @@
+@@ -5748,21 +5748,18 @@ Examples in the @code{screen} distributi
  global initialization files.
  
- @item @code{$SYSSCREENRC}
+ @item @code{$SYSTEM_SCREENRC}
 -@itemx /local/etc/screenrc
 +@itemx /etc/screenrc
  @code{screen} initialization commands
@@ -88,16 +97,16 @@
  @item @code{$SCREENDIR}/S-@var{login}
  
 -@item /local/screens/S-@var{login}
-+@item /tmp/screens/S-@var{login}
- Socket directories (default)
- 
+-Socket directories (default)
+-
 -@item /usr/tmp/screens/S-@var{login}
 -Alternate socket directories.
--
++@item /tmp/screens/S-@var{login}
++Socket directories.
+ 
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
- 
-@@ -5835,7 +5831,7 @@
+@@ -5781,7 +5778,7 @@ Output log files created by the log comm
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -106,22 +115,20 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5860,10 +5856,10 @@
+@@ -5806,9 +5803,9 @@ Contributors @*
  ============
  
  @verbatim
--     Maarten ter Huurne <maarten@treewalker.org>,
--     Jussi Kukkonen <jussi.kukkonen@intel.com>,
+-     Eric S. Raymond <esr@thyrsus.com>,
 -     Thomas Renninger <treen@suse.com>,
 -     Axel Beckert <abe@deuxchevaux.org>,
-+     Maarten ter Huurne <maarten@@treewalker.org>,
-+     Jussi Kukkonen <jussi.kukkonen@@intel.com>,
++     Eric S. Raymond <esr@@thyrsus.com>,
 +     Thomas Renninger <treen@@suse.com>,
 +     Axel Beckert <abe@@deuxchevaux.org>,
       Ken Beal <kbeal@@amber.ssd.csd.harris.com>,
       Rudolf Koenig <rfkoenig@@informatik.uni-erlangen.de>,
       Toerless Eckert <eckert@@informatik.uni-erlangen.de>,
-@@ -5947,10 +5943,10 @@
+@@ -5892,10 +5889,10 @@ capabilities to @code{$TERMCAP} may not
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -134,7 +141,7 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -6030,8 +6026,7 @@
+@@ -5972,8 +5969,7 @@ does not include these features of 4.2 a
  @cindex socket directory
  
  The socket directory defaults either to @file{$HOME/.screen} or simply to 

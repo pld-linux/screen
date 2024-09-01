@@ -1,6 +1,6 @@
---- screen-4.2.1/doc/screen.1.orig	2014-04-28 00:10:01.000000000 +0200
-+++ screen-4.2.1/doc/screen.1	2014-07-20 09:45:37.959175974 +0200
-@@ -103,7 +103,7 @@
+--- screen-5.0.0/doc/screen.1.orig	2024-08-28 21:55:03.000000000 +0200
++++ screen-5.0.0/doc/screen.1	2024-09-01 18:59:59.180121342 +0200
+@@ -100,7 +100,7 @@ to its window. - Note that you cannot tr
  the invoking shell to the application (emacs in this case), because it is
  forked from the parent screen process, not from the invoking shell.
  .PP
@@ -9,7 +9,7 @@
  .IR screen ,
  an appropriate record will be written to this file for each window, and
  removed when the window is terminated.
-@@ -232,7 +232,7 @@
+@@ -229,7 +229,7 @@ See the \*Qdefflow\*U .screenrc command
  The use of this option is discouraged.
  .TP 5
  .BR \-l " and " \-ln
@@ -18,7 +18,7 @@
  This can also be defined through the \*Qdeflogin\*U .screenrc command.
  .TP 5
  .BR \-ls " [" \fImatch ]
-@@ -625,7 +625,7 @@
+@@ -767,7 +767,7 @@ _
  
  .SH CUSTOMIZATION
  The \*Qsocket directory\*U defaults either to $HOME/.screen or simply to
@@ -27,7 +27,7 @@
  .I screen
  is installed setuid-root, then the administrator
  should compile
-@@ -638,7 +638,7 @@
+@@ -780,7 +780,7 @@ in the environment variable $SCREENDIR.
  When
  .I screen
  is invoked, it executes initialization commands from the files
@@ -36,7 +36,7 @@
  \*Q.screenrc\*U in the user's home directory. These are the \*Qprogrammer's
  defaults\*U that can be overridden in the following ways: for the
  global screenrc file 
-@@ -1845,7 +1845,7 @@
+@@ -2047,7 +2047,7 @@ when seeing proper escape sequence. See
  The echo command may be used to annoy 
  .I screen
  users with a 'message of the
@@ -45,10 +45,10 @@
  The option \*Q\-n\*U may be used to suppress the line feed.
  See also \*Qsleep\*U.
  Echo is also useful for online checking of environment variables.
-@@ -4857,20 +4857,18 @@
+@@ -5194,20 +5194,20 @@ Examples in the
  .I screen
  distribution package for private and global initialization files.
- .IP $SYSSCREENRC 
+ .IP $SYSSCREENRC
 -.IP /usr/local/etc/screenrc
 +.IP /etc/screenrc
  .I screen
@@ -58,11 +58,11 @@
 -Read in after /usr/local/etc/screenrc
 +Read in after /etc/screenrc
  .IP $SCREENDIR/S\-<login>
--.IP /local/screens/S\-<login>
-+.IP /tmp/screens/S\-<login>
+ .IP $HOME/.screen
  Socket directories (default)
 -.IP /usr/tmp/screens/S\-<login>
--Alternate socket directories.
++.IP /tmp/screens/S\-<login>
+ Alternate socket directories.
  .IP "<socket directory>/.termcap"
  Written by the "termcap" output function
 -.IP /usr/tmp/screens/screen\-exchange
@@ -70,7 +70,7 @@
  or
  .IP /tmp/screen\-exchange
  .I screen
-@@ -4879,11 +4877,9 @@
+@@ -5216,11 +5216,9 @@ or
  Screen images created by the hardcopy function
  .IP screenlog.[0-9]
  Output log files created by the log function
@@ -84,7 +84,7 @@
  Login records
  .IP $LOCKPRG
  Program that locks a terminal.
-@@ -5005,9 +5001,9 @@
+@@ -5333,9 +5331,9 @@ does not make use of hardware tabs.
  must be installed as set-uid with owner root on most systems in order
  to be able to correctly change the owner of the tty device file for
  each window.

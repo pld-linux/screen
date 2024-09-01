@@ -1,13 +1,13 @@
 Author: Loic Minier <lool@dooz.org>
 Description: Unbreak several useful keybindings.
---- a/termcap.c
-+++ b/termcap.c
-@@ -552,8 +552,6 @@
-       else
- 	break;
-     }
--  if (n < KMAP_KEYS)
--    domap = 1;
-   if (map == 0 && domap)
-     return 0;
-   if (map && !domap)
+--- screen-5.0.0/termcap.c.orig	2024-09-01 19:21:35.029767789 +0200
++++ screen-5.0.0/termcap.c	2024-09-01 19:22:08.722918591 +0200
+@@ -449,8 +449,6 @@ int remap(int n, int map)
+ 		} else
+ 			break;
+ 	}
+-	if (n < KMAP_KEYS)
+-		domap = 1;
+ 	if (map == 0 && domap)
+ 		return 0;
+ 	if (map && !domap)

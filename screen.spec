@@ -10,29 +10,25 @@ Summary(ru.UTF-8):	Менеджер экрана, поддерживающий �
 Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
-Version:	4.9.1
+Version:	5.0.0
 Release:	1
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	https://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	9a9bdc956bd93e4f0cb9e48678889e26
+# Source0-md5:	befc115989242ed4bceeff8d8bfeb4e6
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
 Source3:	%{name}rc
 Patch2:		%{name}-manual.patch
-Patch3:		%{name}-ia64.patch
 Patch4:		%{name}-info.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
 Patch8:		%{name}-home_etc.patch
-Patch9:		%{name}-no-libs.patch
 Patch12:	%{name}-screenrc.patch
 Patch13:	%{name}-osc.patch
-Patch17:	%{name}-E3.patch
 Patch18:	%{name}-4.1.0-suppress_remap.patch
-Patch23:	%{name}-bracketed_paste_mode.patch
 URL:		http://www.gnu.org/software/screen/
-BuildRequires:	autoconf >= 2.60
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
@@ -97,19 +93,15 @@ Screen корисний користувачам, які заходять на �
 %prep
 %setup -q
 %patch2 -p1
-%patch3 -p0
 %patch4 -p1
 # DON'T ENABLE IT UNLESS YOU REALLY FIX IT
 # (it's heavily broken - note that some sequences should be get for
 # $TERM before running screen instance, and others for TERM=screen!)
 ###%patch7 -p1
 #%patch8 -p1
-%patch9 -p1
 %patch12 -p1
 #%patch13 -p1 # my brain farted here, see if you have better luck
-%patch17 -p2
 %patch18 -p1
-%patch23 -p1
 
 %build
 %{__aclocal}
