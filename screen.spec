@@ -11,7 +11,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	5.0.0
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	https://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
@@ -20,6 +20,12 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
 Source3:	%{name}rc
+Patch100:	0001-logfile-reintroduce-lf_secreopen-to-fix-CVE-2025-233.patch
+Patch101:	0002-default-PTY-mode-apply-safe-default-mode-of-0620-to-.patch
+Patch102:	0003-attacher.c-fix-bad-strncpy-which-can-lead-to-a-buffe.patch
+Patch103:	0004-attacher.c-prevent-temporary-0666-mode-on-PTYs-to-fi.patch
+Patch104:	0005-Avoid-file-existence-test-information-leaks-to-fix-C.patch
+Patch105:	0006-socket.c-don-t-send-signals-with-root-privileges-to-.patch
 Patch2:		%{name}-manual.patch
 Patch4:		%{name}-info.patch
 Patch7:		%{name}-no_hardcoded_term_sequences.patch
@@ -92,16 +98,23 @@ Screen корисний користувачам, які заходять на �
 
 %prep
 %setup -q
-%patch2 -p1
-%patch4 -p1
+%patch -P2 -p1
+%patch -P4 -p1
 # DON'T ENABLE IT UNLESS YOU REALLY FIX IT
 # (it's heavily broken - note that some sequences should be get for
 # $TERM before running screen instance, and others for TERM=screen!)
-###%patch7 -p1
-#%patch8 -p1
-%patch12 -p1
-#%patch13 -p1 # my brain farted here, see if you have better luck
-%patch18 -p1
+###%%patch -P7 -p1
+#%%patch -P8 -p1
+%patch -P12 -p1
+#%%patch -P13 -p1 # my brain farted here, see if you have better luck
+%patch -P18 -p1
+
+%patch -P100 -p1
+%patch -P101 -p1
+%patch -P102 -p1
+%patch -P103 -p1
+%patch -P104 -p1
+%patch -P105 -p1
 
 %build
 %{__aclocal}
