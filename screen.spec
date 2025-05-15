@@ -102,11 +102,8 @@ Screen корисний користувачам, які заходять на �
 CFLAGS="%{rpmcflags} -DMAXWIN=256"
 %configure \
 	--enable-pam \
-	--enable-colors256 \
-	--enable-rxvt_osc \
 	--enable-telnet \
-	--enable-use-locale \
-	--with-sys-screenrc=/etc/screenrc \
+	--with-system_screenrc=/etc/screenrc \
 	--with-pty-mode=0620 \
 	--with-pty-group=5 \
 	--disable-socket-dir
