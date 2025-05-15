@@ -22,10 +22,7 @@ Source2:	%{name}.pamd
 Source3:	%{name}rc
 Patch2:		%{name}-manual.patch
 Patch4:		%{name}-info.patch
-Patch7:		%{name}-no_hardcoded_term_sequences.patch
-Patch8:		%{name}-home_etc.patch
 Patch12:	%{name}-screenrc.patch
-Patch13:	%{name}-osc.patch
 Patch18:	%{name}-4.1.0-suppress_remap.patch
 URL:		http://www.gnu.org/software/screen/
 BuildRequires:	autoconf >= 2.71
@@ -94,13 +91,7 @@ Screen корисний користувачам, які заходять на �
 %setup -q
 %patch -P2 -p1
 %patch -P4 -p1
-# DON'T ENABLE IT UNLESS YOU REALLY FIX IT
-# (it's heavily broken - note that some sequences should be get for
-# $TERM before running screen instance, and others for TERM=screen!)
-###%%patch -P7 -p1
-#%%patch -P8 -p1
 %patch -P12 -p1
-#%%patch -P13 -p1 # my brain farted here, see if you have better luck
 %patch -P18 -p1
 
 %build
