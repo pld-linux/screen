@@ -11,7 +11,7 @@ Summary(tr.UTF-8):	Bir uçbirimde birden fazla oturumu düzenler
 Summary(uk.UTF-8):	Менеджер екрану, що підтримує кілька логінів з одного терміналу
 Name:		screen
 Version:	5.0.1
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	https://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
@@ -120,6 +120,7 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-pty-group=5 \
 	--disable-socket-dir
 
+%{__make} clean
 %{__make} -j1
 
 cd doc
