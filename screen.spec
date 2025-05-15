@@ -15,7 +15,7 @@ Release:	2
 License:	GPL v3+
 Group:		Applications/Terminal
 Source0:	https://ftp.gnu.org/gnu/screen/%{name}-%{version}.tar.gz
-# Source0-md5:	4306c5446abd48b7899a211c4d0456b2
+# Source0-md5:	fb5e5dfc9353225c2d6929777344b1a6
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	236166e774cee788cf594b05dd1dd70d
 Source2:	%{name}.pamd
@@ -120,7 +120,6 @@ CFLAGS="%{rpmcflags} -DMAXWIN=256"
 	--with-pty-group=5 \
 	--disable-socket-dir
 
-%{__make} clean
 %{__make} -j1
 
 cd doc
