@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 5.0.0
+ @set version 5.0.1
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -115,13 +115,15 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5806,9 +5803,9 @@ Contributors @*
+@@ -5803,10 +5803,10 @@ Contributors @*
  ============
  
  @verbatim
+-     Matthias Gerstner <matthias.gerstner@suse.de>,
 -     Eric S. Raymond <esr@thyrsus.com>,
 -     Thomas Renninger <treen@suse.com>,
 -     Axel Beckert <abe@deuxchevaux.org>,
++     Matthias Gerstner <matthias.gerstner@@suse.de>,
 +     Eric S. Raymond <esr@@thyrsus.com>,
 +     Thomas Renninger <treen@@suse.com>,
 +     Axel Beckert <abe@@deuxchevaux.org>,
@@ -151,3 +153,19 @@
  setuid root, then the administrator should compile screen with an
  adequate (not NFS mounted) @code{SOCKDIR}. If @code{screen} is not
  running setuid-root, the user can specify any mode 700 directory in the
+diff --git a/doc/screen.texinfo b/doc/screen.texinfo
+index b3568b9..76d0588 100644
+--- a/doc/screen.texinfo
++++ b/doc/screen.texinfo
+@@ -5940,7 +5940,7 @@ of @code{Screen} which you are using.  Also include in your message the
+ hardware and operating system, the compiler used to compile, a
+ description of the bug behavior, and the conditions that triggered the
+ bug. In case of security issue please send an mail to
+-@w{@samp{alexander_naumov@opensuse.org}}.
++@w{@samp{alexander_naumov@@opensuse.org}}.
+ 
+ @node Availability,  , Reporting Bugs, Bugs
+ @section Availability
+-- 
+cgit v1.1
+
