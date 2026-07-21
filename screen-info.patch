@@ -1,5 +1,5 @@
---- screen-5.0.0/doc/screen.texinfo.orig	2024-08-28 21:55:03.000000000 +0200
-+++ screen-5.0.0/doc/screen.texinfo	2024-09-01 19:14:07.342193120 +0200
+--- screen-5.0.2/doc/screen.texinfo.orig	2026-07-11 14:23:46.000000000 +0200
++++ screen-5.0.2/doc/screen.texinfo	2026-07-21 20:35:33.204847881 +0200
 @@ -4,14 +4,14 @@
  @documentencoding ISO-8859-15
  @setfilename screen.info
@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 5.0.1
+ @set version 5.0.2
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
@@ -26,7 +26,17 @@
  will be written to this file for each window, and removed when the
  window is closed.  This is useful for working with @code{talk},
  @code{script}, @code{shutdown}, @code{rsend}, @code{sccs} and other
-@@ -503,7 +503,7 @@ to be executed at startup, or on the fly
+@@ -226,8 +226,7 @@ If you want to help, send a note to scre
+ @cindex socket directory
+ 
+ The socket directory defaults either to @file{$HOME/.screen} or simply to
+-@file{/tmp/screens} or preferably to @file{/usr/local/screens} chosen at
+-compile-time. If @code{screen} is installed
++@file{/tmp/screens} chosen at compile-time. If @code{screen} is installed
+ setuid root, then the administrator should compile screen with an
+ adequate (not NFS mounted) @code{SOCKDIR}. If @code{screen} is not
+ running setuid-root, the user can specify any mode 700 directory in the
+@@ -586,7 +585,7 @@ to be executed at startup, or on the fly
  @cindex screenrc
  When @code{screen} is invoked, it executes initialization commands from
  the files @file{.screenrc} in the user's home directory and
@@ -35,25 +45,25 @@
  following ways:
  For the global screenrc file @code{screen} searches for the environment
  variable @code{$SYSTEM_SCREENRC} (this override feature may be disabled at
-@@ -1044,7 +1044,7 @@ Append to hardcopy files.  @xref{Hardcop
- Place, where to dump hardcopy files.  @xref{Hardcopy}.
- @item hardstatus [@var{state}]
- Use the hardware status line.  @xref{Hardware Status Line}.
+@@ -1339,7 +1338,7 @@ Place, where to dump hardcopy files.
+ Use the hardware status line.
+ @xref{Hardware Status Line}.
+ 
 -@item height [@var{lines} [@var{cols}]]
 +@item ns_regheight [@var{lines} [@var{cols}]]
- Set display height.  @xref{Window Size}.
- @item help [-c @var{class}]
- Display current key bindings.  @xref{Help}.
-@@ -1097,7 +1097,7 @@ Log all output in the current window.  @
- @item logfile @var{filename}
- Place where to collect logfiles.  @xref{Log}.
+ Set display height.
+ @xref{Window Size}.
+ 
+@@ -1444,7 +1443,7 @@ Place where to collect logfiles.
+ @xref{Log}.
+ 
  @item login [@var{state}]
--Log the window in @file{/etc/utmp}.  @xref{Login}.
-+Log the window in @file{/var/run/utmp}.  @xref{Login}.
+-Log the window in @file{/etc/utmp}.
++Log the window in @file{/var/run/utmp}.
+ @xref{Login}.
+ 
  @item logtstamp [@var{state}]
- Configure logfile time-stamps.  @xref{Log}.
- @item mapdefault
-@@ -1772,7 +1772,7 @@ Without a parameter, the current message
+@@ -2284,7 +2283,7 @@ Without a parameter, the current message
  @kindex C-x
  @deffn Command lockscreen
  (@kbd{C-a x}, @kbd{C-a C-x})@*
@@ -62,16 +72,16 @@
  or a builtin, if no other is available). Screen does not accept any
  command keys until this program terminates. Meanwhile processes in the
  windows may continue, as the windows are in the detached state.
-@@ -2414,7 +2414,7 @@ terminal emulation itself.
- * Naming Windows::		Control the name of the window
- * Console::			See the host's console messages
- * Kill::                        Destroy an unwanted window
--* Login::                       Control @file{/etc/utmp} logging
-+* Login::                       Control @file{/var/run/utmp} logging
- * Mode::                        Control the file mode of the pty
- * Monitor::                     Watch for activity or inactivity in a window
- * Windows::			List the active windows
-@@ -2623,7 +2623,7 @@ compile time (@pxref{Installation}). Bot
+@@ -2928,7 +2927,7 @@ terminal emulation itself.
+ * Naming Windows::  Control the name of the window
+ * Console::         See the host's console messages
+ * Kill::            Destroy an unwanted window
+-* Login::           Control @file{/etc/utmp} logging
++* Login::           Control @file{/var/run/utmp} logging
+ * Mode::            Control the file mode of the pty
+ * Monitor::         Watch for activity or inactivity in a window
+ * Windows::         List the active windows
+@@ -3138,7 +3137,7 @@ compile time (@pxref{Installation}). Bot
  @kindex L
  @deffn Command login [state]
  (@kbd{C-a L})@*
@@ -80,7 +90,7 @@
  This controls whether or not the window is @dfn{logged in}.  In addition
  to this toggle, it is convenient to have ``log in'' and ``log out''
  keys.  For instance, @code{bind I login on} and @code{bind O 
-@@ -5748,21 +5748,18 @@ Examples in the @code{screen} distributi
+@@ -6280,21 +6279,18 @@ Examples in the @code{screen} distributi
  global initialization files.
  
  @item @code{$SYSTEM_SCREENRC}
@@ -106,7 +116,7 @@
  
  @item @var{socket directory}/.termcap
  Written by the @code{dumptermcap} command
-@@ -5781,7 +5778,7 @@ Output log files created by the log comm
+@@ -6313,7 +6309,7 @@ Output log files created by the log comm
  @itemx /etc/termcap
  Terminal capability databases
  
@@ -115,22 +125,25 @@
  Login records
  
  @item @code{$LOCKPRG}
-@@ -5803,10 +5803,10 @@ Contributors @*
- ============
- 
- @verbatim
--     Matthias Gerstner <matthias.gerstner@suse.de>,
--     Eric S. Raymond <esr@thyrsus.com>,
--     Thomas Renninger <treen@suse.com>,
--     Axel Beckert <abe@deuxchevaux.org>,
-+     Matthias Gerstner <matthias.gerstner@@suse.de>,
-+     Eric S. Raymond <esr@@thyrsus.com>,
-+     Thomas Renninger <treen@@suse.com>,
-+     Axel Beckert <abe@@deuxchevaux.org>,
-      Ken Beal <kbeal@@amber.ssd.csd.harris.com>,
-      Rudolf Koenig <rfkoenig@@informatik.uni-erlangen.de>,
-      Toerless Eckert <eckert@@informatik.uni-erlangen.de>,
-@@ -5892,10 +5889,10 @@ capabilities to @code{$TERMCAP} may not
+@@ -6343,7 +6339,7 @@ Since 2015 maintained and developed by A
+      Matthias Gerstner <matthias.gerstner@suse.de>
+      Eric S. Raymond <esr@thyrsus.com>
+      Thomas Renninger <treen@suse.com>
+-     Axel Beckert <abe@@deuxchevaux.org>
++     Axel Beckert <abe@deuxchevaux.org>
+      Ken Beal <kbeal@amber.ssd.csd.harris.com>
+      Rudolf Koenig <rfkoenig@informatik.uni-erlangen.de>
+      Toerless Eckert <eckert@informatik.uni-erlangen.de>
+@@ -6351,7 +6347,7 @@ Since 2015 maintained and developed by A
+      Patrick Wolfe <pat@kai.com, kailand!pat>
+      Bart Schaefer <schaefer@cse.ogi.edu>
+      Nathan Glasser <nathan@brokaw.lcs.mit.edu>
+-     Larry W. Virden <lvirden@@cas.org>
++     Larry W. Virden <lvirden@cas.org>
+      Howard Chu <hyc@hanauma.jpl.nasa.gov>
+      Tim MacKenzie <tym@dibbler.cs.monash.edu.au>
+      Markku Jarvinen <mta@{cc,cs,ee}.tut.fi>
+@@ -6426,10 +6422,10 @@ capabilities to @code{$TERMCAP} may not
  in order to be able to
  correctly change the owner of the tty device file for each window.
  Special permission may also be required to write the file
@@ -143,29 +156,3 @@
  with SIGKILL.  This will cause some programs (like "w" or "rwho") to
  advertise that a user is logged on who really isn't.
  
-@@ -5972,8 +5969,7 @@ does not include these features of 4.2 a
- @cindex socket directory
- 
- The socket directory defaults either to @file{$HOME/.screen} or simply to 
--@file{/tmp/screens} or preferably to @file{/usr/local/screens} chosen at 
--compile-time. If @code{screen} is installed
-+@file{/tmp/screens} chosen at compile-time. If @code{screen} is installed
- setuid root, then the administrator should compile screen with an
- adequate (not NFS mounted) @code{SOCKDIR}. If @code{screen} is not
- running setuid-root, the user can specify any mode 700 directory in the
-diff --git a/doc/screen.texinfo b/doc/screen.texinfo
-index b3568b9..76d0588 100644
---- a/doc/screen.texinfo
-+++ b/doc/screen.texinfo
-@@ -5940,7 +5940,7 @@ of @code{Screen} which you are using.  Also include in your message the
- hardware and operating system, the compiler used to compile, a
- description of the bug behavior, and the conditions that triggered the
- bug. In case of security issue please send an mail to
--@w{@samp{alexander_naumov@opensuse.org}}.
-+@w{@samp{alexander_naumov@@opensuse.org}}.
- 
- @node Availability,  , Reporting Bugs, Bugs
- @section Availability
--- 
-cgit v1.1
-
