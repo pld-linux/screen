@@ -9,7 +9,7 @@
  @finalout
  @setchapternewpage odd
  @c %**end of header
- @set version 5.0.2
+ @set version 5.0.3
  
  @direntry
 -* Screen: (screen).             Full-screen window manager.
